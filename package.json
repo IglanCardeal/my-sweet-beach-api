@@ -9,7 +9,7 @@
     "start": "yarn build && node dist/src/index.js",
     "dev": "",
     "test": "",
-    "lint": "eslint '{src|test}/**/*.ts' --fix"
+    "lint": "eslint '**/*.ts' --fix"
   },
   "husky": {
     "hooks": {
