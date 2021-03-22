@@ -1,4 +1,5 @@
-{
+/* eslint-disable no-undef */
+module.exports = {
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
@@ -12,4 +13,4 @@
     "semi": 0,
     "@typescript-eslint/no-explicit-any": 0
   }
-}
+};
