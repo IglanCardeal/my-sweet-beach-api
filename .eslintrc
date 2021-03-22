@@ -5,11 +5,12 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
+    "prettier/@typescript-eslint",
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "space-before-function-paren": 0,
-    "semi": 0,
+    "semi": ["error", "never"],
     "@typescript-eslint/no-explicit-any": 0
   }
 }
