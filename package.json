@@ -9,8 +9,7 @@
     "start": "yarn build && node dist/src/index.js",
     "dev": "",
     "test": "",
-    "lint": "eslint 'src/**/*.ts' --fix",
-    "lint:test": "eslint 'test/**/*.ts' --fix"
+    "lint": "eslint --fix"
   },
   "husky": {
     "hooks": {
@@ -19,11 +18,8 @@
     }
   },
   "lint-staged": {
-    "./src/**/*.ts": [
-      "yarn lint"
-    ],
-    "./test/**/*.ts": [
-      "yarn lint:test"
+    "*.ts": [
+      "yarn lint", "git add"
     ]
   },
   "devDependencies": {
