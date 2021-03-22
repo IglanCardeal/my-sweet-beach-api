@@ -1,7 +1,7 @@
 import './utils/module-alias'
 
 import { Server } from '@overnightjs/core'
-import { json } from 'express'
+import { Application, json } from 'express'
 import { ForecastController } from './controllers/forecast'
 
 export class SetupServer extends Server {
@@ -14,6 +14,10 @@ export class SetupServer extends Server {
     this.setupControllers()
   }
 
+  public getApp(): Application {
+    return this.app
+  }
+
   private setupExpress(): void {
     this.app.use(json())
   }
@@ -23,4 +27,5 @@ export class SetupServer extends Server {
 
     this.addControllers([forecastController])
   }
+
 }
