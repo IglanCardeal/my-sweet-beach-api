@@ -11,6 +11,8 @@
   "rules": {
     "space-before-function-paren": 0,
     "semi": ["error", "never"],
+    "no-unused-vars": "error",
+    "no-unsafe-finally": "error",
     "@typescript-eslint/no-explicit-any": 0
   }
 }
