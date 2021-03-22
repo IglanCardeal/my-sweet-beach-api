@@ -13,12 +13,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint-staged"
+      "pre-commit": "yarn lint-staged",
+      "pre-push": ""
     }
   },
   "lint-staged": {
-    "*.ts": [
-      "yarn lint", "git add"
+    "./src/**/*.ts": [
+      "yarn lint"
     ]
   },
   "devDependencies": {
