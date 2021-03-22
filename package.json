@@ -8,19 +8,7 @@
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
     "dev": "",
-    "test": "",
-    "lint": "eslint 'src/**/*.ts' --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-staged",
-      "pre-push": ""
-    }
-  },
-  "lint-staged": {
-    "./src/**/*.ts": [
-      "yarn lint"
-    ]
+    "test": ""
   },
   "devDependencies": {
     "@types/module-alias": "^2.0.0",
