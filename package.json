@@ -1,0 +1,42 @@
+{
+  "name": "devlab-courses",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "IglanCardeal <cmtcardeal@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/src/index.js",
+    "dev": "",
+    "test": "",
+    "lint": "eslint '**/*.ts' --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged",
+      "pre-push": ""
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.ts": [
+      "yarn lint"
+    ],
+    "./test/**/*.ts": [
+      "yarn lint"
+    ]
+  },
+  "devDependencies": {
+    "@types/module-alias": "^2.0.0",
+    "@types/node": "^14.14.35",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "eslint": "^7.22.0",
+    "git-commit-msg-linter": "^3.0.4",
+    "husky": "^5.2.0",
+    "lint-staged": "^10.5.4",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  }
+}
