@@ -21,8 +21,10 @@
   "lint-staged": {
     "./src/**/*.ts": [
       "yarn lint"
+    ],
+    "./test/**/*.ts": [
+      "yarn lint:test"
     ]
-   
   },
   "devDependencies": {
     "@types/module-alias": "^2.0.0",
