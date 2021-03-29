@@ -11,5 +11,7 @@ beforeAll(() => {
 
   server.init()
 
-  global.testRequest = supertest(server.getApp())
+  const app = server.getApp()
+
+  global.testRequest = supertest(app)
 })

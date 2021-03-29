@@ -5,13 +5,22 @@ import { Application, json } from 'express'
 import { ForecastController } from './controllers/forecast'
 
 export class SetupServer extends Server {
-  constructor(private port = 3000) {
+  private port: number
+
+  constructor(port = 3000) {
     super()
+    this.port = port
   }
 
   public init(): void {
     this.setupExpress()
     this.setupControllers()
+  }
+
+  public start(msg: string): void {
+    this.app.listen(this.port, () => {
+      console.log(msg)
+    })
   }
 
   public getApp(): Application {
@@ -27,5 +36,4 @@ export class SetupServer extends Server {
 
     this.addControllers([forecastController])
   }
-
 }

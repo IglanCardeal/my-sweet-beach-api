@@ -10,6 +10,7 @@ const root = resolve(__dirname)
 
 module.exports = {
   rootDir: root,
+  modulePathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/dist/"],
   displayName: 'root-tests',
   testMatch: ['<rootDir>/src/**/*.test.ts'],
   testEnvironment: 'node',

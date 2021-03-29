@@ -1,9 +1,9 @@
 import { Controller, Get } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
-@Controller('forecast')
+@Controller('forecast') // define um base match da rota: /forecast
 export class ForecastController {
-  @Get('')
+  @Get('') // match em uma rota do tipo: /forecast
   public getForecastForLoggedUser(_: Request, res: Response): void {
     res.status(200).json([
       {
@@ -45,5 +45,11 @@ export class ForecastController {
         ]
       }
     ])
+  }
+
+  @Get('for') // match em uma rota do tipo: /forecast/for
+  public otherRoute(req: Request, res: Response): void {
+    console.log('test')
+    res.status(200).json({ msg: 'hello' })
   }
 }
