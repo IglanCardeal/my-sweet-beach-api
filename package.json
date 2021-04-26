@@ -13,12 +13,6 @@
     "test:functional": "jest --projects ./test --runInBand --forceExit",
     "test:unit": "jest --runInBand"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn test:unit",
-      "pre-push": ""
-    }
-  },
   "lint-staged": {
     "./src/**/*.ts": [
       "yarn lint:fix"
