@@ -14,6 +14,12 @@
     "test:unit": "jest --runInBand",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test:unit",
+      "pre-push": ""
+    }
+  },
   "lint-staged": {
     "./src/**/*.ts": [
       "yarn lint:fix"
