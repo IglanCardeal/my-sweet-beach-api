@@ -1,3 +1,5 @@
+// global.testRequest é definido no arquivo jest-setup.ts como 
+// objeto global de testes
 describe('Beach forecast functional test', () => {
   it('it should return a forecast with just a few times', async () => {
     const { body, status } = await global.testRequest.get('/forecast')

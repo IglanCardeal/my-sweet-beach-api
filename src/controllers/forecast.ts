@@ -50,7 +50,7 @@ export class ForecastController {
 
   @Get('for') // match em uma rota do tipo: /forecast/for
   public otherRoute(req: Request, res: Response): void {
-    console.log('test')
+    // console.log('test')
     res.status(200).json({ msg: 'hello' })
   }
 }

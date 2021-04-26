@@ -9,7 +9,7 @@
     "start": "yarn build && node dist/src/index.js",
     "start:dev": "ts-node-dev src/index.ts",
     "lint": "eslint ./src ./test --ext .ts",
-    "lint:fix": "eslint ./src ./test --ext .ts --fix",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test:functional": "jest --projects ./test --runInBand --forceExit",
     "test:unit": "jest --runInBand"
   },
