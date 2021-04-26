@@ -4,7 +4,7 @@ import { config } from 'dotenv'
 
 config()
 
-const { STORMGLASS_API_KEY } = process.env
+// const { STORMGLASS_API_KEY } = process.env
 
 // Esta classe que fica reponsavel pela chamadas 
 // para a API do Storm Glass
