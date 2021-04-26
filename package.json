@@ -20,8 +20,8 @@
     }
   },
   "lint-staged": {
-    "*.ts": [
-      "yarn lint:fix"
+    "./src/**/*.ts": [
+      "yarn lint"
     ]
   },
   "devDependencies": {
