@@ -2,7 +2,11 @@
 
 ![weather-wallpapper](./docs/weather.png)
 
-## <h2 align="center">API para consulta e previsão do clima em qualquer lugar do globo</h2>
+## <h3 align="center">API para consulta e previsão do clima em qualquer lugar do globo</h3>
+
+## API em construção... :hammer: 👷‍♂️ 👨‍💻
+
+`README.md` completo em breve...
 
 ### cURL
 
