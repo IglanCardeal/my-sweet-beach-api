@@ -11,7 +11,8 @@
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test:functional": "jest --projects ./test --runInBand --forceExit",
-    "test:unit": "jest --runInBand"
+    "test:unit": "jest --runInBand",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "./src/**/*.ts": [
