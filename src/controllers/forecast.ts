@@ -1,6 +1,7 @@
 import { Controller, Get } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
+// Controller para as rotas de Forecast
 @Controller('forecast') // define um base match da rota: /forecast
 export class ForecastController {
   @Get('') // match em uma rota do tipo: /forecast
