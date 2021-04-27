@@ -1,3 +1,5 @@
+// Esta classe é um cliente HTTP para executar chamadas
+// à API do Storm Glass
 import { AxiosStatic } from 'axios'
 
 import { config } from 'dotenv'
@@ -8,8 +10,14 @@ const { STORMGLASS_API_KEY } = process.env
 
 console.log(STORMGLASS_API_KEY)
 
-// Esta classe que fica reponsavel pela chamadas 
-// para a API do Storm Glass
+/**
+ * @classdesc cliente HTTP para chamadas externas para a API do Storm Glass
+ * 
+ * @property {string} stormGlassAPIParams - contém os atributos
+ * do weather da API. [docs](https://docs.stormglass.io/#/sources?id=weather-attributes).
+ * @property {string} stormGlassAPISource - "noaa" é um recurso fonte
+ * do weather da API. [docs](https://docs.stormglass.io/#/sources?id=available-sources).
+ */
 export class StormGlass {
   readonly stormGlassAPIParams =
     'swellHeight,waveHeight,swellDirection,waveDirection,windDirection,windSpeed,swellPeriod'

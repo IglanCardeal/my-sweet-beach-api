@@ -8,6 +8,15 @@
 
 `README.md` completo em breve...
 
+## Testes Automatizados
+
+Foi utilizado o JEST para os criação de testes automatizados. O sistema é coberto por testes de unidade e de integração. Ambos possuem seus próprios arquvivos de configuração (`jest.config.js`) e a nomenclatura possui diferença semântica quanto ao tipo de teste:
+
+- Os **testes de unidade** possuem nomenclatura de arquivo do tipo `*.test.ts`.
+- Os **testes de integração**, os arquivos são nomeados com padrão `*.spec.ts`.
+
+A nomenclatura dos arquivos de testes são apenas uma convenção adotada por mim.
+
 ### cURL
 
 Usando curl para testar uma url:
