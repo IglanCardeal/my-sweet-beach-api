@@ -12,11 +12,15 @@ console.log(STORMGLASS_API_KEY)
 
 /**
  * @classdesc cliente HTTP para chamadas externas para a API do Storm Glass
- * 
+ *
  * @property {string} stormGlassAPIParams - contém os atributos
- * do weather da API. [docs](https://docs.stormglass.io/#/sources?id=weather-attributes).
+ * do weather da API.
+ * [docs](https://docs.stormglass.io/#/sources?id=weather-attributes).
  * @property {string} stormGlassAPISource - "noaa" é um recurso fonte
- * do weather da API. [docs](https://docs.stormglass.io/#/sources?id=available-sources).
+ * do weather da API.
+ * [docs](https://docs.stormglass.io/#/sources?id=available-sources).
+ * @property {object} requester - recebe o módulo que fará as chamadas
+ * externas para a API.
  */
 export class StormGlass {
   readonly stormGlassAPIParams =
@@ -29,13 +33,29 @@ export class StormGlass {
   }
 
   public async fetchPoints(lat: number, long: number): Promise<any> {
-    return await this.requester.get(
-      `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`,
-      {
-        headers: {
-          Authorization: 'example-api-key'
-        }
+    const destURL = this.getDestURL({
+      lat,
+      long
+    })
+
+    return await this.requester.get(destURL, {
+      headers: {
+        Authorization: 'example-api-key'
       }
-    )
+    })
   }
+
+  /**
+   * @function getDestURL - apenas para retornar a URL de destino com os
+   * parâmetros informados
+   * @returns {string}
+   */
+  private getDestURL({ lat, long }: GetDestURLParams): string {
+    return `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`
+  }
+}
+
+interface GetDestURLParams {
+  lat: number
+  long: number
 }
