@@ -3,7 +3,7 @@ import axios from 'axios'
 import { StormGlass } from '@src/clients/stormGlass'
 
 import stormGlassApiResponseExample from '@test/fixtures/stormglass-response.json'
-
+import stormGlassApiResponseNormalizedExample from '@test/fixtures/stormglass-response-normalized.json'
 
 // mockando o axios
 jest.mock('axios')
@@ -25,7 +25,9 @@ describe('StormGlass Client', () => {
     const stormGlass = new StormGlass(axios)
     const response = await stormGlass.fetchPoints(lat, long)
 
-    expect(response).toEqual({})
+    // a class StormGlass deve ter um método para normalizar
+    // os dados vindos da API.
+    expect(response).toEqual(stormGlassApiResponseNormalizedExample)
   })
 })
 
