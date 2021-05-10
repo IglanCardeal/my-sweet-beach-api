@@ -19,6 +19,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Retrieve secret
+      env: 
+        STORMGLASS_API_KEY: ${{ secrets.STORMGLASS_API_KEY }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
