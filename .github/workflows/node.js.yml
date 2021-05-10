@@ -27,21 +27,21 @@ jobs:
     - name: Cache Node.js modules
       uses: actions/cache@v2
       with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        # yarn cache files are stored in `~/.yarn` on Linux/macOS
+        path: ~/.yarn
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
 
     - name: Install dependencies
-      run: npm ci
+      run: yarn
 
     - name: Run unit test
-      run: npm run test:unit
+      run: yarn test:unit
 
     - name: Run functional test
-      run: npm run test:functional
+      run: yarn test:functional
 
     - name: Start the build
-      run: npm run build --if-present
+      run: yarn build --if-present
