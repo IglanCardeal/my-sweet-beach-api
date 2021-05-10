@@ -1,0 +1,60 @@
+{
+  "hours": [
+    {
+      "time": "2021-05-09T23:00:00+00:00",
+      "waveDirection": {
+        "noaa": 69.62
+      },
+      "waveHeight": {
+        "noaa": 0.32
+      },
+      "windDirection": {
+        "noaa": 75.85
+      }
+    },
+    {
+      "time": "2021-05-10T00:00:00+00:00",
+      "waveDirection": {
+        "noaa": 76.66
+      },
+      "waveHeight": {
+        "noaa": 0.3
+      },
+      "windDirection": {
+        "noaa": 81.09
+      }
+    },
+    {
+      "time": "2021-05-10T01:00:00+00:00",
+      "waveDirection": {
+        "noaa": 83.23
+      },
+      "waveHeight": {
+        "noaa": 0.28
+      },
+      "windDirection": {
+        "noaa": 90.57
+      }
+    }
+  ],
+  "meta": {
+    "cost": 1,
+    "dailyQuota": 50,
+    "end": "2021-05-10 01:16",
+    "lat": -1.384799,
+    "lng": -48.408662,
+    "params": [
+      "swellDirection",
+      "swellHeight",
+      "swellPeriod",
+      "waveDirection",
+      "waveHeight",
+      "windDirection"
+    ],
+    "requestCount": 16,
+    "source": [
+      "noaa"
+    ],
+    "start": "2021-05-09 23:00"
+  }
+}

@@ -28,11 +28,11 @@ export class StormGlass {
   readonly stormGlassAPISource = 'noaa'
   protected requester
 
-  constructor(requester: AxiosStatic) {
+  constructor (requester: AxiosStatic) {
     this.requester = requester
   }
 
-  public async fetchPoints(lat: number, long: number): Promise<any> {
+  public async fetchPoints (lat: number, long: number): Promise<any> {
     const destURL = this.getDestURL({
       lat,
       long
@@ -50,7 +50,7 @@ export class StormGlass {
    * parâmetros informados
    * @returns {string}
    */
-  private getDestURL({ lat, long }: GetDestURLParams): string {
+  private getDestURL ({ lat, long }: GetDestURLParams): string {
     return `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`
   }
 }
