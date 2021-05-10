@@ -8,7 +8,7 @@ config()
 
 const { STORMGLASS_API_KEY } = process.env
 
-console.log(STORMGLASS_API_KEY)
+console.log('[__KEY__]: ',STORMGLASS_API_KEY)
 
 /**
  * @classdesc cliente HTTP para chamadas externas para a API do Storm Glass
