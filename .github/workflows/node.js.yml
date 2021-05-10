@@ -23,7 +23,8 @@ jobs:
       env: 
         STORMGLASS_API_KEY: ${{ secrets.STORMGLASS_API_KEY }}
       run: |
-        STORMGLASS_API_KEY="$STORMGLASS_API_KEY"
+        touch .env
+        echo STORMGLASS_API_KEY =${{ secrets.STORMGLASS_API_KEY }} >> .env
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
@@ -50,4 +51,4 @@ jobs:
       run: yarn test:functional
 
     - name: Start the build
-      run: yarn build --if-present
+      run: yarn build 
