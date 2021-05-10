@@ -23,7 +23,7 @@ jobs:
       env: 
         STORMGLASS_API_KEY: ${{ secrets.STORMGLASS_API_KEY }}
       run: |
-        example-command "$STORMGLASS_API_KEY"
+        STORMGLASS_API_KEY="$STORMGLASS_API_KEY"
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
