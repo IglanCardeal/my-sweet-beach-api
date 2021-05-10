@@ -35,13 +35,13 @@ jobs:
           ${{ runner.OS }}-
 
     - name: Install dependencies
-    - run: yarn --frozen-lockfile
+      run: yarn --frozen-lockfile
 
     - name: Run unit test
-    - run: yarn test:unit
+      run: yarn test:unit
 
     - name: Run functional test
-    - run: yarn test:functional
+      run: yarn test:functional
 
     - name: Start the build
-    - run: npm run build --if-present
+      run: npm run build --if-present
