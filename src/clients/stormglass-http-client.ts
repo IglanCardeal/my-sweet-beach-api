@@ -7,30 +7,27 @@
 // console.log('[__KEY__]: ', STORMGLASS_API_KEY)
 import { AxiosStatic } from 'axios'
 
-interface StormGlassForecastPoints {
-  time: string
-  swellDirection: {
-    noaa: number
-  }
-  swellHeight: {
-    noaa: number
-  }
-  swellPeriod: {
-    noaa: number
-  }
-  waveHeight: {
-    noaa: number
-  }
-  waveDirection: {
-    noaa: number
-  }
-  windSpeed: {
-    noaa: number
-  }
+export interface StormGlassPointSource {
+  noaa: number
 }
 
-interface StormGlassForecastAPIResponse {
+export interface StormGlassForecastPoints {
+  readonly time: string
+  readonly swellDirection: StormGlassPointSource
+  readonly swellHeight: StormGlassPointSource
+  readonly swellPeriod: StormGlassPointSource
+  readonly waveHeight: StormGlassPointSource
+  readonly waveDirection: StormGlassPointSource
+  readonly windSpeed: StormGlassPointSource
+}
+
+export interface StormGlassForecastAPIResponse {
   hours: StormGlassForecastPoints[]
+}
+
+export interface GetDestURLParams {
+  lat: number
+  long: number
 }
 
 /**
@@ -79,9 +76,4 @@ export class StormGlassHttpClient {
   private getDestURL ({ lat, long }: GetDestURLParams): string {
     return `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`
   }
-}
-
-interface GetDestURLParams {
-  lat: number
-  long: number
 }
