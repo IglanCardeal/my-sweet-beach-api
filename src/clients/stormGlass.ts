@@ -1,14 +1,37 @@
-// Esta classe é um cliente HTTP para executar chamadas
-// à API do Storm Glass
+// import { config } from 'dotenv'
+
+// config()
+
+// const { STORMGLASS_API_KEY } = process.env
+
+// console.log('[__KEY__]: ', STORMGLASS_API_KEY)
 import { AxiosStatic } from 'axios'
 
-import { config } from 'dotenv'
+interface StormGlassForecastPoints {
+  time: string
+  swellDirection: {
+    noaa: number
+  }
+  swellHeight: {
+    noaa: number
+  }
+  swellPeriod: {
+    noaa: number
+  }
+  waveHeight: {
+    noaa: number
+  }
+  waveDirection: {
+    noaa: number
+  }
+  windSpeed: {
+    noaa: number
+  }
+}
 
-config()
-
-const { STORMGLASS_API_KEY } = process.env
-
-console.log('[__KEY__]: ',STORMGLASS_API_KEY)
+interface StormGlassForecastAPIResponse {
+  hours: StormGlassForecastPoints[]
+}
 
 /**
  * @classdesc cliente HTTP para chamadas externas para a API do Storm Glass
@@ -32,7 +55,10 @@ export class StormGlass {
     this.requester = requester
   }
 
-  public async fetchPoints (lat: number, long: number): Promise<any> {
+  public async fetchPoints (
+    lat: number,
+    long: number
+  ): Promise<StormGlassForecastAPIResponse> {
     const destURL = this.getDestURL({
       lat,
       long

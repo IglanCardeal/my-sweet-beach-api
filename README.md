@@ -27,3 +27,23 @@ curl "https://api.stormglass.io/v2/weather/point?lat=58.7984&lng=17.8081&params=
 ```
 
 - [`json_pp`](https://www.unix.com/man-page/osx/1/json_pp/) para formatar a saída do JSON.
+
+### Clean up duplicated packages
+
+```none
+yarn -D add yarn-deduplicate
+
+npx yarn-deduplicate yarn.lock
+```
+
+You can also add a verification step to your Continuous Integration (CI) pipeline like:
+
+```none
+yarn-deduplicate yarn.lock --list --fail
+```
+
+```none
+```
+
+```none
+```

@@ -1,9 +1,13 @@
+const from = 1
+
+console.log(from)
+
 import { SetupServer } from '@src/server'
 import supertest from 'supertest'
 
 // Este arquivo é responsável por inicializar o servidor para todos os
 // testes funcionais.
-beforeAll(() => {
+const startServer = () => {
   const server = new SetupServer()
 
   server.init()
@@ -11,6 +15,9 @@ beforeAll(() => {
   const app = server.getApp()
 
   // criamos "testRequest" para o objeto
-  // global com os métodos do supertest 
+  // global com os métodos do supertest
   global.testRequest = supertest(app)
-})
+}
+
+beforeAll(startServer)
+
