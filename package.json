@@ -2,7 +2,7 @@
   "name": "devlab-courses",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "IglanCardeal <cmtcardeal@outlook.com>",
+  "author": "Iglan Cardeal <cmtcardeal@outlook.com>",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
@@ -18,6 +18,10 @@
     "./src/**/*.ts": [
       "yarn lint:fix"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IglanCardeal/stormglass-weather-api"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

@@ -45,7 +45,7 @@ interface StormGlassForecastAPIResponse {
  * @property {object} requester - recebe o módulo que fará as chamadas
  * externas para a API.
  */
-export class StormGlass {
+export class StormGlassHttpClient {
   readonly stormGlassAPIParams =
     'swellHeight,waveHeight,swellDirection,waveDirection,windDirection,windSpeed,swellPeriod'
   readonly stormGlassAPISource = 'noaa'
