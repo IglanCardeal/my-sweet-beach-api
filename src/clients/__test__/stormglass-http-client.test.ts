@@ -20,7 +20,7 @@ describe('StormGlass Client', () => {
     const long = -48.48368604061809
 
     // faz o mock da resposta da API
-    axios.get = jest.fn().mockResolvedValue(stormGlassApiResponseExample)
+    axios.get = jest.fn().mockResolvedValue({data: stormGlassApiResponseExample})
 
     const stormGlass = new StormGlassHttpClient(axios)
     const response = await stormGlass.fetchPoints(lat, long)

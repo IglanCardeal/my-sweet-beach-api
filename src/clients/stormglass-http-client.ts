@@ -19,6 +19,7 @@ export interface StormGlassForecastPoint {
   readonly waveHeight: StormGlassPointSource
   readonly waveDirection: StormGlassPointSource
   readonly windSpeed: StormGlassPointSource
+  readonly windDirection: StormGlassPointSource
 }
 
 export interface StormGlassForecastAPIResponse {
@@ -38,6 +39,7 @@ export interface StormGlassForecastAPIResponseNormalized {
   readonly waveHeight: number
   readonly waveDirection: number
   readonly windSpeed: number
+  readonly windDirection: number
 }
 
 /**
@@ -86,7 +88,7 @@ export class StormGlassHttpClient {
   /**
    * Função para normalizar os dados de acordo com interface a `StormGlassForecastAPIResponseNormalized`.
    * @param points - `StormGlassForecastAPIResponse`
-   * @returns
+   * @returns `StormGlassForecastAPIResponseNormalized[]`
    */
   private normalizeReponse (
     points: StormGlassForecastAPIResponse
@@ -99,6 +101,7 @@ export class StormGlassHttpClient {
         swellPeriod: point.swellPeriod[this.stormGlassAPISource],
         waveHeight: point.waveHeight[this.stormGlassAPISource],
         waveDirection: point.waveDirection[this.stormGlassAPISource],
+        windDirection: point.windDirection[this.stormGlassAPISource],
         windSpeed: point.windSpeed[this.stormGlassAPISource],
         time: point.time
       }))
@@ -106,6 +109,11 @@ export class StormGlassHttpClient {
     return normalized
   }
 
+  /**
+   * Verifica se todos as propriedades a serem normalizadas estão contidas na resposta.
+   * @param point - `StormGlassForecastPoint`
+   * @returns `Boolean`
+   */
   private isValidPoint (point: Partial<StormGlassForecastPoint>): boolean {
     return !!(
       point.time &&
@@ -114,6 +122,7 @@ export class StormGlassHttpClient {
       point.swellPeriod?.[this.stormGlassAPISource] &&
       point.waveHeight?.[this.stormGlassAPISource] &&
       point.waveDirection?.[this.stormGlassAPISource] &&
+      point.windDirection?.[this.stormGlassAPISource] &&
       point.windSpeed?.[this.stormGlassAPISource]
     )
   }
