@@ -16,13 +16,15 @@ describe('StormGlass Client', () => {
   })
 
   it('should return StormGlass objects with some metadata', async () => {
+    const mockedAxios = axios as jest.Mocked<typeof axios>
+
     const lat = -1.4333344573775566
     const long = -48.48368604061809
 
     // faz o mock da resposta da API
-    axios.get = jest.fn().mockResolvedValue({data: stormGlassApiResponseExample})
+    mockedAxios.get.mockResolvedValue({ data: stormGlassApiResponseExample })
 
-    const stormGlass = new StormGlassHttpClient(axios)
+    const stormGlass = new StormGlassHttpClient(mockedAxios)
     const response = await stormGlass.fetchPoints(lat, long)
 
     // a class StormGlass deve ter um método para normalizar
