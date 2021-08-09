@@ -8,16 +8,14 @@ import stormGlassApiResponseNormalizedExample from '@test/fixtures/stormglass-re
 // mockando o axios
 jest.mock('axios')
 
+const mockedAxios = axios as jest.Mocked<typeof axios>
+
 describe('StormGlass Client', () => {
   it('should load StormGlass class from stormGlass.ts file', () => {
     expect(StormGlassHttpClient).toBeDefined()
-
-    // console.log('axios hoisted', axios.get)
   })
 
   it('should return StormGlass objects with some metadata', async () => {
-    const mockedAxios = axios as jest.Mocked<typeof axios>
-
     const lat = -1.4333344573775566
     const long = -48.48368604061809
 
@@ -31,6 +29,41 @@ describe('StormGlass Client', () => {
     // os dados vindos da API.
     expect(response).toEqual(stormGlassApiResponseNormalizedExample)
     expect(response).toBeDefined()
+  })
+
+  it('should exclude incomplete data points', async () => {
+    const lat = -1.4333344573775566
+    const long = -48.48368604061809
+    const incompleteResponse = {
+      hours: [
+        {
+          windDirection: {
+            noaa: 300
+          },
+          time: '2020-04-26T00:00:00+00:00'
+        }
+      ]
+    }
+
+    mockedAxios.get.mockResolvedValue({ data: incompleteResponse })
+
+    const stormGlass = new StormGlassHttpClient(mockedAxios)
+    const response = await stormGlass.fetchPoints(lat, long)
+
+    expect(response).toEqual([])
+  })
+
+  it('should get a generic error from StormGlass class when the request fail before reaching the external service', async () => {
+    const lat = -1.4333344573775566
+    const long = -48.48368604061809
+
+    mockedAxios.get.mockRejectedValue({ message: 'Network Error' })
+
+    const stormGlass = new StormGlassHttpClient(mockedAxios)
+
+    await expect(stormGlass.fetchPoints(lat, long)).rejects.toThrow(
+      'Unexpected error when trying to communicate to StormGlass: Network Error'
+    )
   })
 })
 

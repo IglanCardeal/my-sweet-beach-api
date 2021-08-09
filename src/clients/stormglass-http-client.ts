@@ -73,16 +73,22 @@ export class StormGlassHttpClient {
       long
     })
 
-    const response = await this.requester.get<StormGlassForecastAPIResponse>(
-      destURL,
-      {
-        headers: {
-          Authorization: 'example-api-key'
+    try {
+      const response = await this.requester.get<StormGlassForecastAPIResponse>(
+        destURL,
+        {
+          headers: {
+            Authorization: 'example-api-key'
+          }
         }
-      }
-    )
+      )
 
-    return this.normalizeReponse(response.data)
+      return this.normalizeReponse(response.data)
+    } catch (err) {
+      throw new Error(
+        `Unexpected error when trying to communicate to StormGlass: ${err.message}`
+      )
+    }
   }
 
   /**
