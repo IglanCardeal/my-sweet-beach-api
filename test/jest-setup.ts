@@ -1,7 +1,3 @@
-const from = 1
-
-console.log(from)
-
 import { SetupServer } from '@src/server'
 import supertest from 'supertest'
 
@@ -20,4 +16,3 @@ const startServer = () => {
 }
 
 beforeAll(startServer)
-

@@ -26,6 +26,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
+  "files": ["./test/globals.d.ts"],
   "include": ["./src/**/*.ts", "./test/**/*.ts"],
   "exclude": ["./node_modules/*", "dist"]
 }
