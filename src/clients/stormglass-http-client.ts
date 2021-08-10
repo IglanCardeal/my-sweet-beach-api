@@ -5,7 +5,17 @@
 // const { STORMGLASS_API_KEY } = process.env
 
 // console.log('[__KEY__]: ', STORMGLASS_API_KEY)
+import { InternalError } from '@src/utils/errors/internal-error'
 import { AxiosStatic } from 'axios'
+
+export class ClientRequestError extends InternalError {
+  constructor (message: string) {
+    const internalMessage =
+      'Unexpected error when trying to communicate to StormGlass'
+
+    super(`${internalMessage}: ${message}`)
+  }
+}
 
 export interface StormGlassPointSource {
   noaa: number
@@ -85,9 +95,7 @@ export class StormGlassHttpClient {
 
       return this.normalizeReponse(response.data)
     } catch (err) {
-      throw new Error(
-        `Unexpected error when trying to communicate to StormGlass: ${err.message}`
-      )
+      throw new ClientRequestError(err.message)
     }
   }
 
