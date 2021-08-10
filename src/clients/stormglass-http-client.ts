@@ -1,12 +1,8 @@
-// import { config } from 'dotenv'
-
-// config()
-
-// const { STORMGLASS_API_KEY } = process.env
-
-// console.log('[__KEY__]: ', STORMGLASS_API_KEY)
 import { InternalError } from '@src/utils/errors/internal-error'
 import { AxiosStatic } from 'axios'
+import config, { IConfig } from 'config'
+
+const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass')
 
 export class ClientRequestError extends InternalError {
   constructor (message: string) {
@@ -91,13 +87,14 @@ export class StormGlassHttpClient {
       lat,
       long
     })
+    const apiToken = stormGlassResourceConfig.get('apiToken')
 
     try {
       const response = await this.requester.get<StormGlassForecastAPIResponse>(
         destURL,
         {
           headers: {
-            Authorization: 'example-api-key'
+            Authorization: apiToken
           }
         }
       )
@@ -164,6 +161,8 @@ export class StormGlassHttpClient {
    * @returns {string}
    */
   private getDestURL ({ lat, long }: GetDestURLParams): string {
-    return `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`
+    const apiUrl = stormGlassResourceConfig.get('apiUrl')
+
+    return `${apiUrl}/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`
   }
 }
