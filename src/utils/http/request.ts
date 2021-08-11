@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-interface RequestConfig extends AxiosRequestConfig {
+export interface RequestConfig extends AxiosRequestConfig {
   [key: string]: any
 }
 
-interface Response<T = any> extends AxiosResponse<T> {
+export interface Response<T = any> extends AxiosResponse<T> {
   [key: string]: any
 }
 
