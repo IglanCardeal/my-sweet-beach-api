@@ -1,5 +1,5 @@
-import { AxiosStatic } from 'axios'
 import config, { IConfig } from 'config'
+import * as HTTPUtil from '@src/utils/http/request'
 
 import { ClientRequestError, StormGlassResponseError } from './errors'
 
@@ -49,7 +49,7 @@ export interface StormGlassForecastAPIResponseNormalized {
  * @property {string} stormGlassAPISource - "noaa" é um recurso fonte
  * do weather da API.
  * [docs](https://docs.stormglass.io/#/sources?id=available-sources).
- * @property {object} requester - recebe o módulo que fará as chamadas
+ * @constructor {object} `requester` - recebe o módulo que fará as chamadas
  * externas para a API.
  */
 export class StormGlassHttpClient {
@@ -58,7 +58,7 @@ export class StormGlassHttpClient {
   readonly stormGlassAPISource = 'noaa'
   protected requester
 
-  constructor (requester: AxiosStatic) {
+  constructor (requester = new HTTPUtil.Request()) {
     this.requester = requester
   }
 
@@ -71,7 +71,7 @@ export class StormGlassHttpClient {
       long
     })
     const apiToken = stormGlassResourceConfig.get('apiToken')
-    const credentials = {
+    const requestConfig = {
       headers: {
         Authorization: apiToken
       }
@@ -80,7 +80,7 @@ export class StormGlassHttpClient {
     try {
       const response = await this.requester.get<StormGlassForecastAPIResponse>(
         destURL,
-        credentials
+        requestConfig
       )
 
       return this.normalizeReponse(response.data)
