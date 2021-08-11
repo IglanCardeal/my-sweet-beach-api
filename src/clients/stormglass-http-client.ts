@@ -1,26 +1,9 @@
-import { InternalError } from '@src/utils/errors/internal-error'
 import { AxiosStatic } from 'axios'
 import config, { IConfig } from 'config'
 
+import { ClientRequestError, StormGlassResponseError } from './errors'
+
 const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass')
-
-export class ClientRequestError extends InternalError {
-  constructor (message: string) {
-    const internalMessage =
-      'Unexpected error when trying to communicate to StormGlass'
-
-    super(`${internalMessage}: ${message}`)
-  }
-}
-
-export class StormGlassResponseError extends InternalError {
-  constructor (message: string) {
-    const internalMessage =
-      'Unexpected error returned by the StormGlass service'
-
-    super(`${internalMessage}: ${message}`)
-  }
-}
 
 export interface StormGlassPointSource {
   noaa: number
@@ -88,15 +71,16 @@ export class StormGlassHttpClient {
       long
     })
     const apiToken = stormGlassResourceConfig.get('apiToken')
+    const credentials = {
+      headers: {
+        Authorization: apiToken
+      }
+    }
 
     try {
       const response = await this.requester.get<StormGlassForecastAPIResponse>(
         destURL,
-        {
-          headers: {
-            Authorization: apiToken
-          }
-        }
+        credentials
       )
 
       return this.normalizeReponse(response.data)
