@@ -85,15 +85,17 @@ export class StormGlassHttpClient {
 
       return this.normalizeReponse(response.data)
     } catch (err) {
-      if (err.response && err.response.status) {
+      const error = err as any
+
+      if (error.response && error.response.status) {
         throw new StormGlassResponseError(
-          `Error: ${JSON.stringify(err.response.data)} Code: ${
-            err.response.status
+          `Error: ${JSON.stringify(error.response.data)} Code: ${
+            error.response.status
           }`
         )
       }
 
-      throw new ClientRequestError(err.message)
+      throw new ClientRequestError(error.message)
     }
   }
 
