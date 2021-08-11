@@ -10,7 +10,7 @@ export interface Response<T = any> extends AxiosResponse<T> {
 
 /**
  *  @classdesc Classe para realizar chamadas HTTP usando libs externas.
- *  @constructor {Object} `requester` recebe o módulo que fará as chamadas
+ *  @constructor `requester` recebe o módulo que fará as chamadas
  *  externas para a API. Default: `axios`.
  */
 export class Request {
@@ -18,12 +18,15 @@ export class Request {
     this.requester = requester
   }
 
+  /**
+   *
+   * @param url url da API a ser chamada.
+   * @param requestConfig objeto de configurações para inclusão de informações adicionais como headers.
+   */
   public async get<T> (
     url: string,
     requestConfig: RequestConfig = {}
   ): Promise<Response<T>> {
-    console.log(url, requestConfig)
-
     const response = await this.requester.get<T, Response<T>>(
       url,
       requestConfig

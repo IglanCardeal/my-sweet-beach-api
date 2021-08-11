@@ -42,15 +42,14 @@ export interface StormGlassForecastAPIResponseNormalized {
 
 /**
  * @classdesc cliente HTTP para chamadas externas para a API do Storm Glass
- *
- * @property {string} stormGlassAPIParams - contém os atributos
- * do weather da API.
- * [docs](https://docs.stormglass.io/#/sources?id=weather-attributes).
- * @property {string} stormGlassAPISource - "noaa" é um recurso fonte
- * do weather da API.
- * [docs](https://docs.stormglass.io/#/sources?id=available-sources).
  * @constructor {object} `requester` - recebe o módulo que fará as chamadas
  * externas para a API.
+ * @property {string} `stormGlassAPIParams` - contém os atributos
+ * do weather da API.
+ * [docs](https://docs.stormglass.io/#/sources?id=weather-attributes).
+ * @property {string} `stormGlassAPISource` - "noaa" é um recurso fonte
+ * do weather da API.
+ * [docs](https://docs.stormglass.io/#/sources?id=available-sources).
  */
 export class StormGlassHttpClient {
   readonly stormGlassAPIParams =
@@ -102,7 +101,6 @@ export class StormGlassHttpClient {
   /**
    * Função para normalizar os dados de acordo com interface a `StormGlassForecastAPIResponseNormalized`.
    * @param points - `StormGlassForecastAPIResponse`
-   * @returns `StormGlassForecastAPIResponseNormalized[]`
    */
   private normalizeReponse (
     points: StormGlassForecastAPIResponse
@@ -126,7 +124,6 @@ export class StormGlassHttpClient {
   /**
    * Verifica se todos as propriedades a serem normalizadas estão contidas na resposta.
    * @param point - `StormGlassForecastPoint`
-   * @returns `Boolean`
    */
   private isValidPoint (point: Partial<StormGlassForecastPoint>): boolean {
     return !!(
@@ -144,7 +141,6 @@ export class StormGlassHttpClient {
   /**
    * @function getDestURL - apenas para retornar a URL de destino com os
    * parâmetros informados
-   * @returns {string}
    */
   private getDestURL ({ lat, long }: GetDestURLParams): string {
     const apiUrl = stormGlassResourceConfig.get('apiUrl')
