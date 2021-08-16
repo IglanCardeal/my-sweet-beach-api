@@ -1,21 +1,22 @@
 import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass-response-normalized.json'
+import { Beach, BeachPosition } from '../forecast-service'
 import { expectedResponse } from './expectedResponse'
 
 jest.mock('@src/clients/stormglass-http-client')
 
 describe('Forecast Service', () => {
-  it('should return the forecast for a list of beaches', async () => {
+  it.todo('should return the forecast for a list of beaches', async () => {
     StormGlassHttpClient.prototype.fetchPoints = jest
       .fn()
       .mockResolvedValue(stormGlassNormalizedResponseFixture)
 
-    const beaches = [
+    const beaches: Beach[] = [
       {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: 'E',
+        position: BeachPosition.E,
         user: 'some-id'
       }
     ]
