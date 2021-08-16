@@ -7,9 +7,12 @@ import stormGlassApiResponseNormalizedExample from '@test/fixtures/stormglass-re
 
 jest.mock('@src/utils/http/request')
 
-const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>
-
 describe('StormGlass Client', () => {
+  const MockedRequestClass = HTTPUtil.Request as jest.Mocked<
+    typeof HTTPUtil.Request
+  >
+  const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>
+
   it('should load StormGlass class from stormGlass.ts file', () => {
     expect(StormGlassHttpClient).toBeDefined()
   })
@@ -81,6 +84,10 @@ describe('StormGlass Client', () => {
         }
       }
     }
+
+    // 'isRequestError' é um método estático
+    // internamente, 'stormGlass' irá chamar o método estático 'isRequestError'
+    MockedRequestClass.isRequestError.mockReturnValue(true)
     mockedRequest.get.mockRejectedValue(mockedResponse)
 
     const stormGlass = new StormGlassHttpClient(mockedRequest)
