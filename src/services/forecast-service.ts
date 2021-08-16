@@ -63,14 +63,12 @@ export class ForecastService {
     for (const point of forecast) {
       const timePoint = forecastByTime.find(f => f.time === point.time)
 
-      if (timePoint) {
-        timePoint.forecast.push(point)
-      } else {
+      if (timePoint) timePoint.forecast.push(point)
+      else
         forecastByTime.push({
           time: point.time,
           forecast: [point]
         })
-      }
     }
 
     return forecastByTime
