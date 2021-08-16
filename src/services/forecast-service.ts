@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
   StormGlassHttpClient,
-  StormGlassForecastPoint,
   StormGlassForecastAPIResponseNormalized
 } from '@src/clients/stormglass-http-client'
 
@@ -33,7 +32,7 @@ export class ForecastService {
 
   /**
    *
-   * @param beaches - array de Beaches onde cada uma terá uma chamada para o `fetchPoints` e será retornado um `StormGlassForecastAPIResponseNormalized`.
+   * @param beaches - array de Beaches onde cada uma terá uma chamada para o `fetchPoints` e será feito um merge com a resposta do client HTTP com os dados de cada Beach.
    * @returns retorna os dados normalizados com a previsão do tempo para cada Beach.
    */
   public async processForecastForBeaches (
@@ -43,7 +42,7 @@ export class ForecastService {
 
     for (const beach of beaches) {
       const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng)
-      // normaliza os dados para respeitar a interface 'BeachForecast'
+      // normaliza os dados fazendo um merge
       const enrichedBeachData = points.map(e => ({
         ...{
           lat: beach.lat,
