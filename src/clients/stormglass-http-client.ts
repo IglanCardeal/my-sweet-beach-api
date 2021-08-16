@@ -86,7 +86,7 @@ export class StormGlassHttpClient {
     } catch (err) {
       const error = err as any
 
-      if (error.response && error.response.status) {
+      if (HTTPUtil.Request.isRequestError(error)) {
         throw new StormGlassResponseError(
           `Error: ${JSON.stringify(error.response.data)} Code: ${
             error.response.status

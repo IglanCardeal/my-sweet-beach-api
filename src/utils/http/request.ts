@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export interface RequestConfig extends AxiosRequestConfig {
   [key: string]: any
@@ -33,5 +33,9 @@ export class Request {
     )
 
     return response
+  }
+
+  public static isRequestError(error: AxiosError): boolean {
+    return !!(error.response && error.response.status)
   }
 }
