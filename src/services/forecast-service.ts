@@ -23,6 +23,11 @@ export interface BeachForecast
   extends Omit<Beach, 'user'>,
     StormGlassForecastAPIResponseNormalized {}
 
+export interface TimeForecast {
+  time: string
+  forecast: BeachForecast[]
+}
+
 /**
  * @param  {} stormGlass - classe cliente para chamadas HTTP do Storm Glass.
  * Default: {@link StormGlassHttpClient}
@@ -37,12 +42,11 @@ export class ForecastService {
    */
   public async processForecastForBeaches (
     beaches: Beach[]
-  ): Promise<BeachForecast[]> {
+  ): Promise<TimeForecast[]> {
     const pointsWithCorrectedSources: BeachForecast[] = []
 
     for (const beach of beaches) {
       const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng)
-      // normaliza os dados fazendo um merge
       const enrichedBeachData = points.map(e =>
         this.mergeBeachAndPointData(e, beach)
       )
@@ -50,9 +54,31 @@ export class ForecastService {
       pointsWithCorrectedSources.push(...enrichedBeachData)
     }
 
-    return pointsWithCorrectedSources
+    return this.mapForecastByTime(pointsWithCorrectedSources)
   }
 
+  private mapForecastByTime (forecast: BeachForecast[]): TimeForecast[] {
+    const forecastByTime: TimeForecast[] = []
+
+    for (const point of forecast) {
+      const timePoint = forecastByTime.find(f => f.time === point.time)
+
+      if (timePoint) {
+        timePoint.forecast.push(point)
+      } else {
+        forecastByTime.push({
+          time: point.time,
+          forecast: [point]
+        })
+      }
+    }
+
+    return forecastByTime
+  }
+
+  /**
+   * normaliza os dados fazendo um merge entre `StormGlassForecastAPIResponseNormalized` e `Beach`.
+   */
   private mergeBeachAndPointData (
     point: StormGlassForecastAPIResponseNormalized,
     beach: Beach
