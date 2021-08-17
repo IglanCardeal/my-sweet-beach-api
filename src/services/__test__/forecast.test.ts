@@ -8,10 +8,14 @@ import { expectedResponse } from './expectedResponse'
 jest.mock('@src/clients/stormglass-http-client')
 
 describe('Forecast Service', () => {
+  const mockedStormGlassHttpClient = new StormGlassHttpClient() as jest.Mocked<
+    StormGlassHttpClient
+  >
+
   it('should return the forecast for a list of beaches', async () => {
-    StormGlassHttpClient.prototype.fetchPoints = jest
-      .fn()
-      .mockResolvedValue(stormGlassNormalizedResponseFixture)
+    mockedStormGlassHttpClient.fetchPoints.mockResolvedValue(
+      stormGlassNormalizedResponseFixture
+    )
 
     const beaches: Beach[] = [
       {
@@ -22,7 +26,7 @@ describe('Forecast Service', () => {
         user: 'some-id'
       }
     ]
-    const forecast = new ForecastService(new StormGlassHttpClient())
+    const forecast = new ForecastService(mockedStormGlassHttpClient)
     const beachesWithRating = await forecast.processForecastForBeaches(beaches)
 
     expect(beachesWithRating).toEqual(expectedResponse)
