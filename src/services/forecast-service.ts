@@ -3,6 +3,7 @@ import {
   StormGlassHttpClient,
   StormGlassForecastAPIResponseNormalized
 } from '@src/clients/stormglass-http-client'
+import { InternalError } from '@src/utils/errors/internal-error'
 
 export enum BeachPosition {
   S = 'S',
@@ -28,6 +29,12 @@ export interface TimeForecast {
   forecast: BeachForecast[]
 }
 
+export class ForecastProcessingInternalError extends InternalError {
+  constructor (message: string) {
+    super(`Unexpected error during the forecast processing: ${message}`)
+  }
+}
+
 /**
  * @param  {} stormGlass - classe cliente para chamadas HTTP do Storm Glass.
  * Default: {@link StormGlassHttpClient}
@@ -45,16 +52,20 @@ export class ForecastService {
   ): Promise<TimeForecast[]> {
     const pointsWithCorrectedSources: BeachForecast[] = []
 
-    for (const beach of beaches) {
-      const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng)
-      const enrichedBeachData = points.map(e =>
-        this.mergeBeachAndPointData(e, beach)
-      )
+    try {
+      for (const beach of beaches) {
+        const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng)
+        const enrichedBeachData = this.mergeBeachAndPointsData(points, beach)
 
-      pointsWithCorrectedSources.push(...enrichedBeachData)
+        pointsWithCorrectedSources.push(...enrichedBeachData)
+      }
+
+      return this.mapForecastByTime(pointsWithCorrectedSources)
+    } catch (err) {
+      const error = err as any
+
+      throw new ForecastProcessingInternalError(error.msg)
     }
-
-    return this.mapForecastByTime(pointsWithCorrectedSources)
   }
 
   private mapForecastByTime (forecast: BeachForecast[]): TimeForecast[] {
@@ -77,11 +88,11 @@ export class ForecastService {
   /**
    * normaliza os dados fazendo um merge entre `StormGlassForecastAPIResponseNormalized` e `Beach`.
    */
-  private mergeBeachAndPointData (
-    point: StormGlassForecastAPIResponseNormalized,
+  private mergeBeachAndPointsData (
+    points: StormGlassForecastAPIResponseNormalized[],
     beach: Beach
-  ): BeachForecast {
-    return {
+  ): BeachForecast[] {
+    return points.map(e => ({
       ...{
         lat: beach.lat,
         lng: beach.lng,
@@ -89,7 +100,7 @@ export class ForecastService {
         position: beach.position,
         rating: 1
       },
-      ...point
-    }
+      ...e
+    }))
   }
 }
