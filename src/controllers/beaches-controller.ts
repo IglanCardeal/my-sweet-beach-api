@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 @Controller('beaches')
 export class BeachesController {
   @Post('')
-  public getForecastForLoggedUser (req: Request, res: Response): void {
-    res.status(201).json(req.body.newBeach)
+  public create (req: Request, res: Response): void {
+    res.status(201).send({ ...req.body.newBeach, id: 'fake-id' })
   }
 }

@@ -38,6 +38,7 @@ export class SetupServer extends Server {
     const forecastController = new ForecastController()
     const beachesController = new BeachesController()
 
+    // 'addControllers' da classe pai 'Server'
     this.addControllers([forecastController, beachesController])
   }
 
