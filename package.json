@@ -10,7 +10,8 @@
     "dev": "ts-node-dev src/index.ts",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
-    "test:functional": "jest --projects ./test --runInBand --forceExit",
+    "test:functional": "jest --projects ./test --runInBand ",
+    "test:functional:watch": "jest --projects ./test --runInBand --watch",
     "test:unit": "jest --runInBand",
     "test:unit:watch": "jest --runInBand --watch",
     "prepare": "husky install"
