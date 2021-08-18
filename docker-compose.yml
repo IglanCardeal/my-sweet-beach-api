@@ -4,8 +4,8 @@ services:
   mongo:
     container_name: stormglass_mongodb
     restart: always
-    ports: 
+    ports:
       - 27017:27017
     image: mongo
-    volumes: 
-      - /home/Desenvolvimento-Web/docker-volumes/stormglass-api/MongoDB:/data/dbc
+    volumes:
+      - /home/Desenvolvimento-Web/docker-volumes/weather-forecast-api/MongoDB:/data/dbc
