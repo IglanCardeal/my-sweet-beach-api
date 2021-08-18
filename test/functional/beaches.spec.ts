@@ -1,4 +1,3 @@
-// testa
 describe('Beaches functional tests', () => {
   describe('When creating a beach', () => {
     it('should create a beach with success', async () => {
