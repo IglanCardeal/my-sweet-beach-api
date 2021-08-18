@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x] 
+        node-version: [16.x] 
+        mongodb-version: ['4.0', '4.2', '4.4']
     steps:
     - uses: actions/checkout@v2
 
@@ -30,10 +31,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.6.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+
     - name: Cache Node.js modules
       uses: actions/cache@v2
       with:
-        path: ~/.yarn
+        path: '**/node_modules'
         key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.OS }}-node-
