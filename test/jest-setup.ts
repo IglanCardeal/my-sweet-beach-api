@@ -3,10 +3,12 @@ import supertest from 'supertest'
 
 // Este arquivo é responsável por inicializar o servidor para todos os
 // testes funcionais.
-const startServer = () => {
-  const server = new SetupServer()
+let server: SetupServer
 
-  server.init()
+const startServer = async () => {
+  server = new SetupServer()
+
+  await server.init()
 
   const app = server.getApp()
 
@@ -15,4 +17,9 @@ const startServer = () => {
   global.testRequest = supertest(app)
 }
 
+const stopServer = async () => {
+  await server.stop()
+}
+
 beforeAll(startServer)
+afterAll(stopServer)
