@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  mongo:
+    container_name: stormglass_mongodb
+    restart: always
+    ports: 
+      - 27017:27017
+    image: mongo
+    volumes: 
+      - /home/Desenvolvimento-Web/docker-volumes/stormglass-api/MongoDB:/data/dbc
