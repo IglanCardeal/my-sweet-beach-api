@@ -11,9 +11,9 @@
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint 'src/**/*.ts' 'test/**/*.ts' --fix",
     "test:functional": "jest --projects ./test --runInBand ",
-    "test:functional:watch": "jest --projects ./test --runInBand --watch",
+    "test:functional:watch": "jest --projects ./test --runInBand --watch --verbose",
     "test:unit": "jest --runInBand",
-    "test:unit:watch": "jest --runInBand --watch",
+    "test:unit:watch": "jest --runInBand --watch --verbose",
     "prepare": "husky install"
   },
   "lint-staged": {
