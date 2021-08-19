@@ -1,5 +1,11 @@
+/**
+ * Essas classes de erros são para tratamento de erros da classe `StormGlassHttpClient`.
+ */
 import { InternalError } from '@src/utils/errors/internal-error'
 
+/**
+ * trata erros de chamada do cliente da API do Storm Glass
+ */
 export class ClientRequestError extends InternalError {
   constructor (message: string) {
     const internalMessage =
@@ -9,6 +15,9 @@ export class ClientRequestError extends InternalError {
   }
 }
 
+/**
+ * trata erros de resposta da API do Storm Glass
+ */
 export class StormGlassResponseError extends InternalError {
   constructor (message: string) {
     const internalMessage =
