@@ -18,10 +18,4 @@ export class ForecastController {
 
     res.status(200).send(forecastData)
   }
-
-  @Get('for') // match em uma rota do tipo: /forecast/for
-  public otherRoute (req: Request, res: Response): void {
-    // console.log('test')
-    res.status(200).json({ msg: 'hello' })
-  }
 }
