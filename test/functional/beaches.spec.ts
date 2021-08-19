@@ -41,5 +41,29 @@ describe('Beaches functional tests', () => {
           'Beach validation failed: lat: Cast to Number failed for value "invalid string" (type string) at path "lat"'
       })
     })
+
+    it('should return 500 when there is any error other than validation error', async () => {
+      const spy = jest
+        .spyOn(BeachModel.prototype, 'save')
+        .mockRejectedValue({ error: 'any' })
+
+      const newBeach = {
+        lat: -33.792726,
+        lng: 151.289824,
+        name: 'Manly',
+        position: 'E'
+      }
+
+      const response = await global.testRequest
+        .post('/beaches')
+        .send({ newBeach })
+
+      expect(response.status).toBe(500)
+      expect(response.body).toEqual({
+        error: 'Internal Server Error'
+      })
+
+      spy.mockRestore()
+    })
   })
 })
