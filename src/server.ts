@@ -43,7 +43,12 @@ export class SetupServer extends Server {
   }
 
   private async setupDatabase (): Promise<void> {
-    await Database.connect()
+    try {
+      await Database.connect()
+    } catch (error) {
+      console.log('[DATABASE] Database connection error: ', error)
+      process.exit(1)      
+    }
   }
 
   public async stop (): Promise<void> {

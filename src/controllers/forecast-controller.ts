@@ -1,58 +1,26 @@
 import { Controller, Get } from '@overnightjs/core'
+import { BeachModel } from '@src/models/beach-model'
+import { ForecastService } from '@src/services/forecast-service'
 import { Request, Response } from 'express'
 
-// Controller para as rotas de Forecast
-
 // define um base match da rota: /forecast
-@Controller('forecast') 
+@Controller('forecast')
 export class ForecastController {
   // match em uma rota do tipo: /forecast
-  @Get('') 
-  public getForecastForLoggedUser(_: Request, res: Response): void {
-    res.status(200).json([
-      {
-        time: '2020-04-26T00:00:00+00:00',
-        forecast: [
-          {
-            lat: -33.792726,
-            lng: 151.289824,
-            name: 'Manly',
-            position: 'E',
-            rating: 2,
-            swellDirection: 64.26,
-            swellHeight: 0.15,
-            swellPeriod: 3.89,
-            time: '2020-04-26T00:00:00+00:00',
-            waveDirection: 231.38,
-            waveHeight: 0.47,
-            windDirection: 299.45
-          }
-        ]
-      },
-      {
-        time: '2020-04-26T01:00:00+00:00',
-        forecast: [
-          {
-            lat: -33.792726,
-            lng: 151.289824,
-            name: 'Manly',
-            position: 'E',
-            rating: 2,
-            swellDirection: 123.41,
-            swellHeight: 0.21,
-            swellPeriod: 3.67,
-            time: '2020-04-26T01:00:00+00:00',
-            waveDirection: 232.12,
-            waveHeight: 0.46,
-            windDirection: 310.48
-          }
-        ]
-      }
-    ])
+  @Get('')
+  public async getForecastForLoggedUser (
+    _: Request,
+    res: Response
+  ): Promise<void> {
+    const forecast = new ForecastService()
+    const beaches = await BeachModel.find({})
+    const forecastData = await forecast.processForecastForBeaches(beaches)
+
+    res.status(200).send(forecastData)
   }
 
   @Get('for') // match em uma rota do tipo: /forecast/for
-  public otherRoute(req: Request, res: Response): void {
+  public otherRoute (req: Request, res: Response): void {
     // console.log('test')
     res.status(200).json({ msg: 'hello' })
   }
