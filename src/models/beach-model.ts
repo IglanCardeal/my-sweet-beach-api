@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Schema, Document, model } from 'mongoose'
 
-enum BeachPosition {
+export enum BeachPosition {
   S = 'S',
   E = 'E',
   W = 'W',

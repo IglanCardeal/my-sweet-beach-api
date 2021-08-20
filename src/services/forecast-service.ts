@@ -16,7 +16,7 @@ export interface Beach {
   lat: number
   lng: number
   name: string
-  user: string
+  // user: string
   position: BeachPosition
 }
 
@@ -64,7 +64,7 @@ export class ForecastService {
     } catch (err) {
       const error = err as any
 
-      throw new ForecastProcessingInternalError(error.msg)
+      throw new ForecastProcessingInternalError(error.message)
     }
   }
 

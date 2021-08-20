@@ -1,6 +1,21 @@
 // global.testRequest é definido no arquivo jest-setup.ts como
 // objeto global de testes
+import { BeachModel, BeachPosition } from '@src/models/beach-model'
+
 describe('Beach forecast functional test', () => {
+  beforeEach(async () => {
+    await BeachModel.deleteMany({})
+    const defaultBeach = {
+      lat: -33.792726,
+      lng: 151.289824,
+      name: 'Manly',
+      position: BeachPosition.E
+    }
+    const newBeach = new BeachModel(defaultBeach)
+
+    await newBeach.save()
+  })
+
   it('it should return a forecast with just a few times', async () => {
     const { body, status } = await global.testRequest.get('/forecast')
 
