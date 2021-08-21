@@ -1,0 +1,77 @@
+_type: export
+__export_format: 4
+__export_date: 2021-08-21T18:37:00.506Z
+__export_source: insomnia.desktop.app:v2020.4.2
+resources:
+  - _id: req_d6835ad5e8844ee29e2e06ad8a0683ce
+    parentId: wrk_6ea2e4fe71704381ac99712f9bfeba73
+    modified: 1629570680077
+    created: 1619652184644
+    url: "{{ baseUrl }}/beaches"
+    name: StormGlass API
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"lat": -33.792726,
+        	"lng": 151.289824,
+        	"name": "Manly",
+        	"position": "E"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: 645c0710-9023-11eb-a784-0242ac130002-645c0814-9023-11eb-a784-0242ac130002
+    authentication:
+      type: bearer
+      token: ""
+    metaSortKey: -1619652184644
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_6ea2e4fe71704381ac99712f9bfeba73
+    parentId: null
+    modified: 1629570741947
+    created: 1619652167576
+    name: Forecast Weather API
+    description: ""
+    scope: null
+    _type: workspace
+  - _id: env_de0398294ba1411b67fac966fbd94456c8042d6a
+    parentId: wrk_6ea2e4fe71704381ac99712f9bfeba73
+    modified: 1619652260727
+    created: 1619652167888
+    name: Base Environment
+    data:
+      baseUrl: http://localhost:3000
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: null
+    isPrivate: false
+    metaSortKey: 1619652167888
+    _type: environment
+  - _id: jar_de0398294ba1411b67fac966fbd94456c8042d6a
+    parentId: wrk_6ea2e4fe71704381ac99712f9bfeba73
+    modified: 1619652167891
+    created: 1619652167891
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_0aa09c33b2714e5cb50190c57e3e845d
+    parentId: wrk_6ea2e4fe71704381ac99712f9bfeba73
+    modified: 1619652167584
+    created: 1619652167584
+    fileName: fingerprint
+    contents: ""
+    contentType: yaml
+    _type: api_spec

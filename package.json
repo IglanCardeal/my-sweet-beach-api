@@ -1,5 +1,6 @@
 {
-  "name": "devlab-courses",
+  "name": "storm-glass-weather-api",
+  "description": "API Restful para previsão do tempo que usa o serviço do Storm Glass API.",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Iglan Cardeal <cmtcardeal@outlook.com>",
