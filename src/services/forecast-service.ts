@@ -16,7 +16,7 @@ export interface Beach {
   lat: number
   lng: number
   name: string
-  // user: string
+  user?: string
   position: BeachPosition
 }
 
