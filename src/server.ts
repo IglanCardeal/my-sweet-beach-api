@@ -22,7 +22,8 @@ export class SetupServer extends Server {
 
   public start (msg: string): void {
     this.app.listen(this.port, () => {
-      console.log(msg)
+      console.info('[NODE_ENV]', process.env.NODE_ENV)
+      console.info('[SERVER INFO]', msg)
     })
   }
 
@@ -47,7 +48,7 @@ export class SetupServer extends Server {
       await Database.connect()
     } catch (error) {
       console.log('[DATABASE] Database connection error: ', error)
-      process.exit(1)      
+      process.exit(1)
     }
   }
 

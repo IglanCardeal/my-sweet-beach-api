@@ -1,16 +1,19 @@
-import {SetupServer} from './server'
+import { SetupServer } from './server'
+import config from 'config'
 
-const PORT = 3000
+;(async () => {
+  const PORT = config.get('App.port') as number
 
-const server = new SetupServer(PORT)
+  const server = new SetupServer(PORT)
 
-server.init()
+  await server.init()
 
-const msg = `
+  const msg = `
 ===============================
 Server ON 
 Listening on port: ${PORT}
 ===============================
 `
 
-server.start(msg)
+  server.start(msg)
+})()
