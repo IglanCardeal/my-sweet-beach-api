@@ -22,8 +22,8 @@ export class SetupServer extends Server {
 
   public start (msg: string): void {
     this.app.listen(this.port, () => {
-      console.info('[NODE_ENV]', process.env.NODE_ENV)
-      console.info('[SERVER INFO]', msg)
+      console.info('\x1b[36m%s\x1b[0m', '[NODE_ENV]', process.env.NODE_ENV)
+      console.info('\x1b[33m%s\x1b[0m', '[SERVER INFO]', msg)
     })
   }
 

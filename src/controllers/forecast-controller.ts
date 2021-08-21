@@ -19,7 +19,10 @@ export class ForecastController {
 
       res.status(200).send(forecastData)
     } catch (error) {
-      if (error instanceof Error) res.status(500).send({ error: error.message })
+      console.error(error)
+      
+      if (error instanceof Error)
+        res.status(500).send({ error: 'Internal Server Error' })
     }
   }
 }
