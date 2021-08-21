@@ -3,22 +3,8 @@ import {
   StormGlassHttpClient,
   StormGlassForecastAPIResponseNormalized
 } from '@src/clients/stormglass-http-client'
+import { Beach } from '@src/models/beach-model'
 import { InternalError } from '@src/utils/errors/internal-error'
-
-export enum BeachPosition {
-  S = 'S',
-  E = 'E',
-  W = 'W',
-  N = 'N'
-}
-
-export interface Beach {
-  lat: number
-  lng: number
-  name: string
-  user?: string
-  position: BeachPosition
-}
 
 export interface BeachForecast
   extends Omit<Beach, 'user'>,

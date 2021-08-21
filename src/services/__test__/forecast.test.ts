@@ -1,8 +1,8 @@
 import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
+import { Beach, BeachPosition } from '@src/models/beach-model'
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass-response-normalized.json'
 
 import { ForecastService } from '../forecast-service'
-import { Beach, BeachPosition } from '../forecast-service'
 import { expectedResponse } from './expectedResponse'
 
 jest.mock('@src/clients/stormglass-http-client')
@@ -23,7 +23,7 @@ describe('Forecast Service', () => {
         lng: 151.289824,
         name: 'Manly',
         position: BeachPosition.E,
-        user: 'some-id'
+        // user: 'some-id'
       }
     ]
     const forecast = new ForecastService(mockedStormGlassHttpClient)
@@ -46,7 +46,7 @@ describe('Forecast Service', () => {
         lng: 151.289824,
         name: 'Manly',
         position: BeachPosition.E,
-        user: 'some-id'
+        // user: 'some-id'
       }
     ]
 

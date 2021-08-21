@@ -8,7 +8,7 @@ export enum BeachPosition {
   N = 'N'
 }
 
-interface Beach {
+export interface Beach {
   _id?: string
   lat: number
   lng: number

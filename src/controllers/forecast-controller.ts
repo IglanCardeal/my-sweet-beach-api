@@ -12,10 +12,14 @@ export class ForecastController {
     _: Request,
     res: Response
   ): Promise<void> {
-    const forecast = new ForecastService()
-    const beaches = await BeachModel.find({})
-    const forecastData = await forecast.processForecastForBeaches(beaches)
+    try {
+      const forecast = new ForecastService()
+      const beaches = await BeachModel.find({})
+      const forecastData = await forecast.processForecastForBeaches(beaches)
 
-    res.status(200).send(forecastData)
+      res.status(200).send(forecastData)
+    } catch (error) {
+      if (error instanceof Error) res.status(500).send({ error: error.message })
+    }
   }
 }
