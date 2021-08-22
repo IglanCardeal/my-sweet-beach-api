@@ -1,4 +1,10 @@
+import { UserModel } from '@src/models/user-model'
+
 describe('Users functional test', () => {
+  beforeAll(async () => {
+    await UserModel.deleteMany({})
+  })
+
   describe('When creating a new user', () => {
     it('should successfully create a new user', async () => {
       const newUser = {
