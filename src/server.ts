@@ -5,6 +5,7 @@ import { Application, json } from 'express'
 import { ForecastController } from './controllers/forecast-controller'
 import { BeachesController } from './controllers/beaches-controller'
 import { Database } from './database'
+import { UsersController } from './controllers/users-controller'
 
 export class SetupServer extends Server {
   private port: number
@@ -38,9 +39,14 @@ export class SetupServer extends Server {
   private setupControllers (): void {
     const forecastController = new ForecastController()
     const beachesController = new BeachesController()
+    const usersController = new UsersController()
 
     // 'addControllers' da classe pai 'Server'
-    this.addControllers([forecastController, beachesController])
+    this.addControllers([
+      forecastController,
+      beachesController,
+      usersController
+    ])
   }
 
   private async setupDatabase (): Promise<void> {
