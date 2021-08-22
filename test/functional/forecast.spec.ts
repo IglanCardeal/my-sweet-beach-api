@@ -6,7 +6,7 @@ import { BeachModel, BeachPosition } from '@src/models/beach-model'
 import stormGlassApiResponse from '@test/fixtures/stormglass-response.json'
 import { apiForecastResponse } from '@test/fixtures/api-forecast-response'
 
-describe('Beach forecast functional test', () => {
+describe('Forecast functional test', () => {
   beforeEach(async () => {
     await BeachModel.deleteMany({})
     const defaultBeach = {
