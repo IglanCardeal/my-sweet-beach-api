@@ -8,7 +8,7 @@ import { Error } from 'mongoose'
 export abstract class BaseController {
   protected sendCreatedUpdatedErrorResponse (
     res: Response,
-    err: Error.ValidationError
+    err: Error.ValidationError | Error
   ): Response {
     if (err instanceof Error.ValidationError)
       return res.status(422).send({ code: 422, error: err.message })
