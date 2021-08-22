@@ -17,7 +17,7 @@ export class UsersController extends BaseController {
 
       res.status(201).send(response)
     } catch (error) {
-      this.sendCreatedUpdatedErrorResponse(res, error as any)
+      this.sendCreateUpdateErrorResponse(res, error as any)
       // if (error instanceof Error.ValidationError) {
       //   // erros de campos inválidos
       //   res.status(400).send({ error: error.message, code: 400 })

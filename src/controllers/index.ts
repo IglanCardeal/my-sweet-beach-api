@@ -7,31 +7,32 @@ import { Error } from 'mongoose'
  * @abstract
  */
 export abstract class BaseController {
-  protected sendCreatedUpdatedErrorResponse (
+  protected sendCreateUpdateErrorResponse (
     res: Response,
     err: Error.ValidationError | Error
   ): Response {
     if (err instanceof Error.ValidationError) {
-      const errorsArray = Object.values(err.errors)
-      // verifica se alguns dos erros é sobre valor de email duplicado
-      const duplicatedKindErrors = errorsArray.filter(
-        (error: any) => error.kind === CUSTOM_VALIDATION.DUPLICATED
-      )
-      
-      if (duplicatedKindErrors.length) {
-        return res.status(409).send({ code: 409, error: err.message })
-      }
+      const { code, error } = this.handleClientErrors(err)
 
-      return res.status(422).send({ code: 422, error: err.message })
+      return res.status(code).send({ code: code, error: error })
     }
 
-    // para erros de email duplicado
-    // if (err instanceof mongo.MongoError) {
-    //   const error = err as any
-    //   console.log(error.keyPattern, error.keyValue)
-    //   return res.status(409).send({ code: 409, error: err.message })
-    // }
-
     return res.status(500).send({ code: 500, error: 'Something went wrong!' })
+  }
+
+  private handleClientErrors (
+    error: Error.ValidationError
+  ): { code: number; error: string } {
+    const errorsArray = Object.values(error.errors)
+    // verifica se alguns dos erros é sobre valor de email duplicado
+    const duplicatedKindErrors = errorsArray.filter(
+      (error: any) => error.kind === CUSTOM_VALIDATION.DUPLICATED
+    )
+
+    if (duplicatedKindErrors.length) {
+      return { code: 409, error: error.message }
+    }
+
+    return { code: 422, error: error.message }
   }
 }
