@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { compare, hash } from 'bcrypt'
 import { Schema, Document, model, models } from 'mongoose'
 
 export enum CUSTOM_VALIDATION {
@@ -44,5 +45,19 @@ schema.path('email').validate(
   'already exist in the database.',
   CUSTOM_VALIDATION.DUPLICATED
 )
+
+export async function hashPassword (
+  password: string,
+  salt = 10
+): Promise<string> {
+  return await hash(password, salt)
+}
+
+export async function comparePassword (
+  password: string,
+  hash: string
+): Promise<boolean> {
+  return await compare(password, hash)
+}
 
 export const UserModel = model<UserDocument>('User', schema)
