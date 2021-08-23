@@ -6,7 +6,7 @@ describe('Users functional test', () => {
   })
 
   describe('When creating a new user', () => {
-    it('should successfully create a new user', async () => {
+    it('should successfully create a new user with encrypted password', async () => {
       const newUser = {
         name: 'Foo Bar',
         email: 'foo@mail.com',
