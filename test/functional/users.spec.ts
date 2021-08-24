@@ -1,4 +1,5 @@
-import { comparePassword, UserModel } from '@src/models/user-model'
+import { UserModel } from '@src/models/user-model'
+import { AuthService } from '@src/services/auth-service'
 
 describe('Users functional test', () => {
   beforeAll(async () => {
@@ -14,7 +15,7 @@ describe('Users functional test', () => {
       }
 
       const response = await global.testRequest.post('/users').send({ newUser })
-      const comparePasswordResult = await comparePassword(
+      const comparePasswordResult = await AuthService.comparePassword(
         newUser.password,
         response.body.password
       )

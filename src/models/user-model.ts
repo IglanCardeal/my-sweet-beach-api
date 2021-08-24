@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { compare, hash } from 'bcrypt'
+import { AuthService } from '@src/services/auth-service'
 import { Schema, Document, model, models } from 'mongoose'
 
 export enum CUSTOM_VALIDATION {
@@ -36,20 +36,6 @@ const schema = new Schema(
   }
 )
 
-export async function hashPassword (
-  password: string,
-  salt = 10
-): Promise<string> {
-  return await hash(password, salt)
-}
-
-export async function comparePassword (
-  password: string,
-  hashedPassword: string
-): Promise<boolean> {
-  return await compare(password, hashedPassword)
-}
-
 schema.path('email').validate(
   async (email: string): Promise<boolean> => {
     const emailExist = await models.User.countDocuments({ email })
@@ -64,7 +50,7 @@ schema.pre<UserDocument>('save', async function (): Promise<void> {
   if (!this.password || !this.isModified('password')) return
 
   try {
-    const hashedPassword = await hashPassword(this.password)
+    const hashedPassword = await AuthService.hashPassword(this.password)
 
     this.password = hashedPassword
   } catch (error) {
