@@ -20,7 +20,12 @@ describe('Users functional test', () => {
       )
 
       expect(response.status).toBe(201)
-      expect(response.body).toEqual(expect.objectContaining(newUser))
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          ...newUser,
+          ...{ password: expect.any(String) }
+        })
+      )
       expect(comparePasswordResult).toBe(true)
     })
 
