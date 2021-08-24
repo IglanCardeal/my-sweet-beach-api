@@ -1,4 +1,4 @@
-import { UserModel } from '@src/models/user-model'
+import { comparePassword, UserModel } from '@src/models/user-model'
 
 describe('Users functional test', () => {
   beforeAll(async () => {
@@ -14,9 +14,14 @@ describe('Users functional test', () => {
       }
 
       const response = await global.testRequest.post('/users').send({ newUser })
+      const comparePasswordResult = await comparePassword(
+        newUser.password,
+        response.body.password
+      )
 
       expect(response.status).toBe(201)
       expect(response.body).toEqual(expect.objectContaining(newUser))
+      expect(comparePasswordResult).toBe(true)
     })
 
     it('should return 422 when there is validation error', async () => {
