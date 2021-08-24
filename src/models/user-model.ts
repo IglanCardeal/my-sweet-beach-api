@@ -36,6 +36,20 @@ const schema = new Schema(
   }
 )
 
+export async function hashPassword (
+  password: string,
+  salt = 10
+): Promise<string> {
+  return await hash(password, salt)
+}
+
+export async function comparePassword (
+  password: string,
+  hashedPassword: string
+): Promise<boolean> {
+  return await compare(password, hashedPassword)
+}
+
 schema.path('email').validate(
   async (email: string): Promise<boolean> => {
     const emailExist = await models.User.countDocuments({ email })
@@ -46,18 +60,16 @@ schema.path('email').validate(
   CUSTOM_VALIDATION.DUPLICATED
 )
 
-export async function hashPassword (
-  password: string,
-  salt = 10
-): Promise<string> {
-  return await hash(password, salt)
-}
+schema.pre<UserDocument>('save', async function (): Promise<void> {
+  if (!this.password || !this.isModified('password')) return
 
-export async function comparePassword (
-  password: string,
-  hash: string
-): Promise<boolean> {
-  return await compare(password, hash)
-}
+  try {
+    const hashedPassword = await hashPassword(this.password)
+
+    this.password = hashedPassword
+  } catch (error) {
+    console.error(`Error hashing the password for the user: ${this.name}`)
+  }
+})
 
 export const UserModel = model<UserDocument>('User', schema)
