@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 
 import { UserModel } from '@src/models/user-model'
 import { BaseController } from '.'
+import { AuthService } from '@src/services/auth-service'
 
 @Controller('users')
 export class UsersController extends BaseController {
@@ -23,6 +24,27 @@ export class UsersController extends BaseController {
 
   @Post('authenticate')
   public async authenticate (req: Request, res: Response): Promise<void> {
-    res.status(200).send({ token: 'fake-token' })
+    try {
+      const { email, password } = req.body
+
+      const user = await UserModel.findOne({ email })
+
+      if (!user) return
+
+      const compareResult = await AuthService.comparePassword(
+        password,
+        user.password
+      )
+
+      if (!compareResult) {
+        return
+      }
+
+      const token = AuthService.generateToken(user.toJSON())
+
+      res.status(200).send({ token })
+    } catch (error) {
+      this.sendCreateUpdateErrorResponse(res, error as any)
+    }
   }
 }
