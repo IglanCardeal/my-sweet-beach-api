@@ -20,4 +20,9 @@ export class UsersController extends BaseController {
       this.sendCreateUpdateErrorResponse(res, error as any)
     }
   }
+
+  @Post('authenticate')
+  public async authenticate (req: Request, res: Response): Promise<void> {
+    res.status(200).send({ token: 'fake-token' })
+  }
 }

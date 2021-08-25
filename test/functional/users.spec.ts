@@ -2,11 +2,11 @@ import { UserModel } from '@src/models/user-model'
 import { AuthService } from '@src/services/auth-service'
 
 describe('Users functional test', () => {
-  beforeAll(async () => {
-    await UserModel.deleteMany({})
-  })
-
   describe('When creating a new user', () => {
+    beforeAll(async () => {
+      await UserModel.deleteMany({})
+    })
+
     it('should successfully create a new user with encrypted password', async () => {
       const newUser = {
         name: 'Foo Bar',
@@ -63,6 +63,10 @@ describe('Users functional test', () => {
   })
 
   describe('When authenticating a user', () => {
+    beforeAll(async () => {
+      await UserModel.deleteMany({})
+    })
+
     it('should generate a token for a valid user', async () => {
       const newUser = {
         name: 'Foo Bar',
@@ -72,7 +76,7 @@ describe('Users functional test', () => {
       await new UserModel(newUser).save()
 
       const response = await global.testRequest
-        .post('/users/authentication')
+        .post('/users/authenticate')
         .send({ email: newUser.email, password: newUser.password })
 
       expect(response.body).toEqual(
