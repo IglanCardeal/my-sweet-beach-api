@@ -61,4 +61,23 @@ describe('Users functional test', () => {
       })
     })
   })
+
+  describe('When authenticating a user', () => {
+    it('should generate a token for a valid user', async () => {
+      const newUser = {
+        name: 'Foo Bar',
+        email: 'foo@mail.com',
+        password: '123456'
+      }
+      await new UserModel(newUser).save()
+
+      const response = await global.testRequest
+        .post('/users/authentication')
+        .send({ email: newUser.email, password: newUser.password })
+
+      expect(response.body).toEqual(
+        expect.objectContaining({ token: expect.any(String) })
+      )
+    })
+  })
 })
