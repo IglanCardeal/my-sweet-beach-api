@@ -29,15 +29,22 @@ export class UsersController extends BaseController {
 
       const user = await UserModel.findOne({ email })
 
-      if (!user) return res.status(401).send({})
+      if (!user)
+        return res.status(401).send({
+          code: 401,
+          error: 'User not found with the given email address'
+        })
 
-      const compareResult = await AuthService.comparePassword(
+      const passwordComparisonResult = await AuthService.comparePassword(
         password,
         user.password
       )
 
-      if (!compareResult) {
-        return
+      if (!passwordComparisonResult) {
+        return res.status(401).send({
+          code: 401,
+          error: 'Incorrect password'
+        })
       }
 
       const token = AuthService.generateToken(user.toJSON())

@@ -65,33 +65,44 @@ describe('Users functional test', () => {
   describe('When authenticating a user', () => {
     beforeAll(async () => {
       await UserModel.deleteMany({})
-    })
 
-    it('should generate a token for a valid user', async () => {
       const newUser = {
         name: 'Foo Bar',
         email: 'foo@mail.com',
         password: '123456'
       }
       await new UserModel(newUser).save()
+    })
+
+    it('should generate a token for a valid user', async () => {
+      const userData = {
+        email: 'foo@mail.com',
+        password: '123456'
+      }
 
       const response = await global.testRequest
         .post('/users/authenticate')
-        .send({ email: newUser.email, password: newUser.password })
+        .send({ email: userData.email, password: userData.password })
 
       expect(response.body).toEqual(
         expect.objectContaining({ token: expect.any(String) })
       )
     })
 
-    it.only(
-      'should return UNAUTHORIZED if the user with the given email was not found', async () => {
-        const response = await global.testRequest
+    it('should return UNAUTHORIZED if the user with the given email was not found', async () => {
+      const response = await global.testRequest
         .post('/users/authenticate')
         .send({ email: 'fake@mail.com', password: '123456' })
 
-        expect(response.status).toBe(401)
-      }
-    )
+      expect(response.status).toBe(401)
+    })
+
+    it('should return UNAUTHORIZED if the user was found but the password does not match', async () => {
+      const response = await global.testRequest
+        .post('/users/authenticate')
+        .send({ email: 'foo@mail.com', password: 'wrong-pass' })
+
+      expect(response.status).toBe(401)
+    })
   })
 })
