@@ -23,13 +23,13 @@ export class UsersController extends BaseController {
   }
 
   @Post('authenticate')
-  public async authenticate (req: Request, res: Response): Promise<void> {
+  public async authenticate (req: Request, res: Response): Promise<any> {
     try {
       const { email, password } = req.body
 
       const user = await UserModel.findOne({ email })
 
-      if (!user) return
+      if (!user) return res.status(401).send({})
 
       const compareResult = await AuthService.comparePassword(
         password,
