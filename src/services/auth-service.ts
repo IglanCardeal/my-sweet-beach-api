@@ -1,5 +1,6 @@
 import { compare, hash } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
+import config from 'config'
 
 /**
  * classe responsável por toda a lógica necessária para autenticação como
@@ -21,6 +22,11 @@ export class AuthService {
   }
 
   public static generateToken (payload: { [key: string]: any }): string {
-    return sign(payload, 'test', { expiresIn: 10000 })
+    const key = config.get<string>('App.authentication.key')
+    const tokenExpiration = config.get<string>(
+      'App.authentication.tokenExpiresIn'
+    )
+
+    return sign(payload, key, { expiresIn: tokenExpiration })
   }
 }
