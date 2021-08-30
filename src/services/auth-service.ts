@@ -1,6 +1,11 @@
 import { compare, hash } from 'bcrypt'
-import { sign } from 'jsonwebtoken'
+import { sign, verify } from 'jsonwebtoken'
 import config from 'config'
+import { User } from '@src/models/user-model'
+
+interface DecodedUser extends Omit<User, '_id'> {
+  id: string
+}
 
 /**
  * classe responsável por toda a lógica necessária para autenticação como
@@ -28,5 +33,12 @@ export class AuthService {
     )
 
     return sign(payload, key, { expiresIn: tokenExpiration })
+  }
+
+  public static decodeToken (token: string): DecodedUser {
+    return verify(
+      token,
+      config.get<string>('App.authentication.key')
+    ) as DecodedUser
   }
 }
