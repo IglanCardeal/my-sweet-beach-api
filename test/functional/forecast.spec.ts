@@ -3,19 +3,29 @@
 import nock from 'nock'
 
 import { BeachModel, BeachPosition } from '@src/models/beach-model'
-import stormGlassApiResponse from '@test/fixtures/stormglass-response.json'
 import { apiForecastResponse } from '@test/fixtures/api-forecast-response'
+import { UserModel } from '@src/models/user-model'
+
+import stormGlassApiResponse from '@test/fixtures/stormglass-response.json'
 
 describe('Forecast functional test', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await BeachModel.deleteMany({})
+    await UserModel.deleteMany({})
+
+    const newUser = await new UserModel({
+      name: 'Foo',
+      email: 'footest@mail.com',
+      password: '123456'
+    }).save()
+
     const defaultBeach = {
       lat: -33.792726,
       lng: 151.289824,
       name: 'Manly',
       position: BeachPosition.E
     }
-    const newBeach = new BeachModel(defaultBeach)
+    const newBeach = new BeachModel({ ...defaultBeach, user: newUser.id })
 
     await newBeach.save()
   })
