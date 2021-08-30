@@ -7,7 +7,8 @@ describe('Auth Middleware', () => {
     const reqFake = {
       headers: {
         'x-access-token': jwtToken
-      }
+      },
+      decoded: undefined
     }
     const resFake = {}
     const nextFake = jest.fn()
@@ -15,5 +16,6 @@ describe('Auth Middleware', () => {
     authMiddleware(reqFake, resFake, nextFake)
 
     expect(nextFake).toHaveBeenCalled()
+    expect(reqFake.decoded).toBeDefined()
   })
 })

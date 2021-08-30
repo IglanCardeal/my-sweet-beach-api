@@ -1,9 +1,10 @@
 import { compare, hash } from 'bcrypt'
 import { sign, verify } from 'jsonwebtoken'
 import config from 'config'
+
 import { User } from '@src/models/user-model'
 
-interface DecodedUser extends Omit<User, '_id'> {
+export interface DecodedUser extends Omit<User, '_id'> {
   id: string
 }
 

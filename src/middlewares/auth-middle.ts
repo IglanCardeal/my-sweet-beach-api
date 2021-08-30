@@ -1,11 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
+import { AuthService } from '@src/services/auth-service'
 import { NextFunction, Request, Response } from 'express'
 
 export const authMiddleware = (
-  req: Request,
-  res: Response,
+  req: Partial<Request>,
+  _: Partial<Response>,
   next: NextFunction
 ): void => {
-  const token = req.headers['x-acess-token']
+  const token = req.headers?.['x-access-token']
+  const decodedUser = AuthService.decodeToken(token as string)
+
+  req.decoded = decodedUser
+
+  next()
 }
