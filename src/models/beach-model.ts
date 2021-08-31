@@ -14,6 +14,7 @@ export interface Beach {
   lng: number
   name: string
   position: BeachPosition
+  user: string
 }
 
 interface BeachDocument extends Omit<Beach, '_id'>, Document {}
