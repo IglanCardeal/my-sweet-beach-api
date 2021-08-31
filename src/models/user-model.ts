@@ -36,26 +36,29 @@ const schema = new Schema(
   }
 )
 
-schema.path('email').validate(
-  async (email: string): Promise<boolean> => {
-    const emailExist = await models.User.countDocuments({ email })
-
-    return !emailExist
-  },
-  'already exist in the database.',
-  CUSTOM_VALIDATION.DUPLICATED
-)
+schema
+  .path('email')
+  .validate(
+    emailIsAvailable,
+    'already exist in the database.',
+    CUSTOM_VALIDATION.DUPLICATED
+  )
 
 schema.pre<UserDocument>('save', async function (): Promise<void> {
   if (!this.password || !this.isModified('password')) return
 
   try {
-    const hashedPassword = await AuthService.hashPassword(this.password)
-
-    this.password = hashedPassword
+    this.password = await AuthService.hashPassword(this.password)
   } catch (error) {
-    console.error(`Error hashing the password for the user: ${this.name}`)
+    console.info(`Error hashing the password for the user: ${this.name}`)
+    console.error(error)
   }
 })
+
+async function emailIsAvailable (email: string): Promise<boolean> {
+  const emailExist = await models.User.countDocuments({ email })
+
+  return !emailExist
+}
 
 export const UserModel = model<UserDocument>('User', schema)
