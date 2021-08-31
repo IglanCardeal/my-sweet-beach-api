@@ -25,9 +25,8 @@ describe('Forecast functional test', () => {
       name: 'Manly',
       position: BeachPosition.E
     }
-    const newBeach = new BeachModel({ ...defaultBeach, user: newUser.id })
 
-    await newBeach.save()
+    await new BeachModel({ ...defaultBeach, user: newUser.id }).save()
   })
 
   it('it should return a forecast with just a few times', async () => {
