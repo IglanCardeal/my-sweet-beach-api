@@ -7,8 +7,11 @@ import { apiForecastResponse } from '@test/fixtures/api-forecast-response'
 import { UserModel } from '@src/models/user-model'
 
 import stormGlassApiResponse from '@test/fixtures/stormglass-response.json'
+import { AuthService } from '@src/services/auth-service'
 
 describe('Forecast functional test', () => {
+  let token: string
+
   beforeAll(async () => {
     await BeachModel.deleteMany({})
     await UserModel.deleteMany({})
@@ -27,6 +30,8 @@ describe('Forecast functional test', () => {
     }
 
     await new BeachModel({ ...defaultBeach, user: newUser.id }).save()
+
+    token = AuthService.generateToken(newUser.toJSON())
   })
 
   it('it should return a forecast with just a few times', async () => {
@@ -46,7 +51,9 @@ describe('Forecast functional test', () => {
       })
       .reply(200, stormGlassApiResponse)
 
-    const { body, status } = await global.testRequest.get('/forecast')
+    const { body, status } = await global.testRequest
+      .get('/forecast')
+      .set({ 'x-access-token': token })
 
     expect(status).toBe(200)
     expect(body).toEqual(apiForecastResponse)
@@ -67,7 +74,9 @@ describe('Forecast functional test', () => {
       })
       .replyWithError('something went wrong')
 
-    const { status } = await global.testRequest.get('/forecast')
+    const { status } = await global.testRequest
+      .get('/forecast')
+      .set({ 'x-access-token': token })
 
     expect(status).toBe(500)
   })
