@@ -23,6 +23,7 @@
       "@test/*": ["./test/*"]
     },
     "rootDirs": ["./src", "./test"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
