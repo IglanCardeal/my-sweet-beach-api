@@ -52,7 +52,7 @@ jobs:
           ${{ runner.OS }}-
 
     - name: Install dependencies
-      run: yarn
+      run: yarn --frozen-lockfile
 
     - name: Run unit test
       run: yarn test:unit
