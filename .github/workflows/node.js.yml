@@ -5,9 +5,15 @@ name: Storm Glass Weather API CI
 
 on:
   push:
-    branches: [ main ] 
+    branches: 
+    - main 
+    - master
+    - production 
   pull_request:
-    branches: [ main ]
+    branches:
+    - main 
+    - master
+    - production 
 
 jobs:
   build:
