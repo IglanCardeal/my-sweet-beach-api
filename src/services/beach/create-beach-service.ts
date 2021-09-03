@@ -1,15 +1,5 @@
-export interface BeachDTO {
-  _id?: string
-  lat: number
-  lng: number
-  name: string
-  position: string
-  user: string
-}
-
-export interface BeachRepo {
-  create: (beach: BeachDTO) => Promise<void>
-}
+import { BeachDTO } from './baech-dto'
+import { BeachRepo } from './ports/beach-repo'
 
 export class BeachService {
   private readonly beachRepo: BeachRepo

@@ -1,7 +1,8 @@
 import { BeachModel } from '@src/models/beach-model'
-import { BeachDTO, BeachRepo } from '@src/services/beach/create-beach-service'
+import { BeachDTO } from '@src/services/beach/baech-dto'
+import { BeachRepo } from '@src/services/beach/ports/beach-repo'
 
-export class BeachRepository implements BeachRepo {
+export class MongoBeachRepository implements BeachRepo {
   async create (data: BeachDTO): Promise<void> {
     const newBeach = new BeachModel(data)
 
