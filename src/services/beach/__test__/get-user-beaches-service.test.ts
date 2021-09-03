@@ -1,28 +1,24 @@
 import { BeachDTO } from '../beach-dto'
-import { beaches } from './in-memory-repository'
+import { GetUserBeachesService } from '../get-user-beaches-service'
+import { beaches, InMemoryRepo } from './in-memory-repository'
 
-class GetUserBeachesService {
-  constructor (private readonly beachRepo: unknown) {}
-
-  public async execute (): Promise<void> {
-    return
-  }
+const USER_ID = '123456'
+const beach: BeachDTO = {
+  user: USER_ID,
+  lat: 1,
+  lng: 1,
+  name: 'fake beach',
+  position: 'E'
 }
 
 describe('Get User Beaches', () => {
-  const beach: BeachDTO = {
-    user: 'fake-id',
-    lat: 1,
-    lng: 1,
-    name: 'fake beach',
-    position: 'E'
-  }
-
-  beaches.push(beach)
+  beforeAll(() => {
+    beaches.push(beach)
+  })
 
   describe('Pre Conditions', () => {
     it('should have an "execute" method defined', () => {
-      const getUserBeaches = new GetUserBeachesService(null)
+      const getUserBeaches = new GetUserBeachesService(new InMemoryRepo())
 
       expect(getUserBeaches.execute).toBeDefined()
     })
@@ -33,8 +29,10 @@ describe('Get User Beaches', () => {
   })
 
   it('should return at least one beach for a given user', async () => {
-    const getUserBeaches = new GetUserBeachesService(null)
+    const getUserBeaches = new GetUserBeachesService(new InMemoryRepo())
+    const result = await getUserBeaches.execute(USER_ID)
 
-    expect(getUserBeaches.execute).toBeDefined()
+    expect(result).toHaveLength(1)
+    expect(result[0]).toEqual(beach)
   })
 })

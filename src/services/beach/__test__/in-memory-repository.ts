@@ -7,4 +7,8 @@ export class InMemoryRepo implements BeachRepo {
   public async create (data: BeachDTO): Promise<void> {
     beaches.push(data)
   }
+
+  public async findBeachesByUserId (userId: string): Promise<BeachDTO[]> {
+    return beaches.filter(beach => beach.user === userId)
+  }
 }
