@@ -21,17 +21,11 @@ export class ForecastProcessingInternalError extends InternalError {
   }
 }
 
-/**
- * @param  {} stormGlass - classe cliente para chamadas HTTP do Storm Glass.
- * Default: {@link StormGlassHttpClient}
- */
 export class ForecastService {
   constructor (protected stormGlass = new StormGlassHttpClient()) {}
 
   /**
-   *
-   * @param beaches - array de Beaches onde cada uma terá uma chamada para o `fetchPoints` e será feito um merge com a resposta do client HTTP com os dados de cada Beach.
-   * @returns retorna os dados normalizados com a previsão do tempo para cada Beach.
+   * retorna os dados normalizados com a previsão do tempo para cada Beach.
    */
   public async processForecastForBeaches (
     beaches: Beach[]
@@ -78,7 +72,7 @@ export class ForecastService {
     points: StormGlassForecastAPIResponseNormalized[],
     beach: Beach
   ): BeachForecast[] {
-    return points.map(e => ({
+    return points.map(point => ({
       ...{
         lat: beach.lat,
         lng: beach.lng,
@@ -86,7 +80,7 @@ export class ForecastService {
         position: beach.position,
         rating: 1
       },
-      ...e
+      ...point
     }))
   }
 }
