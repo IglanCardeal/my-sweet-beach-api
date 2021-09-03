@@ -5,9 +5,15 @@ name: Storm Glass Weather API CI
 
 on:
   push:
-    branches: [ main ] 
+    branches: 
+    - main 
+    - master
+    - production 
   pull_request:
-    branches: [ main ]
+    branches:
+    - main 
+    - master
+    - production 
 
 jobs:
   build:
@@ -46,7 +52,7 @@ jobs:
           ${{ runner.OS }}-
 
     - name: Install dependencies
-      run: yarn
+      run: yarn --frozen-lockfile
 
     - name: Run unit test
       run: yarn test:unit

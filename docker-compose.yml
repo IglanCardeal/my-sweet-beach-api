@@ -8,4 +8,4 @@ services:
       - 27017:27017
     image: mongo
     volumes:
-      - /home/Desenvolvimento-Web/docker-volumes/weather-forecast-api/MongoDB:/data/dbc
+      - ./docker-volumes/weather-forecast-api/MongoDB:/data/dbc

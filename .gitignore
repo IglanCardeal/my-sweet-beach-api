@@ -1,5 +1,6 @@
 # json config
 config/default.json
+docker-volumes
 
 # Logs
 logs
