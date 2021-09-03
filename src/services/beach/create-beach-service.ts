@@ -1,14 +1,14 @@
-import { BeachDTO } from './baech-dto'
+import { BeachDTO } from './beach-dto'
 import { BeachRepo } from './ports/beach-repo'
 
-export class BeachService {
+export class CreateBeachService {
   private readonly beachRepo: BeachRepo
 
   constructor (beachRepo: BeachRepo) {
     this.beachRepo = beachRepo
   }
 
-  public async createBeach (beach: BeachDTO): Promise<void> {
+  public async execute (beach: BeachDTO): Promise<void> {
     this.validate(beach)
 
     await this.beachRepo.create(beach)
