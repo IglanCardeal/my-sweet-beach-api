@@ -2,8 +2,11 @@ import { ClassMiddleware, Controller, Post } from '@overnightjs/core'
 import { Request, Response } from 'express'
 import { Error } from 'mongoose'
 
-import { authMiddleware } from '@src/middlewares/auth-middle'
 import { BeachDTO, BeachService } from '@src/services/beache-service'
+
+import { BeachRepository } from '@src/repositories/beach-repo'
+
+import { authMiddleware } from '@src/middlewares/auth-middle'
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)
@@ -14,7 +17,8 @@ export class BeachesController {
     const beachData: BeachDTO = { ...newBeach, user: req.decoded?.id }
 
     try {
-      const beachService = new BeachService()
+      const beachRepo = new BeachRepository()
+      const beachService = new BeachService(beachRepo)
 
       await beachService.createBeach(beachData)
 
