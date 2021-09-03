@@ -1,6 +1,9 @@
 import { BeachDTO } from './beach-dto'
 import { ParamError } from './error'
-import { BeachRepo } from './ports/beach-repo'
+
+interface BeachRepo {
+  create: (beach: BeachDTO) => Promise<void>
+}
 
 export class CreateBeachService {
   private readonly beachRepo: BeachRepo
@@ -15,7 +18,7 @@ export class CreateBeachService {
     await this.beachRepo.create(beach)
   }
 
-  // mover essas validacoes para objetos de valor2 
+  // mover essas validacoes para objetos de valor2
   private validate (beach: BeachDTO) {
     this.validatePosition(beach.position)
   }
