@@ -2,7 +2,7 @@ import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
 import { Beach, BeachPosition } from '@src/models/beach-model'
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass-response-normalized.json'
 
-import { ForecastService } from '../forecast-service'
+import { ForecastService } from '../../forecast-service'
 import { expectedResponse } from './expectedResponse'
 
 jest.mock('@src/clients/stormglass-http-client')

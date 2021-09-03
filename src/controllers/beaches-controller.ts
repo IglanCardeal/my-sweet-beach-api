@@ -2,7 +2,10 @@ import { ClassMiddleware, Controller, Post } from '@overnightjs/core'
 import { Request, Response } from 'express'
 import { Error } from 'mongoose'
 
-import { BeachDTO, BeachService } from '@src/services/beache-service'
+import {
+  BeachDTO,
+  BeachService
+} from '@src/services/beach/create-beach-service'
 
 import { BeachRepository } from '@src/repositories/beach-repo'
 
