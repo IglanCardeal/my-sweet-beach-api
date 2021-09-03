@@ -1,5 +1,6 @@
 import { BeachDTO } from '../beach-dto'
 import { CreateBeachService } from '../create-beach-service'
+import { ParamError } from '../error'
 import { beaches, InMemoryRepo } from './in-memory-repository'
 
 describe('Create Beach Service', () => {
@@ -37,5 +38,24 @@ describe('Create Beach Service', () => {
     await beachService.execute(beach)
 
     expect(beaches).toHaveLength(1)
+  })
+
+  it('should throw en error for an invalid beach position', async () => {
+    const beach: BeachDTO = {
+      user: 'fake-id',
+      lat: 1,
+      lng: 1,
+      name: 'fake baech',
+      position: 'incorrect-position'
+    }
+    const beachService = new CreateBeachService(new InMemoryRepo())
+
+    await expect(beachService.execute(beach)).rejects.toThrowError()
+
+    try {
+      await beachService.execute(beach)
+    } catch (error) {
+      expect(error).toBeInstanceOf(ParamError)
+    }
   })
 })

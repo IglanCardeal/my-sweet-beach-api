@@ -1,4 +1,5 @@
 import { BeachDTO } from './beach-dto'
+import { ParamError } from './error'
 import { BeachRepo } from './ports/beach-repo'
 
 export class CreateBeachService {
@@ -14,6 +15,7 @@ export class CreateBeachService {
     await this.beachRepo.create(beach)
   }
 
+  // mover essas validacoes para objetos de valor2 
   private validate (beach: BeachDTO) {
     this.validatePosition(beach.position)
   }
@@ -22,7 +24,9 @@ export class CreateBeachService {
     const validPositions = ['S', 'E', 'W', 'N']
 
     if (!validPositions.includes(position)) {
-      throw new Error('')
+      throw new ParamError(
+        `Beach position is not valid. Only 'S', 'E', 'W', 'N' positions are available`
+      )
     }
   }
 }
