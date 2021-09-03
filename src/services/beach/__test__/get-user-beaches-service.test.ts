@@ -14,7 +14,7 @@ describe('Get User Beaches', () => {
     user: 'fake-id',
     lat: 1,
     lng: 1,
-    name: 'fake baech',
+    name: 'fake beach',
     position: 'E'
   }
 

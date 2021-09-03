@@ -30,7 +30,7 @@ describe('Create Beach Service', () => {
       user: 'fake-id',
       lat: 1,
       lng: 1,
-      name: 'fake baech',
+      name: 'fake beach',
       position: 'E'
     }
     const beachService = new CreateBeachService(new InMemoryRepo())
