@@ -1,24 +1,24 @@
-import { BeachModel, BeachPosition } from '@src/models/beach-model'
-
 export interface BeachDTO {
   _id?: string
   lat: number
   lng: number
   name: string
-  position: BeachPosition
+  position: string
   user: string
 }
 
-export class BeachService {
-  private readonly beachRepo: unknown
+export interface BeachRepo {
+  create: (beach: BeachDTO) => Promise<void>
+}
 
-  constructor () {
-    this.beachRepo = null
+export class BeachService {
+  private readonly beachRepo: BeachRepo
+
+  constructor (beachRepo: BeachRepo) {
+    this.beachRepo = beachRepo
   }
 
   public async createBeach (beach: BeachDTO): Promise<void> {
-    const newBeach = new BeachModel(beach)
-
-    await newBeach.save()
+    await this.beachRepo.create(beach)
   }
 }
