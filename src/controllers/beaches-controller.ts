@@ -2,8 +2,8 @@ import { ClassMiddleware, Controller, Post } from '@overnightjs/core'
 import { Request, Response } from 'express'
 import { Error } from 'mongoose'
 
-import { BeachService } from '@src/services/beach/create-beach-service'
-import { BeachDTO } from '@src/services/beach/baech-dto'
+import { CreateBeachService } from '@src/services/beach/create-beach-service'
+import { BeachDTO } from '@src/services/beach/beach-dto'
 
 import { MongoBeachRepository } from '@src/repositories/beach-repo'
 
@@ -19,9 +19,9 @@ export class BeachesController {
 
     try {
       const beachRepo = new MongoBeachRepository()
-      const beachService = new BeachService(beachRepo)
+      const beachService = new CreateBeachService(beachRepo)
 
-      await beachService.createBeach(beachData)
+      await beachService.execute(beachData)
 
       res.status(201).send(beachData)
     } catch (err) {

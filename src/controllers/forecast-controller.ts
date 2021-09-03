@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 
 import { authMiddleware } from '@src/middlewares/auth-middle'
 import { BeachModel } from '@src/models/beach-model'
-import { ForecastService } from '@src/services/forecast-service'
+import { ForecastService } from '@src/services/forecast/forecast-service'
 
 // define um base match da rota: /forecast
 @Controller('forecast')
