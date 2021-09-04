@@ -8,4 +8,10 @@ export class MongoBeachRepository implements BeachRepo {
 
     await newBeach.save()
   }
+
+  async findBeachesByUserId(data: string): Promise<BeachDTO[]> {
+    const beaches: BeachDTO[] = await BeachModel.find({user: data})
+
+    return beaches
+  }
 }
