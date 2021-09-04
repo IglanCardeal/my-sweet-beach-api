@@ -3,8 +3,8 @@ import {
   StormGlassHttpClient,
   StormGlassForecastAPIResponseNormalized
 } from '@src/clients/stormglass-http-client'
-import { InternalError } from '@src/utils/errors/internal-error'
 import { BeachDTO } from '../beach/beach-dto'
+import { ForecastProcessingInternalError } from './error'
 
 export interface BeachForecast
   extends Omit<BeachDTO, 'user'>,
@@ -15,19 +15,13 @@ export interface TimeForecast {
   forecast: BeachForecast[]
 }
 
-export class ForecastProcessingInternalError extends InternalError {
-  constructor (message: string) {
-    super(`Unexpected error during the forecast processing: ${message}`)
-  }
-}
-
-export class ForecastService {
+export class ProcessForecastForBeachesService {
   constructor (protected stormGlass = new StormGlassHttpClient()) {}
 
   /**
    * retorna os dados normalizados com a previsão do tempo para cada Beach.
    */
-  public async processForecastForBeaches (
+  public async execute (
     beaches: BeachDTO[]
   ): Promise<TimeForecast[]> {
     const pointsWithCorrectedSources: BeachForecast[] = []

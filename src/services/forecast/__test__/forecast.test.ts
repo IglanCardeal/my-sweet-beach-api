@@ -2,7 +2,7 @@ import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
 import { Beach, BeachPosition } from '@src/models/beach-model'
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass-response-normalized.json'
 
-import { ForecastService } from '../forecast-service'
+import { ProcessForecastForBeachesService } from '../forecast-service'
 import { expectedResponse } from './expectedResponse'
 
 jest.mock('@src/clients/stormglass-http-client')
@@ -26,15 +26,15 @@ describe('Forecast Service', () => {
         user: 'some-id'
       }
     ]
-    const forecast = new ForecastService(mockedStormGlassHttpClient)
-    const beachesWithRating = await forecast.processForecastForBeaches(beaches)
+    const forecast = new ProcessForecastForBeachesService(mockedStormGlassHttpClient)
+    const beachesWithRating = await forecast.execute(beaches)
 
     expect(beachesWithRating).toEqual(expectedResponse)
   })
 
   it('should return an empty when beaches array is empty', async () => {
-    const forecast = new ForecastService()
-    const response = await forecast.processForecastForBeaches([])
+    const forecast = new ProcessForecastForBeachesService()
+    const response = await forecast.execute([])
 
     expect(response).toEqual([])
   })
@@ -54,9 +54,9 @@ describe('Forecast Service', () => {
       'Error fetching data'
     )
 
-    const forecast = new ForecastService(mockedStormGlassHttpClient)
+    const forecast = new ProcessForecastForBeachesService(mockedStormGlassHttpClient)
 
-    await expect(forecast.processForecastForBeaches(beaches)).rejects.toThrow(
+    await expect(forecast.execute(beaches)).rejects.toThrow(
       Error
     )
   })

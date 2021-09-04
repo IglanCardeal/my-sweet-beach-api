@@ -2,7 +2,7 @@ import { ClassMiddleware, Controller, Get } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
 import { authMiddleware } from '@src/middlewares/auth-middle'
-import { ForecastService } from '@src/services/forecast/forecast-service'
+import { ProcessForecastForBeachesService } from '@src/services/forecast/forecast-service'
 import { GetUserBeachesService } from '@src/services/beach/get-user-beaches-service'
 import { MongoBeachRepository } from '@src/repositories/beach-repo'
 
@@ -22,8 +22,8 @@ export class ForecastController {
       const getUserBeachesService = new GetUserBeachesService(repo)
       const beaches = await getUserBeachesService.execute(userId as string)
 
-      const forecast = new ForecastService()
-      const forecastData = await forecast.processForecastForBeaches(beaches)
+      const forecast = new ProcessForecastForBeachesService()
+      const forecastData = await forecast.execute(beaches)
 
       res.status(200).send(forecastData)
     } catch (error) {
