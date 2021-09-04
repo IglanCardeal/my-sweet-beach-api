@@ -22,8 +22,8 @@ export class ForecastController {
       const getUserBeachesService = new GetUserBeachesService(repo)
       const beaches = await getUserBeachesService.execute(userId as string)
 
-      const forecast = new ProcessForecastForBeachesService()
-      const forecastData = await forecast.execute(beaches)
+      const processForecast = new ProcessForecastForBeachesService()
+      const forecastData = await processForecast.execute(beaches)
 
       res.status(200).send(forecastData)
     } catch (error) {
