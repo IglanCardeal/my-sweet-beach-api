@@ -2,8 +2,9 @@ import { ClassMiddleware, Controller, Get } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
 import { authMiddleware } from '@src/middlewares/auth-middle'
-import { BeachModel } from '@src/models/beach-model'
 import { ForecastService } from '@src/services/forecast/forecast-service'
+import { GetUserBeachesService } from '@src/services/beach/get-user-beaches-service'
+import { MongoBeachRepository } from '@src/repositories/beach-repo'
 
 // define um base match da rota: /forecast
 @Controller('forecast')
@@ -17,7 +18,9 @@ export class ForecastController {
   ): Promise<void> {
     try {
       const userId = req.decoded?.id
-      const beaches = await BeachModel.find({ user: userId })
+      const repo = new MongoBeachRepository()
+      const getUserBeachesService = new GetUserBeachesService(repo)
+      const beaches = await getUserBeachesService.execute(userId as string)
 
       const forecast = new ForecastService()
       const forecastData = await forecast.processForecastForBeaches(beaches)

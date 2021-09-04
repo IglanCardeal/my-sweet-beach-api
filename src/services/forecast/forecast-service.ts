@@ -3,11 +3,11 @@ import {
   StormGlassHttpClient,
   StormGlassForecastAPIResponseNormalized
 } from '@src/clients/stormglass-http-client'
-import { Beach } from '@src/models/beach-model'
 import { InternalError } from '@src/utils/errors/internal-error'
+import { BeachDTO } from '../beach/beach-dto'
 
 export interface BeachForecast
-  extends Omit<Beach, 'user'>,
+  extends Omit<BeachDTO, 'user'>,
     StormGlassForecastAPIResponseNormalized {}
 
 export interface TimeForecast {
@@ -28,7 +28,7 @@ export class ForecastService {
    * retorna os dados normalizados com a previsão do tempo para cada Beach.
    */
   public async processForecastForBeaches (
-    beaches: Beach[]
+    beaches: BeachDTO[]
   ): Promise<TimeForecast[]> {
     const pointsWithCorrectedSources: BeachForecast[] = []
 
@@ -70,7 +70,7 @@ export class ForecastService {
    */
   private mergeBeachAndPointsData (
     points: StormGlassForecastAPIResponseNormalized[],
-    beach: Beach
+    beach: BeachDTO
   ): BeachForecast[] {
     return points.map(point => ({
       ...{
