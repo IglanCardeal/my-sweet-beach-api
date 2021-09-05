@@ -7,7 +7,7 @@ import { apiForecastResponse } from '@test/fixtures/api-forecast-response'
 import { UserModel } from '@src/models/user-model'
 
 import stormGlassApiResponse from '@test/fixtures/stormglass-response.json'
-import { AuthService } from '@src/services/auth-service'
+import { AuthService } from '@src/services/auth/auth-service'
 
 describe('Forecast functional test', () => {
   let token: string

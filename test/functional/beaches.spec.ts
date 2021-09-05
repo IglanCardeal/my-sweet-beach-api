@@ -1,6 +1,6 @@
 import { BeachModel } from '@src/models/beach-model'
 import { UserModel } from '@src/models/user-model'
-import { AuthService } from '@src/services/auth-service'
+import { AuthService } from  '@src/services/auth/auth-service'
 
 describe('Beaches functional tests', () => {
   let token: string

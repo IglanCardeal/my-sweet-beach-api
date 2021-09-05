@@ -1,5 +1,5 @@
 import { UserModel } from '@src/models/user-model'
-import { AuthService } from '@src/services/auth-service'
+import { AuthService } from '@src/services/auth/auth-service'
 
 describe('Users functional test', () => {
   describe('When creating a new user', () => {

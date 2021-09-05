@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { AuthService } from '@src/services/auth-service'
+import { AuthService } from '@src/services/auth/auth-service'
 import { Schema, Document, model, models } from 'mongoose'
 
 export enum CUSTOM_VALIDATION {
