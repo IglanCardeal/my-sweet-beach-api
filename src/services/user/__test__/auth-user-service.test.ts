@@ -27,8 +27,9 @@ describe('Auth User Service', () => {
 
   it('should return user data if the user email exist', async () => {
     const authUserService = new AuthUserService(inUserMemoRepo)
-    const result = await authUserService.execute(userData.email)
+    const result = await authUserService.execute(userData.email) as any
 
+    expect(result).toBeDefined()
     expect(result.name).toBeDefined()
     expect(result.email).toBe(userData.email)
   })

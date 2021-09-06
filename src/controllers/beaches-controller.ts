@@ -5,7 +5,7 @@ import { Error } from 'mongoose'
 import { CreateBeachService } from '@src/services/beach/create-beach-service'
 import { BeachDTO } from '@src/services/beach/beach-dto'
 
-import { MongoBeachRepository } from '@src/repositories/beach-repo'
+import { BeachMongoRepository } from '@src/repositories/beach-repo'
 
 import { authMiddleware } from '@src/middlewares/auth-middle'
 
@@ -18,7 +18,7 @@ export class BeachesController {
     const beachData: BeachDTO = { ...newBeach, user: req.decoded?.id }
 
     try {
-      const beachRepo = new MongoBeachRepository()
+      const beachRepo = new BeachMongoRepository()
       const beachService = new CreateBeachService(beachRepo)
 
       await beachService.execute(beachData)

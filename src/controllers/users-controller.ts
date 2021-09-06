@@ -1,8 +1,11 @@
 import { Controller, Post } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
-import { UserModel } from '@src/models/user-model'
 import { BaseController } from './base'
+
+import { UserModel } from '@src/models/user-model'
+import { UserMongoRepository } from '@src/repositories/user-repo'
+import { AuthUserService } from '@src/services/user/auth-user-service'
 import { AuthService } from '@src/services/auth/auth-service'
 
 @Controller('users')
@@ -11,8 +14,9 @@ export class UsersController extends BaseController {
   public async authenticate(req: Request, res: Response): Promise<any> {
     try {
       const { email, password } = req.body
-
-      const user = await UserModel.findOne({ email })
+      const userRepo = new UserMongoRepository()
+      const authUserService = new AuthUserService(userRepo)
+      const user = await authUserService.execute(email)
 
       if (!user)
         return res.status(401).send({
@@ -32,7 +36,7 @@ export class UsersController extends BaseController {
         })
       }
 
-      const token = AuthService.generateToken(user.toJSON())
+      const token = AuthService.generateToken(user)
 
       res.status(200).send({ token })
     } catch (error) {

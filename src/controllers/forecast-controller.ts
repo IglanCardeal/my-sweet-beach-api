@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 import { authMiddleware } from '@src/middlewares/auth-middle'
 import { ProcessForecastForBeachesService } from '@src/services/forecast/forecast-service'
 import { GetUserBeachesService } from '@src/services/beach/get-user-beaches-service'
-import { MongoBeachRepository } from '@src/repositories/beach-repo'
+import { BeachMongoRepository } from '@src/repositories/beach-repo'
 
 // define um base match da rota: /forecast
 @Controller('forecast')
@@ -18,7 +18,7 @@ export class ForecastController {
   ): Promise<void> {
     try {
       const userId = req.decoded?.id
-      const repo = new MongoBeachRepository()
+      const repo = new BeachMongoRepository()
       const getUserBeachesService = new GetUserBeachesService(repo)
       const beaches = await getUserBeachesService.execute(userId as string)
 
