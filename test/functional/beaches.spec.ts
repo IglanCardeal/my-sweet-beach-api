@@ -1,6 +1,6 @@
 import { BeachModel } from '@src/models/beach-model'
 import { UserModel } from '@src/models/user-model'
-import { AuthService } from  '@src/services/auth/auth-service'
+import { AuthService } from '@src/services/auth/auth-service'
 
 describe('Beaches functional tests', () => {
   let token: string
@@ -16,7 +16,7 @@ describe('Beaches functional tests', () => {
       password: '123456'
     }).save()
 
-    token = AuthService.generateToken(newUser.toJSON())
+    token = AuthService.generateToken({ ...newUser.toJSON(), id: newUser.id })
   })
 
   describe('When creating a beach', () => {

@@ -31,7 +31,7 @@ describe('Forecast functional test', () => {
 
     await new BeachModel({ ...defaultBeach, user: newUser.id }).save()
 
-    token = AuthService.generateToken(newUser.toJSON())
+    token = AuthService.generateToken({...newUser.toJSON(), id: newUser.id})
   })
 
   it('it should return a forecast with just a few times', async () => {

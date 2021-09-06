@@ -6,8 +6,9 @@ export class UserMongoRepository implements UserRepo {
   public async findUserByEmail(email: string): Promise<UserDTO | null> {
     const user = await UserModel.findOne({ email })
 
-    if (user) return user.toJSON()
-    return null
+    if (!user) return null
+
+    return { ...user.toJSON(), id: user.id }
   }
 
   public async createUser(userData: UserDTO): Promise<void> {
