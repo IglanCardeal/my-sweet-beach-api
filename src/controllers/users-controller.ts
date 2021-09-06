@@ -45,7 +45,7 @@ export class UsersController extends BaseController {
   }
 
   @Post('')
-  public async getForecastForLoggedUser(
+  public async createUser(
     req: Request,
     res: Response
   ): Promise<void> {
