@@ -7,6 +7,7 @@ describe('Create User Service', () => {
   })
 
   const userData = {
+    id: 'some-id',
     name: 'another fake name',
     email: 'fake2@email.com',
     password: '123456'

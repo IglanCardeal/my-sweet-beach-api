@@ -3,6 +3,7 @@ import { InMemoryUserRepo, users } from './in-memory-repository'
 
 describe('Auth User Service', () => {
   const userData = {
+    id: 'some-id',
     name: 'fake name',
     email: 'fake@email.com',
     password: '123'
