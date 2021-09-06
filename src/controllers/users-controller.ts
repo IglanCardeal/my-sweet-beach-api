@@ -7,23 +7,8 @@ import { AuthService } from '@src/services/auth/auth-service'
 
 @Controller('users')
 export class UsersController extends BaseController {
-  @Post('')
-  public async getForecastForLoggedUser (
-    req: Request,
-    res: Response
-  ): Promise<void> {
-    try {
-      const user = new UserModel(req.body.newUser)
-      const response = await user.save()
-
-      res.status(201).send(response)
-    } catch (error) {
-      this.sendCreateUpdateErrorResponse(res, error as any)
-    }
-  }
-
   @Post('authenticate')
-  public async authenticate (req: Request, res: Response): Promise<any> {
+  public async authenticate(req: Request, res: Response): Promise<any> {
     try {
       const { email, password } = req.body
 
@@ -50,6 +35,21 @@ export class UsersController extends BaseController {
       const token = AuthService.generateToken(user.toJSON())
 
       res.status(200).send({ token })
+    } catch (error) {
+      this.sendCreateUpdateErrorResponse(res, error as any)
+    }
+  }
+
+  @Post('')
+  public async getForecastForLoggedUser(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const user = new UserModel(req.body.newUser)
+      const response = await user.save()
+
+      res.status(201).send(response)
     } catch (error) {
       this.sendCreateUpdateErrorResponse(res, error as any)
     }
