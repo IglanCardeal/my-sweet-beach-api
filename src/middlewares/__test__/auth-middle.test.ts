@@ -19,7 +19,7 @@ describe('Auth Middleware', () => {
     expect(reqFake.decoded).toBeDefined()
   })
 
-  it('should return UNAUTHORIZED if there is a problem on the token verification', () => {
+  it('should return 401 (UNAUTHORIZED) if there is a problem on the token verification', () => {
     const reqFake = {
       headers: {
         'x-access-token': 'invalid-jwtToken'
@@ -38,5 +38,29 @@ describe('Auth Middleware', () => {
 
     expect(resFake.status).toHaveBeenCalledWith(401)
     expect(sendMock).toHaveBeenCalledWith({ code: 401, error: 'jwt malformed' })
+  })
+
+  it('should return 400 (BAD REQUEST) if no token was provided', () => {
+    const reqFake = {
+      headers: {
+        'x-access-token': ''
+      },
+      decoded: undefined
+    }
+    const sendMock = jest.fn()
+    const resFake = {
+      status: jest.fn(() => ({
+        send: sendMock
+      }))
+    }
+    const nextFake = jest.fn()
+
+    authMiddleware(reqFake, resFake as any, nextFake)
+
+    expect(resFake.status).toHaveBeenCalledWith(400)
+    expect(sendMock).toHaveBeenCalledWith({
+      code: 400,
+      error: 'Token was not provided'
+    })
   })
 })
