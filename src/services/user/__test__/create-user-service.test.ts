@@ -25,11 +25,13 @@ describe('Create User Service', () => {
     })
   })
 
-  it('should create a new user and insert it on users', async () => {
+  it('should create a new user and insert it on users array', async () => {
     const createUserService = new CreateUserService(inUserMemoRepo)
+    const result = await createUserService.execute(userData)
+    const passwordAreNotEqual = users[0].password !== result.password
 
-    await expect(createUserService.execute(userData)).resolves.toBeUndefined()
     expect(users).toHaveLength(1)
-    expect(users[0].email).toBe(userData.email)
+    expect(users[0].email).toBe(result.email)
+    expect(passwordAreNotEqual).toBe(true)
   })
 })

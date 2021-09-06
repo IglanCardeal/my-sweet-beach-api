@@ -7,7 +7,9 @@ export interface UserRepo {
 export class CreateUserService {
   constructor(private readonly userRepo: UserRepo) {}
 
-  public async execute(userData: UserDTO): Promise<void> {
+  public async execute(userData: UserDTO): Promise<UserDTO> {
     await this.userRepo.createUser(userData)
+
+    return { ...userData, password: '' }
   }
 }
