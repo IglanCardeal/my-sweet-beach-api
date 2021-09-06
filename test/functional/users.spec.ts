@@ -1,5 +1,5 @@
 import { UserModel } from '@src/models/user-model'
-import { AuthService } from '@src/services/auth/auth-service'
+// import { AuthService } from '@src/services/auth/auth-service'
 
 describe('Users functional test', () => {
   describe('When creating a new user', () => {
@@ -7,7 +7,7 @@ describe('Users functional test', () => {
       await UserModel.deleteMany({})
     })
 
-    it('should successfully create a new user with encrypted password', async () => {
+    it('should successfully create a new user but do not return encrypted password', async () => {
       const newUser = {
         name: 'Foo Bar',
         email: 'foo@mail.com',
@@ -15,10 +15,6 @@ describe('Users functional test', () => {
       }
 
       const response = await global.testRequest.post('/users').send({ newUser })
-      const comparePasswordResult = await AuthService.comparePassword(
-        newUser.password,
-        response.body.password
-      )
 
       expect(response.status).toBe(201)
       expect(response.body).toEqual(
@@ -27,7 +23,7 @@ describe('Users functional test', () => {
           ...{ password: expect.any(String) }
         })
       )
-      expect(comparePasswordResult).toBe(true)
+      expect(response.body.password).toBe('')
     })
 
     it('should return 422 when there is validation error', async () => {
