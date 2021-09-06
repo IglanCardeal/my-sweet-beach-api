@@ -9,4 +9,10 @@ export class UserMongoRepository implements UserRepo {
     if (user) return user.toJSON()
     return null
   }
+
+  public async createUser(userData: UserDTO): Promise<void> {
+    const user = new UserModel(userData)
+
+    await user.save()
+  }
 }

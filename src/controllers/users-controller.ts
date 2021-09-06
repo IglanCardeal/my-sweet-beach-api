@@ -3,10 +3,10 @@ import { Request, Response } from 'express'
 
 import { BaseController } from './base'
 
-import { UserModel } from '@src/models/user-model'
 import { UserMongoRepository } from '@src/repositories/user-repo'
 import { AuthUserService } from '@src/services/user/auth-user-service'
 import { AuthService } from '@src/services/auth/auth-service'
+import { CreateUserService } from '@src/services/user/create-user-service'
 
 @Controller('users')
 export class UsersController extends BaseController {
@@ -45,13 +45,12 @@ export class UsersController extends BaseController {
   }
 
   @Post('')
-  public async createUser(
-    req: Request,
-    res: Response
-  ): Promise<void> {
+  public async createUser(req: Request, res: Response): Promise<void> {
     try {
-      const user = new UserModel(req.body.newUser)
-      const response = await user.save()
+      const userData = req.body.newUser
+      const userRepo = new UserMongoRepository()
+      const createUserService = new CreateUserService(userRepo)
+      const response = await createUserService.execute(userData)
 
       res.status(201).send(response)
     } catch (error) {
