@@ -1,14 +1,13 @@
-import { UserDTO } from "./user-dto"
+import { UserDTO } from './user-dto'
 
 export interface UserRepo {
   createUser: (userData: UserDTO) => Promise<void>
 }
 
 export class CreateUserService {
-  constructor(private readonly userRepo?: UserRepo) {}
+  constructor(private readonly userRepo: UserRepo) {}
 
-  public async execute(userData?: UserDTO): Promise<void> {
-    (userData)
-    return 
+  public async execute(userData: UserDTO): Promise<void> {
+    await this.userRepo.createUser(userData)
   }
 }
