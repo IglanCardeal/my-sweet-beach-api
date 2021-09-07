@@ -41,10 +41,20 @@ describe('Auth User Service', () => {
     expect(token.length).toBeGreaterThan(1)
   })
 
-  it('should return undefined if the user email does not exist', async () => {
+  it('should return null user if the user email does not exist', async () => {
     const authUserService = new AuthUserService(inUserMemoRepo)
-    const {user} = await authUserService.execute('other@email.com', '123456')
+    const { user } = await authUserService.execute('other@email.com', '123456')
 
     expect(user).toBe(null)
+  })
+
+  it('should return false password comparison result if the user pasword is no correct', async () => {
+    const authUserService = new AuthUserService(inUserMemoRepo)
+    const { passwordComparisonResult } = await authUserService.execute(
+      'other@email.com',
+      'wrong-pass'
+    )
+
+    expect(passwordComparisonResult).toBe(false)
   })
 })
