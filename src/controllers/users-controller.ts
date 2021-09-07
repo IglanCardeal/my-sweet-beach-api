@@ -5,7 +5,6 @@ import { BaseController } from './base'
 
 import { UserMongoRepository } from '@src/repositories/user-repo'
 import { AuthUserService } from '@src/services/user/auth-user-service'
-import { AuthService } from '@src/services/auth/auth-service'
 import { CreateUserService } from '@src/services/user/create-user-service'
 
 @Controller('users')
@@ -16,18 +15,18 @@ export class UsersController extends BaseController {
       const { email, password } = req.body
       const userRepo = new UserMongoRepository()
       const authUserService = new AuthUserService(userRepo)
-      const user = await authUserService.execute(email)
+      const {
+        user,
+        passwordComparisonResult,
+        token
+      } = await authUserService.execute(email, password)
 
-      if (!user)
+      if (!user) {
         return res.status(401).send({
           code: 401,
           error: 'User not found with the given email address'
         })
-
-      const passwordComparisonResult = await AuthService.comparePassword(
-        password,
-        user.password
-      )
+      }
 
       if (!passwordComparisonResult) {
         return res.status(401).send({
@@ -35,8 +34,6 @@ export class UsersController extends BaseController {
           error: 'Incorrect password'
         })
       }
-
-      const token = AuthService.generateToken(user)
 
       res.status(200).send({ token })
     } catch (error) {

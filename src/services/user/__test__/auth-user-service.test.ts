@@ -1,3 +1,4 @@
+import { AuthService } from '@src/services/auth/auth-service'
 import { AuthUserService } from '../auth-user-service'
 import { InMemoryUserRepo, users } from './in-memory-repository'
 
@@ -10,8 +11,9 @@ describe('Auth User Service', () => {
   }
   const inUserMemoRepo = new InMemoryUserRepo()
 
-  beforeAll(() => {
-    users.push(userData)
+  beforeAll(async () => {
+    const hashedPass = await AuthService.hashPassword(userData.password)
+    users.push({ ...userData, password: hashedPass })
   })
 
   describe('Pre Conditions', () => {
@@ -28,17 +30,21 @@ describe('Auth User Service', () => {
 
   it('should return user data if the user email exist', async () => {
     const authUserService = new AuthUserService(inUserMemoRepo)
-    const result = await authUserService.execute(userData.email) as any
+    const {
+      user,
+      passwordComparisonResult,
+      token
+    } = await authUserService.execute(userData.email, userData.password)
 
-    expect(result).toBeDefined()
-    expect(result.name).toBeDefined()
-    expect(result.email).toBe(userData.email)
+    expect(user).toBeDefined()
+    expect(passwordComparisonResult).toBe(true)
+    expect(token.length).toBeGreaterThan(1)
   })
 
   it('should return undefined if the user email does not exist', async () => {
     const authUserService = new AuthUserService(inUserMemoRepo)
-    const result = await authUserService.execute('other@email.com')
+    const {user} = await authUserService.execute('other@email.com', '123456')
 
-    expect(result).toBeUndefined()
+    expect(user).toBe(null)
   })
 })
