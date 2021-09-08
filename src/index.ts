@@ -8,12 +8,7 @@ import config from 'config'
 
   await server.init()
 
-  const msg = `
-===============================
-Server ON 
-Listening on port: ${PORT}
-===============================
-`
+  const msg = `Server ON Listening on port: ${PORT}`
 
   server.start(msg)
 })()

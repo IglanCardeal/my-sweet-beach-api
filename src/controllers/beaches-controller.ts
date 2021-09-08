@@ -1,6 +1,5 @@
 import { ClassMiddleware, Controller, Post } from '@overnightjs/core'
 import { Request, Response } from 'express'
-import { Error } from 'mongoose'
 
 import { CreateBeachService } from '@src/services/beach/create-beach-service'
 import { BeachDTO } from '@src/services/beach/beach-dto'
@@ -8,10 +7,11 @@ import { BeachDTO } from '@src/services/beach/beach-dto'
 import { BeachMongoRepository } from '@src/repositories/beach-repo'
 
 import { authMiddleware } from '@src/middlewares/auth-middle'
+import { BaseController } from './base'
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)
-export class BeachesController {
+export class BeachesController extends BaseController{
   @Post('')
   public async create (req: Request, res: Response): Promise<void> {
     const { newBeach } = req.body
@@ -25,9 +25,10 @@ export class BeachesController {
 
       res.status(201).send(beachData)
     } catch (err) {
-      if (err instanceof Error.ValidationError)
-        res.status(422).send({ error: err.message })
-      else res.status(500).send({ error: 'Internal Server Error' })
+      this.sendCreateUpdateErrorResponse(res, err as any)
+      // if (err instanceof Error.ValidationError)
+      //   res.status(422).send({ error: err.message })
+      // else res.status(500).send({ error: 'Internal Server Error' })
     }
   }
 }

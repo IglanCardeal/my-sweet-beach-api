@@ -13,6 +13,10 @@
         "apiUrl": "STORM_GLASS_API_URL",
         "apiToken": "STOM_GLASS_API_TOKEN"
       }
+    },
+    "logger": {
+      "enabled": true,
+      "level": "info"
     }
   }
 }

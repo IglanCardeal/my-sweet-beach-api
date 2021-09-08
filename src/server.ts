@@ -6,6 +6,7 @@ import { ForecastController } from './controllers/forecast-controller'
 import { BeachesController } from './controllers/beaches-controller'
 import { Database } from './database'
 import { UsersController } from './controllers/users-controller'
+import { Logger } from './infra/logger'
 
 export class SetupServer extends Server {
   private port: number
@@ -23,8 +24,8 @@ export class SetupServer extends Server {
 
   public start (msg: string): void {
     this.app.listen(this.port, () => {
-      console.info('\x1b[36m%s\x1b[0m', '[NODE_ENV]', process.env.NODE_ENV)
-      console.info('\x1b[33m%s\x1b[0m', '[SERVER INFO]', msg)
+      Logger.info('[NODE_ENV]: ' +  process.env.NODE_ENV)
+      Logger.info('[SERVER INFO]: ' + msg)
     })
   }
 
@@ -53,7 +54,7 @@ export class SetupServer extends Server {
     try {
       await Database.connect()
     } catch (error) {
-      console.log('[DATABASE] Database connection error: ', error)
+      Logger.log('[DATABASE] Database connection error: ', error)
       process.exit(1)
     }
   }

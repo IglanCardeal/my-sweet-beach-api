@@ -1,3 +1,4 @@
+import { Logger } from '@src/infra/logger'
 import { CUSTOM_VALIDATION } from '@src/models/user-model'
 import { Response } from 'express'
 import { Error } from 'mongoose'
@@ -15,6 +16,8 @@ export abstract class BaseController {
 
       return res.status(code).send({ code: code, error: error })
     }
+
+    Logger.error(err)
 
     return res.status(500).send({ code: 500, error: 'Something went wrong!' })
   }

@@ -36,8 +36,8 @@ export class UsersController extends BaseController {
       }
 
       res.status(200).send({ token })
-    } catch (error) {
-      this.sendCreateUpdateErrorResponse(res, error as any)
+    } catch (err) {
+      this.sendCreateUpdateErrorResponse(res, err as any)
     }
   }
 
@@ -50,8 +50,8 @@ export class UsersController extends BaseController {
       const response = await createUserService.execute(userData)
 
       res.status(201).send(response)
-    } catch (error) {
-      this.sendCreateUpdateErrorResponse(res, error as any)
+    } catch (err) {
+      this.sendCreateUpdateErrorResponse(res, err as any)
     }
   }
 }

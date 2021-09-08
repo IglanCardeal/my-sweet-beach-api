@@ -5,11 +5,12 @@ import { authMiddleware } from '@src/middlewares/auth-middle'
 import { ProcessForecastForBeachesService } from '@src/services/forecast/forecast-service'
 import { GetUserBeachesService } from '@src/services/beach/get-user-beaches-service'
 import { BeachMongoRepository } from '@src/repositories/beach-repo'
+import { BaseController } from './base'
 
 // define um base match da rota: /forecast
 @Controller('forecast')
 @ClassMiddleware(authMiddleware)
-export class ForecastController {
+export class ForecastController extends BaseController{
   // match em uma rota do tipo: /forecast
   @Get('')
   public async getForecastForLoggedUser (
@@ -26,11 +27,8 @@ export class ForecastController {
       const forecastData = await processForecast.execute(beaches)
 
       res.status(200).send(forecastData)
-    } catch (error) {
-      console.error(error)
-
-      if (error instanceof Error)
-        res.status(500).send({ error: 'Internal Server Error' })
+    } catch (err) {
+      this.sendCreateUpdateErrorResponse(res, err as any)
     }
   }
 }

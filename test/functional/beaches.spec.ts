@@ -51,6 +51,7 @@ describe('Beaches functional tests', () => {
         .send({ newBeach })
 
       expect(response.status).toBe(422)
+      console.debug(response.body)
       expect(response.body).toEqual({
         error:
           'Beach validation failed: lat: Cast to Number failed for value "invalid string" (type string) at path "lat"'
@@ -76,7 +77,7 @@ describe('Beaches functional tests', () => {
 
       expect(response.status).toBe(500)
       expect(response.body).toEqual({
-        error: 'Internal Server Error'
+        error: 'Something went wrong!'
       })
 
       spy.mockRestore()
