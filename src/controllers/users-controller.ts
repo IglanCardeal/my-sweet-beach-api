@@ -9,7 +9,7 @@ import { CreateUserService } from '@src/services/user/create-user-service'
 
 @Controller('users')
 export class UsersController extends BaseController {
-  @Post('') // mudar esse PATH para 'create'
+  @Post('/create')
   public async createUser(req: Request, res: Response): Promise<void> {
     try {
       const userData = req.body.newUser
