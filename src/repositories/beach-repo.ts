@@ -1,4 +1,4 @@
-import { BeachModel } from '@src/models/beach-model'
+import { BeachModel } from '@src/infra/models/beach-model'
 import { BeachDTO } from '@src/services/beach/beach-dto'
 import { BeachRepo } from '@src/services/beach/ports/beach-repo'
 

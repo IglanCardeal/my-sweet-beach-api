@@ -1,4 +1,4 @@
-import { UserModel } from '@src/models/user-model'
+import { UserModel } from '@src/infra/models/user-model'
 import { UserRepo } from '@src/services/user/ports/user-repo'
 import { UserDTO } from '@src/services/user/user-dto'
 

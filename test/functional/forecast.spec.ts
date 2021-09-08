@@ -2,9 +2,9 @@
 // objeto global de testes
 import nock from 'nock'
 
-import { BeachModel, BeachPosition } from '@src/models/beach-model'
+import { BeachModel, BeachPosition } from '@src/infra/models/beach-model'
 import { apiForecastResponse } from '@test/fixtures/api-forecast-response'
-import { UserModel } from '@src/models/user-model'
+import { UserModel } from '@src/infra/models/user-model'
 
 import stormGlassApiResponse from '@test/fixtures/stormglass-response.json'
 import { AuthService } from '@src/services/auth/auth-service'

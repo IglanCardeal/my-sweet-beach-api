@@ -8,8 +8,6 @@ let server: SetupServer
 const startServer = async () => {
   server = new SetupServer()
 
-  console.error = () => undefined
-
   await server.init()
 
   const app = server.getApp()

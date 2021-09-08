@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { AuthService } from '@src/services/auth/auth-service'
 import { Schema, Document, model, models } from 'mongoose'
+import { Logger } from '../logger'
 
 export enum CUSTOM_VALIDATION {
   DUPLICATED = 'DUPLICATED'
@@ -50,8 +51,8 @@ schema.pre<UserDocument>('save', async function (): Promise<void> {
   try {
     this.password = await AuthService.hashPassword(this.password)
   } catch (error) {
-    console.info(`Error hashing the password for the user: ${this.name}`)
-    console.error(error)
+    Logger.info(`Error hashing the password for the user: ${this.name}`)
+    Logger.error(error as any)
   }
 })
 

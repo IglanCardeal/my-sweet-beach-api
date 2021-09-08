@@ -1,4 +1,4 @@
-import { UserModel } from '@src/models/user-model'
+import { UserModel } from '@src/infra/models/user-model'
 // import { AuthService } from '@src/services/auth/auth-service'
 
 describe('Users functional test', () => {

@@ -1,5 +1,5 @@
 import { Logger } from '@src/infra/logger'
-import { CUSTOM_VALIDATION } from '@src/models/user-model'
+import { CUSTOM_VALIDATION } from '@src/infra/models/user-model'
 import { Response } from 'express'
 import { Error } from 'mongoose'
 

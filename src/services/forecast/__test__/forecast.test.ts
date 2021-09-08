@@ -1,5 +1,5 @@
 import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
-import { Beach, BeachPosition } from '@src/models/beach-model'
+import { Beach, BeachPosition } from '@src/infra/models/beach-model'
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass-response-normalized.json'
 
 import { ProcessForecastForBeachesService } from '../forecast-service'

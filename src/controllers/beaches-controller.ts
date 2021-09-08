@@ -6,7 +6,7 @@ import { BeachDTO } from '@src/services/beach/beach-dto'
 
 import { BeachMongoRepository } from '@src/repositories/beach-repo'
 
-import { authMiddleware } from '@src/middlewares/auth-middle'
+import { authMiddleware } from '@src/infra/middlewares/auth-middle'
 import { BaseController } from './base'
 
 @Controller('beaches')

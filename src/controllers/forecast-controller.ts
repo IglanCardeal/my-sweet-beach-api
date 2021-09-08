@@ -1,7 +1,7 @@
 import { ClassMiddleware, Controller, Get } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
-import { authMiddleware } from '@src/middlewares/auth-middle'
+import { authMiddleware } from '@src/infra/middlewares/auth-middle'
 import { ProcessForecastForBeachesService } from '@src/services/forecast/forecast-service'
 import { GetUserBeachesService } from '@src/services/beach/get-user-beaches-service'
 import { BeachMongoRepository } from '@src/repositories/beach-repo'
