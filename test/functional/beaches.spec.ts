@@ -51,17 +51,19 @@ describe('Beaches functional tests', () => {
         .send({ newBeach })
 
       expect(response.status).toBe(422)
-      expect(response.body).toEqual({
-        code: 422,
-        error:
-          'Beach validation failed: lat: Cast to Number failed for value "invalid string" (type string) at path "lat"'
-      })
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          code: 422,
+          message:
+            'Beach validation failed: lat: Cast to Number failed for value "invalid string" (type string) at path "lat"'
+        })
+      )
     })
 
     it('should return 500 when there is any error other than validation error', async () => {
       const spy = jest
         .spyOn(BeachModel.prototype, 'save')
-        .mockRejectedValue({ error: 'any' })
+        .mockRejectedValue({ message: 'any' })
 
       const newBeach = {
         lat: -33.792726,
@@ -76,10 +78,12 @@ describe('Beaches functional tests', () => {
         .send({ newBeach })
 
       expect(response.status).toBe(500)
-      expect(response.body).toEqual({
-        code: 500,
-        error: 'Something went wrong!'
-      })
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          code: 500,
+          message: 'Something went wrong!'
+        })
+      )
 
       spy.mockRestore()
     })
