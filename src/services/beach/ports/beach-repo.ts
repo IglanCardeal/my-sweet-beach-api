@@ -1,6 +1,4 @@
-import { BeachDTO } from '../beach-dto'
+import { BeachRepo as CreateBeachRepo } from '../create-beach-service'
+import { BeachRepo as GetUserBeachRepo } from '../get-user-beaches-service'
 
-export interface BeachRepo {
-  create: (beach: BeachDTO) => Promise<void>
-  findBeachesByUserId: (userId: string) => Promise<BeachDTO[]>
-}
+export interface BeachRepository extends CreateBeachRepo, GetUserBeachRepo {}

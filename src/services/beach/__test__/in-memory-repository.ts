@@ -1,9 +1,9 @@
 import { BeachDTO } from '../beach-dto'
-import { BeachRepo } from '../ports/beach-repo'
+import { BeachRepository } from '../ports/beach-repo'
 
 export const beaches: BeachDTO[] = []
 
-export class InMemoryRepo implements BeachRepo {
+export class InMemoryRepo implements BeachRepository {
   public async create (data: BeachDTO): Promise<void> {
     beaches.push(data)
   }

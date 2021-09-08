@@ -1,8 +1,8 @@
 import { UserModel } from '@src/infra/models/user-model'
-import { UserRepo } from '@src/services/user/ports/user-repo'
+import { UserRepository } from '@src/services/user/ports/user-repo'
 import { UserDTO } from '@src/services/user/user-dto'
 
-export class UserMongoRepository implements UserRepo {
+export class UserMongoRepository implements UserRepository {
   public async findUserByEmail(email: string): Promise<UserDTO | null> {
     const user = await UserModel.findOne({ email })
 

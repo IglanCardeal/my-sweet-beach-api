@@ -1,6 +1,6 @@
 import { BeachDTO } from './beach-dto'
 
-interface BeachRepo {
+export interface BeachRepo {
   findBeachesByUserId: (userId: string) => Promise<BeachDTO[]>
 }
 

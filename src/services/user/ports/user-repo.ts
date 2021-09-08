@@ -1,6 +1,4 @@
-import { UserDTO } from '../user-dto'
+import { UserRepo as AuthUserRepo } from '../auth-user-service'
+import { UserRepo as CreateUserRepo } from '../create-user-service'
 
-export interface UserRepo {
-  findUserByEmail: (email: string) => Promise<UserDTO | null>
-  createUser: (userData: UserDTO) => Promise<void>
-}
+export interface UserRepository extends AuthUserRepo, CreateUserRepo {}

@@ -1,7 +1,7 @@
 import { BeachDTO } from './beach-dto'
 import { ParamError } from './error'
 
-interface BeachRepo {
+export interface BeachRepo {
   create: (beach: BeachDTO) => Promise<void>
 }
 
