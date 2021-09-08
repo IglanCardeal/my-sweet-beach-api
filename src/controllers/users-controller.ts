@@ -9,6 +9,20 @@ import { CreateUserService } from '@src/services/user/create-user-service'
 
 @Controller('users')
 export class UsersController extends BaseController {
+  @Post('') // mudar esse PATH para 'create'
+  public async createUser(req: Request, res: Response): Promise<void> {
+    try {
+      const userData = req.body.newUser
+      const userRepo = new UserMongoRepository()
+      const createUserService = new CreateUserService(userRepo)
+      const response = await createUserService.execute(userData)
+
+      res.status(201).send(response)
+    } catch (err) {
+      this.sendCreateUpdateErrorResponse(res, err as any)
+    }
+  }
+
   @Post('authenticate')
   public async authenticate(req: Request, res: Response): Promise<any> {
     try {
@@ -22,7 +36,7 @@ export class UsersController extends BaseController {
       } = await authUserService.execute(email, password)
 
       if (!user) {
-        this.sendErrorResponse(res, {
+        return this.sendErrorResponse(res, {
           code: 401,
           message: 'User not found with the given email address'
         })
@@ -38,20 +52,6 @@ export class UsersController extends BaseController {
       res.status(200).send({ token })
     } catch (err) {
       this.sendErrorResponse(res, err as any)
-    }
-  }
-
-  @Post('')
-  public async createUser(req: Request, res: Response): Promise<void> {
-    try {
-      const userData = req.body.newUser
-      const userRepo = new UserMongoRepository()
-      const createUserService = new CreateUserService(userRepo)
-      const response = await createUserService.execute(userData)
-
-      res.status(201).send(response)
-    } catch (err) {
-      this.sendCreateUpdateErrorResponse(res, err as any)
     }
   }
 }
