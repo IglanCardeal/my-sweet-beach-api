@@ -1,4 +1,4 @@
-import '../module-alias'
+import './utils/module-alias'
 
 import { Server } from '@overnightjs/core'
 import { Application, json } from 'express'
