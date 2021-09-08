@@ -35,10 +35,10 @@ describe('Users functional test', () => {
       const response = await global.testRequest.post('/users').send({ newUser })
 
       expect(response.status).toBe(422)
-      expect(response.body).toEqual({
+      expect(response.body).toEqual(expect.objectContaining({
         code: 422,
-        error: 'User validation failed: name: Path `name` is required.'
-      })
+        message: 'User validation failed: name: Path `name` is required.'
+      }))
     })
 
     it('should return 409 when the email is already in use', async () => {
@@ -51,10 +51,10 @@ describe('Users functional test', () => {
       const response = await global.testRequest.post('/users').send({ newUser })
 
       expect(response.status).toBe(409)
-      expect(response.body).toEqual({
+      expect(response.body).toEqual(expect.objectContaining({
         code: 409,
-        error: 'User validation failed: email: already exist in the database.'
-      })
+        message: 'User validation failed: email: already exist in the database.'
+      }))
     })
   })
 
