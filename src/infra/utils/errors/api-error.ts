@@ -1,4 +1,4 @@
-import hsc from 'http-status-codes'
+import * as hsc from 'http-status-codes'
 
 export interface APIError {
   code: number
@@ -19,7 +19,7 @@ export class ApiError {
       code: error.code,
       error: error.codeAsString
         ? error.codeAsString
-        : hsc.getStatusText(error.code)
+        : hsc.getReasonPhrase(error.code)
     }
     const mergedBase = {
       ...base,
