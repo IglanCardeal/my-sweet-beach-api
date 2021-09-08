@@ -2,6 +2,8 @@ import './utils/module-alias'
 
 import { Server } from '@overnightjs/core'
 import { Application, json } from 'express'
+import expressPinoLogger from 'express-pino-logger'
+import cors from 'cors'
 
 import { ForecastController } from '@src/controllers/forecast-controller'
 import { BeachesController } from '@src/controllers/beaches-controller'
@@ -13,33 +15,35 @@ import { Logger } from '@src/infra/logger'
 export class SetupServer extends Server {
   private port: number
 
-  constructor (port = 3000) {
+  constructor(port = 3000) {
     super()
     this.port = port
   }
 
-  public async init (): Promise<void> {
+  public async init(): Promise<void> {
     this.setupExpress()
     this.setupControllers()
     await this.setupDatabase()
   }
 
-  public start (msg: string): void {
+  public start(msg: string): void {
     this.app.listen(this.port, () => {
-      Logger.info('[NODE_ENV]: ' +  process.env.NODE_ENV)
+      Logger.info('[NODE_ENV]: ' + process.env.NODE_ENV)
       Logger.info('[SERVER INFO]: ' + msg)
     })
   }
 
-  public getApp (): Application {
+  public getApp(): Application {
     return this.app
   }
 
-  private setupExpress (): void {
+  private setupExpress(): void {
     this.app.use(json())
+    this.app.use(cors({ origin: '*' }))
+    this.app.use(expressPinoLogger({ logger: Logger }))
   }
 
-  private setupControllers (): void {
+  private setupControllers(): void {
     const forecastController = new ForecastController()
     const beachesController = new BeachesController()
     const usersController = new UsersController()
@@ -52,7 +56,7 @@ export class SetupServer extends Server {
     ])
   }
 
-  private async setupDatabase (): Promise<void> {
+  private async setupDatabase(): Promise<void> {
     try {
       await Database.connect()
     } catch (error) {
@@ -61,7 +65,7 @@ export class SetupServer extends Server {
     }
   }
 
-  public async stop (): Promise<void> {
+  public async stop(): Promise<void> {
     await Database.disconnect()
   }
 }
