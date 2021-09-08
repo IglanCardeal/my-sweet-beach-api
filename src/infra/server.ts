@@ -1,12 +1,14 @@
-import './infra/utils/module-alias'
+import '../module-alias'
 
 import { Server } from '@overnightjs/core'
 import { Application, json } from 'express'
-import { ForecastController } from './controllers/forecast-controller'
-import { BeachesController } from './controllers/beaches-controller'
-import { Database } from './database'
-import { UsersController } from './controllers/users-controller'
-import { Logger } from './infra/logger'
+
+import { ForecastController } from '@src/controllers/forecast-controller'
+import { BeachesController } from '@src/controllers/beaches-controller'
+import { UsersController } from '@src/controllers/users-controller'
+
+import { Database } from '@src/infra/database'
+import { Logger } from '@src/infra/logger'
 
 export class SetupServer extends Server {
   private port: number

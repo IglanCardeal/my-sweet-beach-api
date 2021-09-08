@@ -1,4 +1,4 @@
-import { SetupServer } from '@src/server'
+import { SetupServer } from '@src/infra/server'
 import supertest from 'supertest'
 
 // Este arquivo é responsável por inicializar o servidor para todos os

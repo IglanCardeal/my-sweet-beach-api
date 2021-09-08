@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "start": "NODE_ENV=production node dist/src/index.js",
-    "dev": "NODE_ENV=development ts-node-dev --files src/index.ts | pino-pretty -c",
+    "start": "NODE_ENV=production node dist/src/infra/index.js",
+    "dev": "NODE_ENV=development ts-node-dev --files src/infra/index.ts | pino-pretty -c",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint 'src/**/*.ts' 'test/**/*.ts' --fix",
     "test": "yarn test:unit --verbose && yarn test:functional --verbose",
