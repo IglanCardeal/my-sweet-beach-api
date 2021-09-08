@@ -26,9 +26,6 @@ export class BeachesController extends BaseController{
       res.status(201).send(beachData)
     } catch (err) {
       this.sendCreateUpdateErrorResponse(res, err as any)
-      // if (err instanceof Error.ValidationError)
-      //   res.status(422).send({ error: err.message })
-      // else res.status(500).send({ error: 'Internal Server Error' })
     }
   }
 }
