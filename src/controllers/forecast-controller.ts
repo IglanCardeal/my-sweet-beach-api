@@ -6,6 +6,7 @@ import { ProcessForecastForBeachesService } from '@src/services/forecast/forecas
 import { GetUserBeachesService } from '@src/services/beach/get-user-beaches-service'
 import { BeachMongoRepository } from '@src/repositories/beach-repo'
 import { BaseController } from './base'
+import { Logger } from '@src/infra/logger'
 
 // define um base match da rota: /forecast
 @Controller('forecast')
@@ -28,7 +29,8 @@ export class ForecastController extends BaseController{
 
       res.status(200).send(forecastData)
     } catch (err) {
-      this.sendCreateUpdateErrorResponse(res, err as any)
+      Logger.error(err as any)
+      this.sendErrorResponse(res, err as any)
     }
   }
 }
