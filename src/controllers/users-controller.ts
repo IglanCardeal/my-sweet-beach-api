@@ -22,22 +22,22 @@ export class UsersController extends BaseController {
       } = await authUserService.execute(email, password)
 
       if (!user) {
-        return res.status(401).send({
+        this.sendErrorResponse(res, {
           code: 401,
-          error: 'User not found with the given email address'
+          message: 'User not found with the given email address'
         })
       }
 
       if (!passwordComparisonResult) {
-        return res.status(401).send({
+        return this.sendErrorResponse(res, {
           code: 401,
-          error: 'Incorrect password'
+          message: 'Incorrect password'
         })
       }
 
       res.status(200).send({ token })
     } catch (err) {
-      this.sendCreateUpdateErrorResponse(res, err as any)
+      this.sendErrorResponse(res, err as any)
     }
   }
 
