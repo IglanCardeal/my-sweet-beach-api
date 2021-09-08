@@ -43,7 +43,9 @@ describe('Auth Middleware', () => {
     authMiddleware(reqFake, resFake as any, nextFake)
 
     expect(resFake.status).toHaveBeenCalledWith(401)
-    expect(sendMock).toHaveBeenCalledWith({ code: 401, error: 'jwt malformed' })
+    expect(sendMock).toHaveBeenCalledWith(
+      expect.objectContaining({ code: 401, message: 'jwt malformed' })
+    )
   })
 
   it('should return 400 (BAD REQUEST) if no token was provided', () => {
@@ -64,9 +66,11 @@ describe('Auth Middleware', () => {
     authMiddleware(reqFake, resFake as any, nextFake)
 
     expect(resFake.status).toHaveBeenCalledWith(400)
-    expect(sendMock).toHaveBeenCalledWith({
-      code: 400,
-      error: 'Token was not provided'
-    })
+    expect(sendMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        code: 400,
+        message: 'Token was not provided'
+      })
+    )
   })
 })

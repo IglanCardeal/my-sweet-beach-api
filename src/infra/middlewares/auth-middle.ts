@@ -1,5 +1,6 @@
 import { AuthService } from '@src/services/auth/auth-service'
 import { NextFunction, Request, Response } from 'express'
+import { ApiError } from '../utils/errors/api-error'
 import { MissingTokenError } from './errors/auth-middle-errors'
 
 export const authMiddleware = (
@@ -26,6 +27,8 @@ export const authMiddleware = (
     if (error instanceof Error) code = 401
     if (error instanceof MissingTokenError) code = 400
 
-    res?.status?.(code).send({ code: code, error: error.message })
+    res
+      ?.status?.(code)
+      .send(ApiError.format({ code: code, message: error.message }))
   }
 }
