@@ -1,11 +1,11 @@
-import * as HTTPUtil from '@src/utils/http/request'
+import * as HTTPUtil from '@src/infra/utils/http/request'
 
 import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
 
 import stormGlassApiResponseExample from '@test/fixtures/stormglass-response.json'
 import stormGlassApiResponseNormalizedExample from '@test/fixtures/stormglass-response-normalized.json'
 
-jest.mock('@src/utils/http/request')
+jest.mock('@src/infra/utils/http/request')
 
 describe('StormGlass Client', () => {
   const MockedRequestClass = HTTPUtil.Request as jest.Mocked<

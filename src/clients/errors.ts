@@ -1,7 +1,7 @@
 /**
  * Essas classes de erros são para tratamento de erros da classe `StormGlassHttpClient`.
  */
-import { InternalError } from '@src/utils/errors/internal-error'
+import { InternalError } from '@src/infra/utils/errors/internal-error'
 
 /**
  * trata erros de chamada do cliente da API do Storm Glass

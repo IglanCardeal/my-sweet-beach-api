@@ -1,4 +1,4 @@
-import { InternalError } from '@src/utils/errors/internal-error'
+import { InternalError } from '@src/infra/utils/errors/internal-error'
 
 export class ForecastProcessingInternalError extends InternalError {
   constructor (message: string) {

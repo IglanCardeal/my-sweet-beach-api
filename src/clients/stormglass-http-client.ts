@@ -1,5 +1,5 @@
 import config, { IConfig } from 'config'
-import * as HTTPUtil from '@src/utils/http/request'
+import * as HTTPUtil from '@src/infra/utils/http/request'
 
 import { ClientRequestError, StormGlassResponseError } from './errors'
 
