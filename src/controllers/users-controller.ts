@@ -1,4 +1,4 @@
-import { Controller, Post } from '@overnightjs/core'
+import { Controller, Get, Middleware, Post } from '@overnightjs/core'
 import { Request, Response } from 'express'
 
 import { BaseController } from './base'
@@ -6,10 +6,13 @@ import { BaseController } from './base'
 import { UserMongoRepository } from '@src/repositories/user-repo'
 import { AuthUserService } from '@src/services/user/auth-user-service'
 import { CreateUserService } from '@src/services/user/create-user-service'
+import { authMiddleware } from '@src/infra/middlewares/auth-middle'
+import { FindUserByEmailService } from '@src/services/user/find-user-by-email-service'
+// import { Logger } from '@src/infra/logger'
 
 @Controller('users')
 export class UsersController extends BaseController {
-  @Post('/create')
+  @Post('create')
   public async createUser(req: Request, res: Response): Promise<void> {
     try {
       const userData = req.body.newUser
@@ -50,6 +53,28 @@ export class UsersController extends BaseController {
       }
 
       res.status(200).send({ token })
+    } catch (err) {
+      this.sendErrorResponse(res, err as any)
+    }
+  }
+
+  @Get('me')
+  @Middleware(authMiddleware)
+  public async me(req: Request, res: Response): Promise<any> {
+    try {
+      const email = req.decoded?.email
+      const userRepo = new UserMongoRepository()
+      const findUserService = new FindUserByEmailService(userRepo)
+      const user = await findUserService.execute(email as string)
+
+      if (!user) {
+        return this.sendErrorResponse(res, {
+          code: 404,
+          message: 'User not found'
+        })
+      }
+
+      res.status(200).send({ user })
     } catch (err) {
       this.sendErrorResponse(res, err as any)
     }

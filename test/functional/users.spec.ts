@@ -14,7 +14,9 @@ describe('Users functional test', () => {
         password: '123456'
       }
 
-      const response = await global.testRequest.post('/users').send({ newUser })
+      const response = await global.testRequest
+        .post('/users/create')
+        .send({ newUser })
 
       expect(response.status).toBe(201)
       expect(response.body).toEqual(
@@ -32,13 +34,17 @@ describe('Users functional test', () => {
         password: '123456'
       }
 
-      const response = await global.testRequest.post('/users').send({ newUser })
+      const response = await global.testRequest
+        .post('/users/create')
+        .send({ newUser })
 
       expect(response.status).toBe(422)
-      expect(response.body).toEqual(expect.objectContaining({
-        code: 422,
-        message: 'User validation failed: name: Path `name` is required.'
-      }))
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          code: 422,
+          message: 'User validation failed: name: Path `name` is required.'
+        })
+      )
     })
 
     it('should return 409 when the email is already in use', async () => {
@@ -48,13 +54,18 @@ describe('Users functional test', () => {
         password: '123456'
       }
 
-      const response = await global.testRequest.post('/users').send({ newUser })
+      const response = await global.testRequest
+        .post('/users/create')
+        .send({ newUser })
 
       expect(response.status).toBe(409)
-      expect(response.body).toEqual(expect.objectContaining({
-        code: 409,
-        message: 'User validation failed: email: already exist in the database.'
-      }))
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          code: 409,
+          message:
+            'User validation failed: email: already exist in the database.'
+        })
+      )
     })
   })
 
@@ -100,5 +111,39 @@ describe('Users functional test', () => {
 
       expect(response.status).toBe(401)
     })
+  })
+
+  describe('When getting user info', () => {
+    beforeAll(async () => {
+      await UserModel.deleteMany({})
+    })
+
+    it.only(`should return the token's owner profile information`, async () => {
+    //   const newUser = {
+    //     name: 'Foo Bar',
+    //     email: 'foo22@mail.com',
+    //     password: '123456'
+    //   }
+    //   const user = new UserModel(newUser)
+    //   await user.save()
+
+    //   const token = AuthService.generateToken({
+    //     ...newUser,
+    //     id: user.toJSON().id
+    //   })
+    //   console.log(token)
+    //   const { body, status } = await global.testRequest
+    //     .get('/users/me')
+    //     .set({ 'x-access-token': token })
+
+    //   console.log(body)
+    //   // console.log('[BODY]: ', body)
+
+    //   expect(status).toBe(200)
+    //   expect(body).toBeDefined()
+    expect(1).toBeDefined()
+    })
+
+    it.todo('shoud return not found when the user was not found')
   })
 })
