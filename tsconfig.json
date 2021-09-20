@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2019",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "module": "commonjs",
     "lib": ["es2019"],
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "dist/src",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -17,6 +17,7 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "baseUrl": ".",
     "paths": {
       "@src/*": ["./src/*"],
