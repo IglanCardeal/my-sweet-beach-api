@@ -1,4 +1,7 @@
 import config from 'config'
+import { config as dotenv } from 'dotenv'
+
+dotenv()
 
 import { SetupServer } from './app'
 import { Logger } from './logger'
@@ -24,9 +27,10 @@ enum ExitCode {
 
 ;(async () => {
   try {
-    const PORT = config.get('App.port') as number
+    const PORT =
+      (process.env.PORT as string) || (config.get('App.port') as number)
     const msg = `Server ON Listening on port: ${PORT}`
-    const server = new SetupServer(PORT)
+    const server = new SetupServer(+PORT)
 
     await server.init()
     server.start(msg)
