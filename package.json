@@ -24,12 +24,14 @@
     "test:u": "yarn test:unit",
     "test:u:w": "yarn test:unit:watch",
     "test:u:v": "yarn test:unit:verbose",
+    "test:staged": "yarn test:unit",
     "test:ci": "yarn test:u --ci --updateSnapshot --coverage && yarn test:f --ci --updateSnapshot --coverage",
     "prepare": "husky install"
   },
   "lint-staged": {
     "./src/**/*.ts": [
-      "yarn lint:fix"
+      "yarn lint:fix",
+      "yarn test:staged"
     ]
   },
   "repository": {
