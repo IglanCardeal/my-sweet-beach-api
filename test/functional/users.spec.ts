@@ -137,9 +137,32 @@ describe('Users functional test', () => {
         .set({ 'x-access-token': token })
 
       expect(status).toBe(200)
-      expect(body).toBeDefined()
+      expect(body.user).toEqual(
+        expect.objectContaining({
+          name: 'Foo Bar',
+          email: 'foo22@mail.com',
+          id: expect.any(String),
+          password: expect.any(String)
+        })
+      )
     })
 
-    it.todo('shoud return not found when the user was not found')
+    it('shoud return not found when the user was not found', async () => {
+      const newUser = {
+        name: 'Foo Bar',
+        email: 'foo2@mail.com',
+        password: '123456'
+      }
+      const token = AuthService.generateToken({
+        ...newUser,
+        id: 'FAKE-ID'
+      })
+      const { body, status } = await global.testRequest
+        .get('/users/me')
+        .set({ 'x-access-token': token })
+
+      expect(status).toBe(404)
+      expect(body.user).toBeUndefined()
+    })
   })
 })
