@@ -13,7 +13,7 @@ import { FindUserByEmailService } from '@src/services/user/find-user-by-email-se
 @Controller('users')
 export class UsersController extends BaseController {
   @Post('create')
-  public async createUser(req: Request, res: Response): Promise<void> {
+  public async createUser (req: Request, res: Response): Promise<void> {
     try {
       const userData = req.body.newUser
       const userRepo = new UserMongoRepository()
@@ -27,7 +27,7 @@ export class UsersController extends BaseController {
   }
 
   @Post('authenticate')
-  public async authenticate(req: Request, res: Response): Promise<any> {
+  public async authenticate (req: Request, res: Response): Promise<any> {
     try {
       const { email, password } = req.body
       const userRepo = new UserMongoRepository()
@@ -60,7 +60,7 @@ export class UsersController extends BaseController {
 
   @Get('me')
   @Middleware(authMiddleware)
-  public async me(req: Request, res: Response): Promise<any> {
+  public async me (req: Request, res: Response): Promise<any> {
     try {
       const email = req.decoded?.email
       const userRepo = new UserMongoRepository()

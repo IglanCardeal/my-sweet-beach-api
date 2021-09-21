@@ -16,7 +16,6 @@ export const authMiddleware = (
     }
 
     const decodedUserData = AuthService.decodeToken(token as string)
-
     req.decoded = decodedUserData
 
     next()
