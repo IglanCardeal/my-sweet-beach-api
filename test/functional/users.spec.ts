@@ -1,4 +1,5 @@
 import { UserModel } from '@src/infra/models/user-model'
+import { AuthService } from '@src/services/auth/auth-service'
 // import { AuthService } from '@src/services/auth/auth-service'
 
 describe('Users functional test', () => {
@@ -118,30 +119,25 @@ describe('Users functional test', () => {
       await UserModel.deleteMany({})
     })
 
-    it.only(`should return the token's owner profile information`, async () => {
-    //   const newUser = {
-    //     name: 'Foo Bar',
-    //     email: 'foo22@mail.com',
-    //     password: '123456'
-    //   }
-    //   const user = new UserModel(newUser)
-    //   await user.save()
+    it(`should return the token's owner profile information`, async () => {
+      const newUser = {
+        name: 'Foo Bar',
+        email: 'foo22@mail.com',
+        password: '123456'
+      }
+      const user = new UserModel(newUser)
+      await user.save()
 
-    //   const token = AuthService.generateToken({
-    //     ...newUser,
-    //     id: user.toJSON().id
-    //   })
-    //   console.log(token)
-    //   const { body, status } = await global.testRequest
-    //     .get('/users/me')
-    //     .set({ 'x-access-token': token })
+      const token = AuthService.generateToken({
+        ...newUser,
+        id: user.toJSON().id
+      })
+      const { body, status } = await global.testRequest
+        .get('/users/me')
+        .set({ 'x-access-token': token })
 
-    //   console.log(body)
-    //   // console.log('[BODY]: ', body)
-
-    //   expect(status).toBe(200)
-    //   expect(body).toBeDefined()
-    expect(1).toBeDefined()
+      expect(status).toBe(200)
+      expect(body).toBeDefined()
     })
 
     it.todo('shoud return not found when the user was not found')
