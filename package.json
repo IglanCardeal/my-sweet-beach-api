@@ -18,7 +18,7 @@
     "test:f": "yarn test:functional",
     "test:f:w": "yarn test:functional:watch",
     "test:f:v": "yarn test:functional:verbose",
-    "test:unit": "jest --silent",
+    "test:unit": "jest --silent --passWithNoTests",
     "test:unit:watch": "jest --watch --silent",
     "test:unit:verbose": "jest --verbose",
     "test:u": "yarn test:unit",
