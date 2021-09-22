@@ -9,12 +9,8 @@ export class RatingService {
     wavePosition: string,
     windPosition: string
   ): number {
-    if (wavePosition === windPosition) {
-      return 1
-    }
-    if (this.isWindOffshore(windPosition, wavePosition)) {
-      return 5
-    }
+    if (wavePosition === windPosition) return 1
+    if (this.isWindOffshore(windPosition, wavePosition)) return 5
     return 3
   }
 
@@ -40,21 +36,15 @@ export class RatingService {
         max: 2.5
       }
     }
-    if (
+    const ok =
       heigh >= waveHeights.ankleToKnee.min &&
       heigh < waveHeights.ankleToKnee.max
-    ) {
-      return 2
-    }
-    if (
-      heigh >= waveHeights.waistHigh.min &&
-      heigh < waveHeights.waistHigh.max
-    ) {
-      return 3
-    }
-    if (heigh >= waveHeights.headHigh.min) {
-      return 5
-    }
+    const good =
+      heigh >= waveHeights.waistHigh.min && heigh < waveHeights.waistHigh.max
+    const veryGood = heigh >= waveHeights.headHigh.min
+    if (ok) return 2
+    if (good) return 3
+    if (veryGood) return 5
     return 1
   }
 
