@@ -64,4 +64,26 @@ describe('Rating Service', () => {
       expect(rating).toBe(5)
     })
   })
+
+  describe('Get rating base on swell height', () => {
+    it('should get rating 1 for a less than ankle to knee high swell', () => {
+      const rating = defaultConfig.getRatingForSwellHeight(0.2)
+      expect(rating).toBe(1)
+    })
+
+    it('should get rating 2 for an ankle to knee high swell', () => {
+      const rating = defaultConfig.getRatingForSwellHeight(0.6)
+      expect(rating).toBe(2)
+    })
+
+    it('should get rating 3 for waist high swell', () => {
+      const rating = defaultConfig.getRatingForSwellHeight(1.5)
+      expect(rating).toBe(3)
+    })
+
+    it('should get rating 5 for overhead high swell', () => {
+      const rating = defaultConfig.getRatingForSwellHeight(2.5)
+      expect(rating).toBe(5)
+    })
+  })
 })
