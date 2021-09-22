@@ -42,4 +42,11 @@ describe('Rating Service', () => {
       expect(rating).toBe(5)
     })
   })
+
+  describe('Get rating base on swell period', () => {
+    it('should get a rating 1 for a period of 5 seconds', () => {
+      const rating = defaultConfig.getRatingForSwellPeriod(5)
+      expect(rating).toBe(1)
+    })
+  })
 })
