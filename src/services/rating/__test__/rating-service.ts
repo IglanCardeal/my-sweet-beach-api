@@ -25,6 +25,39 @@ export class RatingService {
     return 1
   }
 
+  public getRatingForSwellHeight (heigh: number): number {
+    const waveHeights = {
+      ankleToKnee: {
+        min: 0.3,
+        max: 1
+      },
+      waistHigh: {
+        min: 1,
+        max: 2
+      },
+      headHigh: {
+        min: 2,
+        max: 2.5
+      }
+    }
+    if (
+      heigh >= waveHeights.ankleToKnee.min &&
+      heigh < waveHeights.ankleToKnee.max
+    ) {
+      return 2
+    }
+    if (
+      heigh >= waveHeights.waistHigh.min &&
+      heigh < waveHeights.waistHigh.max
+    ) {
+      return 3
+    }
+    if (heigh >= waveHeights.headHigh.min) {
+      return 5
+    }
+    return 1
+  }
+
   private isWindOffshore (windPosition: string, wavePosition: string): boolean {
     return (
       (wavePosition === BeachPosition.N &&
