@@ -86,4 +86,26 @@ describe('Rating Service', () => {
       expect(rating).toBe(5)
     })
   })
+
+  describe('Get position based on points location', () => {
+    it('should get the point based on east position', () => {
+      const position = defaultConfig.getPositionFromLocation(92)
+      expect(position).toBe(BeachPosition.E)
+    })
+
+    it('should get the point based on north position', () => {
+      const position = defaultConfig.getPositionFromLocation(1)
+      expect(position).toBe(BeachPosition.N)
+    })
+
+    it('should get the point based on west position', () => {
+      const position = defaultConfig.getPositionFromLocation(268)
+      expect(position).toBe(BeachPosition.W)
+    })
+
+    it('should get the point based on south position', () => {
+      const position = defaultConfig.getPositionFromLocation(185)
+      expect(position).toBe(BeachPosition.S)
+    })
+  })
 })
