@@ -1,9 +1,26 @@
 /* eslint-disable security/detect-object-injection */
+import { StormGlassForecastAPIResponseNormalized } from '@src/clients/stormglass-http-client'
 import { BeachPosition } from '@src/infra/models/beach-model'
 import { BeachDTO } from '@src/services/beach/beach-dto'
 
 export class RatingService {
   constructor (private readonly beach: BeachDTO) {}
+
+  public getRateForPoint (
+    point: StormGlassForecastAPIResponseNormalized
+  ): number {
+    const swellDirection = this.getPositionFromLocation(point.swellDirection)
+    const windDirection = this.getPositionFromLocation(point.windDirection)
+    const windAndWaveDirectionRating = this.getRatingBasedOnWindAndWavePositions(
+      swellDirection,
+      windDirection
+    )
+    const swellHeightRating = this.getRatingForSwellHeight(point.swellHeight)
+    const swellPeriodRating = this.getRatingForSwellPeriod(point.swellPeriod)
+    const finalRating =
+      (windAndWaveDirectionRating + swellHeightRating + swellPeriodRating) / 3
+    return Math.round(finalRating)
+  }
 
   public getRatingBasedOnWindAndWavePositions (
     wavePosition: string,
