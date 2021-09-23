@@ -1,6 +1,6 @@
 /* eslint-disable security/detect-object-injection */
 import { StormGlassForecastAPIResponseNormalized } from '@src/clients/stormglass-http-client'
-import { BeachPosition } from '@src/infra/models/beach-model'
+import { GeoPosition } from '@src/infra/models/beach-model'
 import { BeachDTO } from '@src/services/beach/beach-dto'
 
 export class RatingService {
@@ -65,29 +65,29 @@ export class RatingService {
     return 1
   }
 
-  public getPositionFromLocation (direction: number): BeachPosition {
+  public getPositionFromLocation (direction: number): GeoPosition {
     if (direction > 315 || (direction <= 45 && direction >= 0))
-      return BeachPosition.N
-    if (direction > 45 && direction <= 135) return BeachPosition.E
-    if (direction > 135 && direction <= 225) return BeachPosition.S
+      return GeoPosition.N
+    if (direction > 45 && direction <= 135) return GeoPosition.E
+    if (direction > 135 && direction <= 225) return GeoPosition.S
     // if (direction > 225 && direction <= 315)
-    return BeachPosition.W
+    return GeoPosition.W
   }
 
   private isWindOffshore (windPosition: string, wavePosition: string): boolean {
     return (
-      (wavePosition === BeachPosition.N &&
-        windPosition === BeachPosition.S &&
-        this.beach.position === BeachPosition.N) ||
-      (wavePosition === BeachPosition.S &&
-        windPosition === BeachPosition.N &&
-        this.beach.position === BeachPosition.S) ||
-      (wavePosition === BeachPosition.E &&
-        windPosition === BeachPosition.W &&
-        this.beach.position === BeachPosition.E) ||
-      (wavePosition === BeachPosition.W &&
-        windPosition === BeachPosition.W &&
-        this.beach.position === BeachPosition.W)
+      (wavePosition === GeoPosition.N &&
+        windPosition === GeoPosition.S &&
+        this.beach.position === GeoPosition.N) ||
+      (wavePosition === GeoPosition.S &&
+        windPosition === GeoPosition.N &&
+        this.beach.position === GeoPosition.S) ||
+      (wavePosition === GeoPosition.E &&
+        windPosition === GeoPosition.W &&
+        this.beach.position === GeoPosition.E) ||
+      (wavePosition === GeoPosition.W &&
+        windPosition === GeoPosition.W &&
+        this.beach.position === GeoPosition.W)
     )
   }
 }

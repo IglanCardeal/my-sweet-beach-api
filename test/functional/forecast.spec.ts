@@ -2,7 +2,7 @@
 // objeto global de testes
 import nock from 'nock'
 
-import { BeachModel, BeachPosition } from '@src/infra/models/beach-model'
+import { BeachModel, GeoPosition } from '@src/infra/models/beach-model'
 import { apiForecastResponse } from '@test/fixtures/api-forecast-response'
 import { UserModel } from '@src/infra/models/user-model'
 
@@ -26,12 +26,12 @@ describe('Forecast functional test', () => {
       lat: -33.792726,
       lng: 151.289824,
       name: 'Manly',
-      position: BeachPosition.E
+      position: GeoPosition.E
     }
 
     await new BeachModel({ ...defaultBeach, user: newUser.id }).save()
 
-    token = AuthService.generateToken({...newUser.toJSON(), id: newUser.id})
+    token = AuthService.generateToken({ ...newUser.toJSON(), id: newUser.id })
   })
 
   it('it should return a forecast with just a few times', async () => {

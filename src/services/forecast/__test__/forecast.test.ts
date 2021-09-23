@@ -1,5 +1,5 @@
 import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
-import { Beach, BeachPosition } from '@src/infra/models/beach-model'
+import { Beach, GeoPosition } from '@src/infra/models/beach-model'
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass-response-normalized.json'
 
 import { ProcessForecastForBeachesService } from '../forecast-service'
@@ -22,11 +22,13 @@ describe('Forecast Service', () => {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: BeachPosition.E,
+        position: GeoPosition.E,
         user: 'some-id'
       }
     ]
-    const forecast = new ProcessForecastForBeachesService(mockedStormGlassHttpClient)
+    const forecast = new ProcessForecastForBeachesService(
+      mockedStormGlassHttpClient
+    )
     const beachesWithRating = await forecast.execute(beaches)
 
     expect(beachesWithRating).toEqual(expectedResponse)
@@ -45,7 +47,7 @@ describe('Forecast Service', () => {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: BeachPosition.E,
+        position: GeoPosition.E,
         user: 'some-id'
       }
     ]
@@ -54,10 +56,10 @@ describe('Forecast Service', () => {
       'Error fetching data'
     )
 
-    const forecast = new ProcessForecastForBeachesService(mockedStormGlassHttpClient)
-
-    await expect(forecast.execute(beaches)).rejects.toThrow(
-      Error
+    const forecast = new ProcessForecastForBeachesService(
+      mockedStormGlassHttpClient
     )
+
+    await expect(forecast.execute(beaches)).rejects.toThrow(Error)
   })
 })

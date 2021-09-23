@@ -1,5 +1,5 @@
-import { BeachPosition } from '@src/infra/models/beach-model'
-import { RatingService } from './rating-service'
+import { GeoPosition } from '@src/infra/models/beach-model'
+import { RatingService } from '../rating-service'
 
 describe('Rating Service', () => {
   const beach = {
@@ -98,24 +98,24 @@ describe('Rating Service', () => {
   describe('Get rating bases on wind and wave positions', () => {
     it('should get rating 1 for a beach with onshore winds', () => {
       const rating = defaultConfig.getRatingBasedOnWindAndWavePositions(
-        BeachPosition.E,
-        BeachPosition.E
+        GeoPosition.E,
+        GeoPosition.E
       )
       expect(rating).toBe(1)
     })
 
     it('should get rating 3 for a beach with cross winds', () => {
       const rating = defaultConfig.getRatingBasedOnWindAndWavePositions(
-        BeachPosition.E,
-        BeachPosition.S
+        GeoPosition.E,
+        GeoPosition.S
       )
       expect(rating).toBe(3)
     })
 
     it('should get rating 5 for a beach with offshore winds', () => {
       const rating = defaultConfig.getRatingBasedOnWindAndWavePositions(
-        BeachPosition.E,
-        BeachPosition.W
+        GeoPosition.E,
+        GeoPosition.W
       )
       expect(rating).toBe(5)
     })
@@ -168,22 +168,22 @@ describe('Rating Service', () => {
   describe('Get position based on points location', () => {
     it('should get the point based on east position', () => {
       const position = defaultConfig.getPositionFromLocation(92)
-      expect(position).toBe(BeachPosition.E)
+      expect(position).toBe(GeoPosition.E)
     })
 
     it('should get the point based on north position', () => {
       const position = defaultConfig.getPositionFromLocation(1)
-      expect(position).toBe(BeachPosition.N)
+      expect(position).toBe(GeoPosition.N)
     })
 
     it('should get the point based on west position', () => {
       const position = defaultConfig.getPositionFromLocation(268)
-      expect(position).toBe(BeachPosition.W)
+      expect(position).toBe(GeoPosition.W)
     })
 
     it('should get the point based on south position', () => {
       const position = defaultConfig.getPositionFromLocation(185)
-      expect(position).toBe(BeachPosition.S)
+      expect(position).toBe(GeoPosition.S)
     })
   })
 })
