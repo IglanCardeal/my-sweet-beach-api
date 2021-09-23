@@ -4,6 +4,7 @@ import {
   StormGlassForecastAPIResponseNormalized
 } from '@src/clients/stormglass-http-client'
 import { BeachDTO } from '../beach/beach-dto'
+import { RatingService } from '../rating/rating-service'
 import { ForecastProcessingInternalError } from './error'
 
 export interface BeachForecast
@@ -16,20 +17,26 @@ export interface TimeForecast {
 }
 
 export class ProcessForecastForBeachesService {
-  constructor (protected stormGlass = new StormGlassHttpClient()) {}
+  constructor (
+    protected stormGlass = new StormGlassHttpClient(),
+    protected Rating: typeof RatingService = RatingService
+  ) {}
 
   /**
    * retorna os dados normalizados com a previsão do tempo para cada Beach.
    */
-  public async execute (
-    beaches: BeachDTO[]
-  ): Promise<TimeForecast[]> {
+  public async execute (beaches: BeachDTO[]): Promise<TimeForecast[]> {
     const pointsWithCorrectedSources: BeachForecast[] = []
 
     try {
       for (const beach of beaches) {
+        const rating = new this.Rating(beach)
         const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng)
-        const enrichedBeachData = this.mergeBeachAndPointsData(points, beach)
+        const enrichedBeachData = this.mergeBeachAndPointsData(
+          points,
+          beach,
+          rating
+        )
 
         pointsWithCorrectedSources.push(...enrichedBeachData)
       }
@@ -64,7 +71,8 @@ export class ProcessForecastForBeachesService {
    */
   private mergeBeachAndPointsData (
     points: StormGlassForecastAPIResponseNormalized[],
-    beach: BeachDTO
+    beach: BeachDTO,
+    rating: RatingService
   ): BeachForecast[] {
     return points.map(point => ({
       ...{
@@ -72,7 +80,7 @@ export class ProcessForecastForBeachesService {
         lng: beach.lng,
         name: beach.name,
         position: beach.position,
-        rating: 1
+        rating: rating.getRateForPoint(point)
       },
       ...point
     }))
