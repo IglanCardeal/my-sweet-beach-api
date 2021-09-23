@@ -1,8 +1,8 @@
-# <h1 align="center">Storm Glass Weather API</h1>
+# <h1 align="center">My Sweet Beach API</h1>
 
 ![weather-wallpapper](./docs/weather.png)
 
-## <h3 align="center">API para consulta e previsão do clima em qualquer lugar do globo</h3>
+## <h3 align="center">API para consulta e previsão do clima em qualquer praia do globo</h3>
 
 ## API em construção... :hammer: 👷‍♂️ 👨‍💻
 
