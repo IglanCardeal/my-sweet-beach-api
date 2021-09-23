@@ -48,6 +48,15 @@ export class RatingService {
     return 1
   }
 
+  public getPositionFromLocation (direction: number): BeachPosition {
+    if (direction > 315 || (direction <= 45 && direction >= 0))
+      return BeachPosition.N
+    if (direction > 45 && direction <= 135) return BeachPosition.E
+    if (direction > 135 && direction <= 225) return BeachPosition.S
+    // if (direction > 225 && direction <= 315)
+    return BeachPosition.W
+  }
+
   private isWindOffshore (windPosition: string, wavePosition: string): boolean {
     return (
       (wavePosition === BeachPosition.N &&
