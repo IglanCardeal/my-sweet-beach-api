@@ -16,7 +16,6 @@ describe('Forecast Service', () => {
     mockedStormGlassHttpClient.fetchPoints.mockResolvedValue(
       stormGlassNormalizedResponseFixture
     )
-
     const beaches: Beach[] = [
       {
         lat: -33.792726,
@@ -30,14 +29,12 @@ describe('Forecast Service', () => {
       mockedStormGlassHttpClient
     )
     const beachesWithRating = await forecast.execute(beaches)
-
     expect(beachesWithRating).toEqual(expectedResponse)
   })
 
   it('should return an empty when beaches array is empty', async () => {
     const forecast = new ProcessForecastForBeachesService()
     const response = await forecast.execute([])
-
     expect(response).toEqual([])
   })
 
@@ -51,15 +48,12 @@ describe('Forecast Service', () => {
         user: 'some-id'
       }
     ]
-
     mockedStormGlassHttpClient.fetchPoints.mockRejectedValue(
       'Error fetching data'
     )
-
     const forecast = new ProcessForecastForBeachesService(
       mockedStormGlassHttpClient
     )
-
     await expect(forecast.execute(beaches)).rejects.toThrow(Error)
   })
 })
