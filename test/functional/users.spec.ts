@@ -29,7 +29,7 @@ describe('Users functional test', () => {
       expect(response.body.password).toBe('')
     })
 
-    it('should return 422 when there is validation error', async () => {
+    it('should return 400 when there is validation error', async () => {
       const newUser = {
         email: 'foo2@mail.com',
         password: '123456'
@@ -39,16 +39,16 @@ describe('Users functional test', () => {
         .post('/users/create')
         .send({ newUser })
 
-      expect(response.status).toBe(422)
+      expect(response.status).toBe(400)
       expect(response.body).toEqual(
         expect.objectContaining({
-          code: 422,
+          code: 400,
           message: 'User validation failed: name: Path `name` is required.'
         })
       )
     })
 
-    it('should return 409 when the email is already in use', async () => {
+    it('should return 400 when the email is already in use', async () => {
       const newUser = {
         name: 'Foo Bar',
         email: 'foo@mail.com',
@@ -59,10 +59,10 @@ describe('Users functional test', () => {
         .post('/users/create')
         .send({ newUser })
 
-      expect(response.status).toBe(409)
+      expect(response.status).toBe(400)
       expect(response.body).toEqual(
         expect.objectContaining({
-          code: 409,
+          code: 400,
           message:
             'User validation failed: email: already exist in the database.'
         })

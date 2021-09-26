@@ -11,18 +11,21 @@ import { BaseController } from './base'
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)
-export class BeachesController extends BaseController{
+export class BeachesController extends BaseController {
   @Post('')
   public async create (req: Request, res: Response): Promise<void> {
-    const { newBeach } = req.body
-    const beachData: BeachDTO = { ...newBeach, user: req.decoded?.id }
-
+    const { lat, lng, name, position } = req.body
+    const beachData: BeachDTO = {
+      lat,
+      lng,
+      name,
+      position,
+      user: req.decoded?.id ? req.decoded?.id : ''
+    }
     try {
       const beachRepo = new BeachMongoRepository()
       const beachService = new CreateBeachService(beachRepo)
-
       await beachService.execute(beachData)
-
       res.status(201).send(beachData)
     } catch (err) {
       this.sendCreateUpdateErrorResponse(res, err as any)

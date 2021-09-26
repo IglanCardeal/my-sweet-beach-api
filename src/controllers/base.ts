@@ -8,17 +8,16 @@ import { Error } from 'mongoose'
  * classe base para resposta de erros para os controladores.
  */
 export abstract class BaseController {
-  protected sendCreateUpdateErrorResponse(
+  protected sendCreateUpdateErrorResponse (
     res: Response,
     err: Error.ValidationError | Error
   ): Response {
     if (err instanceof Error.ValidationError) {
       const { code, error } = this.handleClientErrors(err)
-
       return res
         .status(code)
         .send(ApiError.format({ code: code, message: error }))
-    } 
+    }
 
     Logger.error(err)
 
@@ -27,11 +26,11 @@ export abstract class BaseController {
       .send(ApiError.format({ code: 500, message: 'Something went wrong!' }))
   }
 
-  protected sendErrorResponse(res: Response, error: APIError): Response {
+  protected sendErrorResponse (res: Response, error: APIError): Response {
     return res.status(error.code).send(ApiError.format(error))
   }
 
-  private handleClientErrors(
+  private handleClientErrors (
     error: Error.ValidationError
   ): { code: number; error: string } {
     const errorsArray = Object.values(error.errors)
@@ -41,9 +40,9 @@ export abstract class BaseController {
     )
 
     if (duplicatedKindErrors.length) {
-      return { code: 409, error: error.message }
+      return { code: 400, error: error.message }
     }
 
-    return { code: 422, error: error.message }
+    return { code: 400, error: error.message }
   }
 }
