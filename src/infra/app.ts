@@ -16,6 +16,7 @@ import { UsersController } from '@src/controllers/users-controller'
 
 import { Database } from '@src/infra/database'
 import { Logger } from '@src/infra/logger'
+import { apiErrorValidator } from './middlewares/api-error-validator-middle'
 
 export class SetupServer extends Server {
   private port: number
@@ -30,6 +31,7 @@ export class SetupServer extends Server {
     await this.apiDocsSetup()
     this.setupControllers()
     await this.setupDatabase()
+    this.setupErrorsHandler()
   }
 
   public start (msg: string): void {
@@ -84,5 +86,9 @@ export class SetupServer extends Server {
         validateResponses: true
       })
     )
+  }
+
+  private setupErrorsHandler (): void {
+    this.app.use(apiErrorValidator)
   }
 }

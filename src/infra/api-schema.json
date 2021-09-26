@@ -21,7 +21,7 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/users/create": {
       "post": {
         "description": "Create a new User",
         "operationId": "createUser",
