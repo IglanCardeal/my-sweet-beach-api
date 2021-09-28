@@ -32,10 +32,10 @@ export class RatingService {
   }
 
   public getRatingForSwellPeriod (period: number): number {
-    if (period >= 7 && period < 10) return 2
-    if (period >= 10 && period < 14) return 4
-    if (period >= 14) return 5
-    return 1
+    if (period < 7) return 1
+    if (period < 10) return 2
+    if (period < 14) return 4
+    return 5
   }
 
   public getRatingForSwellHeight (heigh: number): number {
@@ -53,25 +53,18 @@ export class RatingService {
         max: 2.5
       }
     }
-    const ok =
-      heigh >= waveHeights.ankleToKnee.min &&
-      heigh < waveHeights.ankleToKnee.max
-    const good =
-      heigh >= waveHeights.waistHigh.min && heigh < waveHeights.waistHigh.max
-    const veryGood = heigh >= waveHeights.headHigh.min
-    if (ok) return 2
-    if (good) return 3
-    if (veryGood) return 5
-    return 1
+    if (heigh < waveHeights.ankleToKnee.min) return 1
+    if (heigh < waveHeights.ankleToKnee.max) return 2
+    if (heigh < waveHeights.headHigh.max) return 3
+    return 5
   }
 
   public getPositionFromLocation (direction: number): GeoPosition {
-    if (direction > 315 || (direction <= 45 && direction >= 0))
-      return GeoPosition.N
-    if (direction > 45 && direction <= 135) return GeoPosition.E
-    if (direction > 135 && direction <= 225) return GeoPosition.S
-    // if (direction > 225 && direction <= 315)
-    return GeoPosition.W
+    if (direction <= 45) return GeoPosition.N
+    if (direction <= 135) return GeoPosition.E
+    if (direction <= 225) return GeoPosition.S
+    if (direction <= 315) return GeoPosition.W
+    return GeoPosition.N
   }
 
   private isWindOffshore (windPosition: string, wavePosition: string): boolean {
