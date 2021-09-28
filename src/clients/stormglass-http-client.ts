@@ -2,6 +2,7 @@ import config, { IConfig } from 'config'
 import * as HTTPUtil from '@src/infra/utils/http/request'
 
 import { ClientRequestError, StormGlassResponseError } from './errors'
+import { TimeUtil } from '@src/infra/utils/time'
 
 const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass')
 
@@ -144,7 +145,7 @@ export class StormGlassHttpClient {
    */
   private getDestURL ({ lat, long }: GetDestURLParams): string {
     const apiUrl = stormGlassResourceConfig.get('apiUrl')
-
-    return `${apiUrl}/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`
+    const endTimeStamp = TimeUtil.getUnixTimeForFutureDay(1)
+    return `${apiUrl}/weather/point?lat=${lat}&lng=${long}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&end=${endTimeStamp}`
   }
 }
