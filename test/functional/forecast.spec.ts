@@ -47,7 +47,8 @@ describe('Forecast functional test', () => {
         lat: '-33.792726',
         lng: '151.289824',
         params: /(.*)/,
-        source: 'noaa'
+        source: 'noaa',
+        end: /(.*)/
       })
       .reply(200, stormGlassApiResponse)
 
