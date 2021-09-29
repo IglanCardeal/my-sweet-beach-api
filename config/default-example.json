@@ -6,7 +6,7 @@
     },
     "authentication": {
       "key": "any-key",
-      "tokenExpiresIn": "100000"
+      "tokenExpiresIn": "1h"
     },
     "resources": {
       "StormGlass": {
@@ -17,6 +17,9 @@
     "logger": {
       "enabled": true,
       "level": "info"
+    },
+    "cache": {
+      "standardTtl": 3600
     }
   }
 }

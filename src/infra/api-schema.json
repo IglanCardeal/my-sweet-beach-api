@@ -134,6 +134,21 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User unauthorized",
+                  "code": "401",
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found!",
             "content": {
@@ -201,6 +216,21 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User unauthorized",
+                  "code": "401",
+                  "error": "Unauthorized"
+                }
+              }
+            }
           }
         }
       }
@@ -226,6 +256,21 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TimeForecast"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User unauthorized",
+                  "code": "401",
+                  "error": "Unauthorized"
                 }
               }
             }
