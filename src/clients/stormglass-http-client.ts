@@ -58,11 +58,11 @@ export class StormGlassHttpClient {
   readonly stormGlassAPIParams =
     'swellHeight,waveHeight,swellDirection,waveDirection,windDirection,windSpeed,swellPeriod'
   readonly stormGlassAPISource = 'noaa'
-  protected requester
 
-  constructor (requester = new HTTPUtil.Request()) {
-    this.requester = requester
-  }
+  constructor (
+    protected requester = new HTTPUtil.Request(),
+    protected cache = CacheRepository
+  ) {}
 
   public async fetchPoints (
     lat: number,
@@ -80,19 +80,18 @@ export class StormGlassHttpClient {
         }
       }
       let response: StormGlassForecastAPIResponse
-      const cacheKey = CacheRepository.setCacheKey(lat, long)
+      const cacheKey = this.cache.setCacheKey(lat, long)
       const cachedValue = <StormGlassForecastAPIResponse>(
-        CacheRepository.getCacheValueForKey(cacheKey)
+        this.cache.getCacheValueForKey(cacheKey)
       )
-      // em ambiente de teste sempre eu chamo o `requester`
-      if (cachedValue == undefined || process.env.NODE_ENV === 'test') {
+      if (cachedValue == undefined) {
         response = (
           await this.requester.get<StormGlassForecastAPIResponse>(
             destURL,
             requestConfig
           )
         ).data
-        CacheRepository.setCacheValue<StormGlassForecastAPIResponse>(
+        this.cache.setCacheValue<StormGlassForecastAPIResponse>(
           cacheKey,
           response
         )
