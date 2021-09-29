@@ -1,3 +1,4 @@
+import { Database } from '@src/infra/database'
 import { BeachModel } from '@src/infra/models/beach-model'
 import { UserModel } from '@src/infra/models/user-model'
 import { AuthService } from '@src/services/auth/auth-service'
@@ -87,6 +88,51 @@ describe('Beaches functional tests', () => {
       )
 
       spy.mockRestore()
+    })
+
+    it.only('should resolve database connection error trying to reconnect before execute db operation', async () => {
+      await Database.disconnect()
+
+      const newBeach = {
+        lat: -33.792726,
+        lng: 151.289824,
+        name: 'Manly',
+        position: 'E'
+      }
+
+      const response = await global.testRequest
+        .post('/beaches')
+        .set({ 'x-access-token': token })
+        .send({ ...newBeach })
+
+      expect(response.status).toBe(201)
+    })
+
+    it('should return 500 when there is a database connection error unsolved', async () => {
+      await Database.disconnect()
+      jest.spyOn(Database, 'connect').mockImplementationOnce(async () => {
+        throw new Error()
+      })
+
+      const newBeach = {
+        lat: -33.792726,
+        lng: 151.289824,
+        name: 'Manly',
+        position: 'E'
+      }
+
+      const response = await global.testRequest
+        .post('/beaches')
+        .set({ 'x-access-token': token })
+        .send({ ...newBeach })
+
+      expect(response.status).toBe(500)
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          code: 500,
+          message: 'Something went wrong!'
+        })
+      )
     })
   })
 })
