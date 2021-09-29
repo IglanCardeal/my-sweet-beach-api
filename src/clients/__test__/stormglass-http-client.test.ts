@@ -4,14 +4,17 @@ import { StormGlassHttpClient } from '@src/clients/stormglass-http-client'
 
 import stormGlassApiResponseExample from '@test/fixtures/stormglass-response.json'
 import stormGlassApiResponseNormalizedExample from '@test/fixtures/stormglass-response-normalized.json'
+import { CacheRepository } from '@src/repositories/cache/node-cache-repo'
 
 jest.mock('@src/infra/utils/http/request')
+jest.mock('@src/repositories/cache/node-cache-repo')
 
 describe('StormGlass Client', () => {
   const MockedRequestClass = HTTPUtil.Request as jest.Mocked<
     typeof HTTPUtil.Request
   >
   const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>
+  const MockedCacheRepo = CacheRepository as jest.Mocked<typeof CacheRepository>
 
   it('should load StormGlass class from stormGlass.ts file', () => {
     expect(StormGlassHttpClient).toBeDefined()
@@ -25,6 +28,30 @@ describe('StormGlass Client', () => {
     mockedRequest.get.mockResolvedValue({
       data: stormGlassApiResponseExample
     } as HTTPUtil.Response)
+    MockedCacheRepo.getCacheValueForKey.mockReturnValueOnce(
+      stormGlassApiResponseExample
+    )
+
+    const stormGlass = new StormGlassHttpClient(mockedRequest)
+    const response = await stormGlass.fetchPoints(lat, long)
+
+    // a class StormGlass deve ter um método para normalizar
+    // os dados vindos da API.
+    expect(response).toEqual(stormGlassApiResponseNormalizedExample)
+    expect(response).toBeDefined()
+  })
+
+  it('should return StormGlass objects with some metadata from cache repository', async () => {
+    const lat = -1.4333344573775566
+    const long = -48.48368604061809
+
+    // faz o mock da resposta da API
+    mockedRequest.get.mockResolvedValue({
+      data: null
+    } as HTTPUtil.Response)
+    MockedCacheRepo.getCacheValueForKey.mockReturnValueOnce(
+      stormGlassApiResponseExample
+    )
 
     const stormGlass = new StormGlassHttpClient(mockedRequest)
     const response = await stormGlass.fetchPoints(lat, long)
@@ -52,8 +79,9 @@ describe('StormGlass Client', () => {
     mockedRequest.get.mockResolvedValue({
       data: incompleteResponse
     } as HTTPUtil.Response)
+    MockedCacheRepo.getCacheValueForKey.mockReturnValueOnce(undefined)
 
-    const stormGlass = new StormGlassHttpClient(mockedRequest)
+    const stormGlass = new StormGlassHttpClient(mockedRequest, MockedCacheRepo)
     const response = await stormGlass.fetchPoints(lat, long)
 
     expect(response).toEqual([])
