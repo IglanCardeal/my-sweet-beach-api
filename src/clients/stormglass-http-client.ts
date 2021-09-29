@@ -84,7 +84,8 @@ export class StormGlassHttpClient {
       const cachedValue = <StormGlassForecastAPIResponse>(
         CacheRepository.getCacheValueForKey(cacheKey)
       )
-      if (cachedValue == undefined) {
+      // em ambiente de teste sempre eu chamo o `requester`
+      if (cachedValue == undefined || process.env.NODE_ENV === 'test') {
         response = (
           await this.requester.get<StormGlassForecastAPIResponse>(
             destURL,
