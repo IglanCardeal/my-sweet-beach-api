@@ -27,16 +27,19 @@ export class Database {
     }
   }
 
-  public static getConnectionState (): string {
+  public static async checkConnectionState (): Promise<void> {
     // 0 = disconnected
     // 1 = connected
     // 2 = connecting
     // 3 = disconnecting
     const state = mongoose.connection.readyState
-    if (state === 0) {
-      return 'disconnected'
+    if (state === 0 || state === 3) {
+      try {
+        await Database.connect()
+      } catch (error) {
+        throw new Error('Database Connection Error')
+      }
     }
-    return ''
   }
 
   public static async disconnect (): Promise<void> {
