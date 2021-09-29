@@ -3,6 +3,8 @@ import * as HTTPUtil from '@src/infra/utils/http/request'
 
 import { ClientRequestError, StormGlassResponseError } from './errors'
 import { TimeUtil } from '@src/infra/utils/time'
+import { CacheRepository } from '@src/repositories/cache/node-cache-repo'
+import { Logger } from '@src/infra/logger'
 
 const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass')
 
@@ -66,27 +68,40 @@ export class StormGlassHttpClient {
     lat: number,
     long: number
   ): Promise<StormGlassForecastAPIResponseNormalized[]> {
-    const destURL = this.getDestURL({
-      lat,
-      long
-    })
-    const apiToken = stormGlassResourceConfig.get('apiToken')
-    const requestConfig = {
-      headers: {
-        Authorization: apiToken
-      }
-    }
-
     try {
-      const response = await this.requester.get<StormGlassForecastAPIResponse>(
-        destURL,
-        requestConfig
+      const destURL = this.getDestURL({
+        lat,
+        long
+      })
+      const apiToken = stormGlassResourceConfig.get('apiToken')
+      const requestConfig = {
+        headers: {
+          Authorization: apiToken
+        }
+      }
+      let response: StormGlassForecastAPIResponse
+      const cacheKey = CacheRepository.setCacheKey(lat, long)
+      const cachedValue = <StormGlassForecastAPIResponse>(
+        CacheRepository.getCacheValueForKey(cacheKey)
       )
-
-      return this.normalizeReponse(response.data)
+      if (cachedValue == undefined) {
+        response = (
+          await this.requester.get<StormGlassForecastAPIResponse>(
+            destURL,
+            requestConfig
+          )
+        ).data
+        CacheRepository.setCacheValue<StormGlassForecastAPIResponse>(
+          cacheKey,
+          response
+        )
+      } else {
+        Logger.info(`[CACHE]: Serving from cache for: ${cacheKey}}`)
+        response = cachedValue
+      }
+      return this.normalizeReponse(response)
     } catch (err) {
       const error = err as any
-
       if (HTTPUtil.Request.isRequestError(error)) {
         throw new StormGlassResponseError(
           `Error: ${JSON.stringify(error.response.data)} Code: ${
@@ -94,7 +109,6 @@ export class StormGlassHttpClient {
           }`
         )
       }
-
       throw new ClientRequestError(error.message)
     }
   }
