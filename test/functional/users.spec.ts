@@ -140,9 +140,7 @@ describe('Users functional test', () => {
       expect(body.user).toEqual(
         expect.objectContaining({
           name: 'Foo Bar',
-          email: 'foo22@mail.com',
-          id: expect.any(String),
-          password: expect.any(String)
+          id: expect.any(String)
         })
       )
     })
@@ -153,9 +151,10 @@ describe('Users functional test', () => {
         email: 'foo2@mail.com',
         password: '123456'
       }
+      const invalidId = '6175a100ac3a0439f33d0d2b'
       const token = AuthService.generateToken({
         ...newUser,
-        id: 'FAKE-ID'
+        id: invalidId
       })
       const { body, status } = await global.testRequest
         .get('/users/me')

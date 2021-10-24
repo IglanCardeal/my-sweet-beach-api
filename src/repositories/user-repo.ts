@@ -16,4 +16,12 @@ export class UserMongoRepository implements UserRepository {
 
     await user.save()
   }
+
+  public async findUserById(userId: string): Promise<UserDTO | null> {
+    const user = await UserModel.findById(userId)
+
+    if (!user) return null
+
+    return { ...user.toJSON(), id: user.id }
+  }
 }

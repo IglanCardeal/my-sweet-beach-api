@@ -7,13 +7,13 @@ import { UserMongoRepository } from '@src/repositories/user-repo'
 import { AuthUserService } from '@src/services/user/auth-user-service'
 import { CreateUserService } from '@src/services/user/create-user-service'
 import { authMiddleware } from '@src/infra/middlewares/auth-middle'
-import { FindUserByEmailService } from '@src/services/user/find-user-by-email-service'
+import { FindUserByIdService } from '@src/services/user/find-user-by-id-service'
 // import { Logger } from '@src/infra/logger'
 
 @Controller('users')
 export class UsersController extends BaseController {
   @Post('create')
-  public async createUser (req: Request, res: Response): Promise<void> {
+  public async createUser(req: Request, res: Response): Promise<void> {
     try {
       const userData = req.body.newUser
       const userRepo = new UserMongoRepository()
@@ -27,7 +27,7 @@ export class UsersController extends BaseController {
   }
 
   @Post('authenticate')
-  public async authenticate (req: Request, res: Response): Promise<any> {
+  public async authenticate(req: Request, res: Response): Promise<any> {
     try {
       const { email, password } = req.body
       const userRepo = new UserMongoRepository()
@@ -60,12 +60,12 @@ export class UsersController extends BaseController {
 
   @Get('me')
   @Middleware(authMiddleware)
-  public async me (req: Request, res: Response): Promise<any> {
+  public async me(req: Request, res: Response): Promise<any> {
     try {
-      const email = req.decoded?.email
+      const userId = req.decoded?.id
       const userRepo = new UserMongoRepository()
-      const findUserService = new FindUserByEmailService(userRepo)
-      const user = await findUserService.execute(email as string)
+      const findUserService = new FindUserByIdService(userRepo)
+      const user = await findUserService.execute(userId as string)
 
       if (!user) {
         return this.sendErrorResponse(res, {

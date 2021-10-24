@@ -52,6 +52,5 @@ describe('Authentication Service Class', () => {
 
     expect(resData.id).toBeDefined()
     expect(resData.name).toBeDefined()
-    expect(resData.email).toBeDefined()
   })
 })
