@@ -90,7 +90,7 @@ describe('Beaches functional tests', () => {
       spy.mockRestore()
     })
 
-    it.only('should resolve database connection error trying to reconnect before execute db operation', async () => {
+    it('should resolve database connection error trying to reconnect before execute db operation', async () => {
       await Database.disconnect()
 
       const newBeach = {
